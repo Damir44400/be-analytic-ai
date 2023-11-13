@@ -1,21 +1,8 @@
-import bcrypt
 from jose import jwt
 from typing import Union, Any
 from datetime import datetime, timedelta
 from app.config import env
-
-
-def hash_password(password: str) -> bytes:
-    """Hash the provided password."""
-    pw = bytes(password, "utf-8")
-    salt = bcrypt.gensalt()
-    return bcrypt.hashpw(pw, salt)
-
-
-def check_password(password: str, password_in_db: bytes) -> bool:
-    """Check if the provided password matches the hashed password in the database."""
-    password_bytes = bytes(password, "utf-8")
-    return bcrypt.checkpw(password_bytes, password_in_db)
+from fastapi import HTTPException, status
 
 
 def create_token(data: Union[str, Any], expires_delta: int = None, secret_key: str = env.JWT_SECRET_KEY):
@@ -44,3 +31,15 @@ def create_access_token(data: Union[str, Any], expires_delta: int = None):
 def create_refresh_token(data: Union[str, Any], expires_delta: int = None):
     """Create a refresh token."""
     return create_token(data, expires_delta, env.JWT_REFRESH_SECRET_KEY)
+
+
+def decode_token(token: str, key: str):
+    return jwt.decode(token=token, key=key, algorithms=[env.ALGORITHM])
+
+
+def validate_date_token(payload):
+    current_time = datetime.utcnow()
+    token_expiration = datetime.fromtimestamp(payload["exp"])
+    if current_time > token_expiration:
+        return False
+    return True

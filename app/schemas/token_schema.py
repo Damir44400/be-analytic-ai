@@ -11,3 +11,11 @@ class TokenPayload(BaseModel):
 class TokenSchema(BaseModel):
     access_token: str
     refresh_token: str
+
+
+class AccessSchema(BaseModel):
+    access_token: str
+
+
+class RefreshSchema(BaseModel):
+    refresh_token: str

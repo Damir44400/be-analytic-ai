@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 from pydantic_settings import BaseSettings, SettingsConfigDict
 import importlib
 import pkgutil
@@ -12,7 +12,9 @@ class Config(BaseSettings):
     CORS_ORIGINS: List[str] = ["*"]
     CORS_HEADERS: List[str] = ["*"]
     CORS_METHODS: List[str] = ["*"]
-
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30  # 30 minutes
+    REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
+    ALGORITHM: str = "HS256"
     JWT_SECRET_KEY: str
     JWT_REFRESH_SECRET_KEY: str
     POSTGRES_HOST: str
@@ -40,3 +42,8 @@ def import_routers(package_name):
             importlib.import_module(module_name)
         except Exception as e:
             print(f"Failed to import {module_name}, error: {e}")
+
+
+fastapi_config: dict[str, Any] = {
+    "title": "API",
+}

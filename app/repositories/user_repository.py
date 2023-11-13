@@ -1,25 +1,25 @@
 from sqlalchemy.orm import Session
 from app.models.user_model import User
-from app.schemas.user_schema import UserRegistration, UserUpdate
+from app.schemas.user_schema import UserUpdate
 from fastapi import HTTPException, status
 
 
 class UserRepository:
     @staticmethod
     def get_user_by_username(db: Session, username: str):
-        return db.query(User).filter(User.username == username)
+        return db.query(User).filter(User.username == username).first()
 
     @staticmethod
     def get_user_by_email(db: Session, email: str):
-        return db.query(User).filter(User.email == email)
+        return db.query(User).filter(User.email == email).first()
 
     @staticmethod
     def get_user_by_id(db: Session, user_id: int):
-        return db.query(User).filter(User.id == user_id)
+        return db.query(User).filter(User.id == user_id).first()
 
     @staticmethod
-    def create_user(db: Session, user: UserRegistration):
-        user_db = User(username=user.username, email=user.email, hashed_password=user.password)
+    def create_user(db: Session, user):
+        user_db = User(username=user["username"], email=user["email"], hashed_password=user["password"])
         db.add(user_db)
         db.commit()
         db.refresh(user_db)
@@ -45,3 +45,7 @@ class UserRepository:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="User not found",
             )
+
+    @staticmethod
+    def get_all(db: Session):
+        return db.query(User).all()

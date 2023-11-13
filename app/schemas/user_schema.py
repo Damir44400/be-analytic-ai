@@ -1,31 +1,33 @@
 from typing import Optional, Annotated
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field
-from pydantic.types import SecretStr
+from pydantic import BaseModel, EmailStr
 from fastapi import UploadFile
 
 
 class UserBase(BaseModel):
-    username: Optional[str]
+    username: str
 
 
 class UserRegistration(UserBase):
     email: Optional[EmailStr]
-    password: Optional[SecretStr]
+    password: Optional[str]
 
 
 class UserProfile(UserBase):
     id: int
-    profile_photo: Optional[str]
-    registered_at: Optional[datetime]
-    is_active: Optional[bool]
+    profile_photo: str
+    registered_at: datetime
+    is_active: bool
 
     class Config:
-        orm_mode = True
-        datetime_format = "%Y-%m-%dT%H:%M:%S"
+        datetime_format = "%Y-%m-%d"
 
 
 class UserUpdate(UserBase):
-    profile_photo: Optional[Annotated[str, UploadFile]]
-    email: Optional[EmailStr]
-    password: Optional[SecretStr]
+    email: EmailStr | None
+    password: str | None
+
+
+class UserOut(UserBase):
+    id: int
+    is_active: bool
