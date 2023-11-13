@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "tolqyn"
+version = "0.1.0"
+description = ""
+authors = ["Dinmukhammed <arystambekdimash005@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0.post1"
+pydantic = {extras = ["email"], version = "^2.4.2"}
+pydantic-settings = "^2.0.3"
+alembic = "^1.12.1"
+sqlalchemy = "^2.0.23"
+websockets = "^12.0"
+importlib = "^1.0.4"
+bcrypt = "^4.0.1"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-multipart = "^0.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
