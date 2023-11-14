@@ -49,3 +49,13 @@ class UserRepository:
     @staticmethod
     def get_all(db: Session):
         return db.query(User).all()
+
+    @staticmethod
+    def reset_password(db: Session, email, password):
+        user_db = db.query(User).filter(User.email == email).first()
+        if user_db:
+            if password:
+                user_db.hashed_password = password
+            db.commit()
+            db.refresh(user_db)
+        return user_db
