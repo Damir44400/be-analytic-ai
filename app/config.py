@@ -19,6 +19,7 @@ class FormatConfig(BaseSettings):
 
 
 class DataConfig(BaseSettings):
+    POSTGRES_DB: str
     POSTGRES_HOST: str
     POSTGRES_PORT: str
     POSTGRES_USER: str

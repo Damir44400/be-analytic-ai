@@ -52,9 +52,16 @@ async def get_current_user(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Could not find user",
         )
-
+    is_superuser = False
+    is_moderator = False
+    if user.role_id == 1:
+        is_superuser = True
+    elif user.role_id == 3:
+        is_moderator = True
     return UserOut(
         id=user.id,
         username=user.username,
         is_active=True,
+        is_superuser=is_superuser,
+        is_moderator=is_moderator,
     )

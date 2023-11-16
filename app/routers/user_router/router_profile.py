@@ -15,5 +15,7 @@ async def profile(user: UserOut = Depends(get_current_user), db: Session = Depen
         username=user_profile.username,
         profile_photo=user_profile.profile_photo,
         registered_at=user_profile.registered_at,
-        is_active=True
+        is_active=True,
+        is_superuser=user.is_superuser,
+        is_moderator=user.is_moderator
     )

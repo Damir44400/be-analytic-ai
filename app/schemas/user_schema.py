@@ -17,6 +17,8 @@ class UserProfile(UserBase):
     profile_photo: Optional[str] = None
     registered_at: Optional[datetime] = None
     is_active: Optional[bool] = None
+    is_superuser: Optional[bool]
+    is_moderator: Optional[bool]
 
     class Config:
         datetime_format = "%Y-%m-%d"
@@ -32,3 +34,5 @@ class UserUpdate(BaseModel):
 class UserOut(UserBase):
     id: int
     is_active: Optional[bool] = False
+    is_superuser: Optional[bool]
+    is_moderator: Optional[bool]

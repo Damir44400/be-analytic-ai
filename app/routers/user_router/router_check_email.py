@@ -21,7 +21,7 @@ def check_email(response: Response, email: EmailStr = Form(), db: Session = Depe
     try:
         secret_code = ''.join(secrets.choice('0123456789') for _ in range(6))
         sub = {"email": email, "secret_code": secret_code}
-        send_email = SendEmail(email, "Your code to reset password", secret_code)
+        send_email = SendEmail(email, message=secret_code)
         email_result = send_email.send_email()
         response.set_cookie("code_to_reset", json.dumps(sub), domain=None, expires=100, secure=True, httponly=True,
                             samesite="lax")
@@ -33,6 +33,7 @@ def check_email(response: Response, email: EmailStr = Form(), db: Session = Depe
                 detail="Failed to send reset code email"
             )
     except Exception as e:
+        print(e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=e
