@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.producer_model import Producer
+from app.models.models import Producer
 from app.schemas.producer_schema import ProducerCreate, ProducerUpdate
 from fastapi import HTTPException, status
 

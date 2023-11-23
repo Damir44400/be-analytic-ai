@@ -1,11 +1,21 @@
-import sys, uvicorn, re, getpass
+import sys, uvicorn, re, getpass, os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from app.routers.user_router import router as user_route
 from app.routers.role_router import router as superuser_route
+from app.routers.anime_route import router as anime_route
+from app.routers.producer_route import router as producer_route
+from app.routers.genre_route import router as genre_router
 from app.database import Base, engine
 from app.config import fastapi_config, env
 from app.repositories.role_repository import RoleRepository
+
+if not os.path.exists("media"):
+    os.mkdir("media")
+if not os.path.exists("images"):
+    os.mkdir("images")
+if not os.path.exists("videos"):
+    os.mkdir("videos")
 
 Base.metadata.create_all(bind=engine)
 repository = RoleRepository(engine)
@@ -20,6 +30,9 @@ app.add_middleware(
     allow_credentials=True,
 )
 app.include_router(user_route, tags=["User"], prefix="/api")
+app.include_router(anime_route, tags=["Anime"], prefix="/api")
+app.include_router(genre_router, tags=["Genre"], prefix="/api")
+app.include_router(producer_route, tags=["Producer"], prefix="/api")
 app.include_router(superuser_route, tags=['SuperUser'], prefix='/api')
 
 

@@ -51,6 +51,10 @@ class UserRepository:
         return db.query(User).all()
 
     @staticmethod
+    def get_moderators(db: Session):
+        return db.query(User).filter(User.role_id == 3).all()
+
+    @staticmethod
     def reset_password(db: Session, email, password):
         user_db = db.query(User).filter(User.email == email).first()
         if user_db:

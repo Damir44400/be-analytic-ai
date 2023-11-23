@@ -5,6 +5,12 @@ from sqlalchemy import Column, String, DateTime, Integer, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 
 
+class Category(Base):
+    __tablename__ = "Category"
+    id = Column(Integer, index=True, primary_key=True)
+    name = Column(String, unique=True, index=True)
+
+
 class Genre(Base):
     __tablename__ = "Genre"
 
@@ -14,12 +20,15 @@ class Genre(Base):
     anime = relationship("GenreAnime", back_populates="genre")
 
 
-class Role(Base):
-    __tablename__ = "Role"
+class GenreAnime(Base):
+    __tablename__ = "GenreAnime"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, unique=True, index=True)
-    permissions = Column(JSON, default={})
+    id = Column(Integer, index=True, primary_key=True)
+    genre_id = Column(Integer, ForeignKey("Genre.id"))
+    anime_id = Column(Integer, ForeignKey("Anime.id"))
+
+    anime = relationship("Anime", back_populates="genre")
+    genre = relationship("Genre", back_populates="anime")
 
 
 class Anime(Base):
@@ -31,12 +40,20 @@ class Anime(Base):
     date_announce = Column(DateTime, nullable=True)
     country = Column(String, default="Japan")
     description = Column(String, nullable=False)
-    date_uploaded = Column(DateTime, default=datetime.datetime.now())
-    date_updated = Column(DateTime, default=datetime.datetime.now())
-
-    studio_id = Column(Integer, ForeignKey("Studio.id"))
-    producer_id = Column(Integer, ForeignKey("Producer.id"))
+    date_uploaded = Column(DateTime, default=datetime.datetime.utcnow)
+    date_updated = Column(DateTime, default=datetime.datetime.utcnow)
+    studio_id = Column(Integer, ForeignKey("Studio.id"), nullable=True)
+    producer_id = Column(Integer, ForeignKey("Producer.id"), nullable=True)
+    category_id = Column(Integer, ForeignKey("Category.id"))
     genre = relationship("GenreAnime", back_populates="anime")
+
+
+class Role(Base):
+    __tablename__ = "Role"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String, unique=True, index=True)
+    permissions = Column(JSON, default={})
 
 
 class AnimeChapter(Base):
@@ -58,16 +75,7 @@ class User(Base):
     registered_at = Column(DateTime, default=datetime.datetime.now)
     role_id = Column(Integer, ForeignKey("Role.id"), default=2)
 
-
-class GenreAnime(Base):
-    __tablename__ = "GenreAnime"
-
-    id = Column(Integer, index=True, primary_key=True)
-    genre_id = Column(Integer, ForeignKey("Genre.id"))
-    anime_id = Column(Integer, ForeignKey("Anime.id"))
-
-    anime = relationship("Anime", back_populates="genre")
-    genre = relationship("Genre", back_populates="anime")
+    roles = relationship("Role")
 
 
 class Rating(Base):

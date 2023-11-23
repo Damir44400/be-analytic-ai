@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
-from app.models.studio_model import Studio
+from app.models.models import Studio
 from app.schemas.studio_schema import StudioCreate, StudioUpdate
 from fastapi import HTTPException, status
+
 
 class StudioRepository:
     @staticmethod

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.anime_model import AnimeChapter
+from app.models.models import AnimeChapter
 from app.schemas.anime_schema import AnimeChapterCreate
 from fastapi import HTTPException, status
 

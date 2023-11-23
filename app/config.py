@@ -1,4 +1,4 @@
-import os.path, importlib, pkgutil
+import os.path
 from typing import List, Any
 from pydantic import EmailStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -57,19 +57,7 @@ class RootUserEmail(BaseSettings):
     model_config = SettingsConfigDict(env_file="../.env")
 
 
-def import_routers(package_name):
-    """import routes"""
-    package = importlib.import_module(package_name)
-    prefix = package.__name__ + "."
 
-    for _, module_name, _ in pkgutil.iter_modules(package.__path__, prefix):
-        if not module_name.startswith(prefix + "router_"):
-            continue
-
-        try:
-            importlib.import_module(module_name)
-        except Exception as e:
-            print(f"Failed to import {module_name}, error: {e}")
 
 
 fastapi_config: dict[str, Any] = {

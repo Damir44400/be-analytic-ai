@@ -1,7 +1,7 @@
 import datetime
 
 from sqlalchemy.orm import Session
-from app.models.anime_model import Anime
+from app.models.models import Anime
 from app.schemas.anime_schema import AnimeCreate, AnimeUpdate
 from fastapi import HTTPException, status
 
