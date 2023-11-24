@@ -610,16 +610,6 @@ files = [
 ]
 
 [[package]]
-name = "importlib"
-version = "1.0.4"
-description = "Backport of importlib.import_module() from Python 2.7"
-optional = false
-python-versions = "*"
-files = [
-    {file = "importlib-1.0.4.zip", hash = "sha256:b6ee7066fea66e35f8d0acee24d98006de1a0a8a94a8ce6efe73a9a23c8d9826"},
-]
-
-[[package]]
 name = "mako"
 version = "1.3.0"
 description = "A super-fast templating language that borrows the best ideas from the existing templating languages."
@@ -1381,4 +1371,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10.12"
-content-hash = "7afbb5a162f52dadba29dfbd5582b789adf0ce2a912f18e6efc0f4862d8be527"
+content-hash = "a6c0232af16684fde12de3163241bf5d5a9f364c36326d4e52c70e258bf002e6"

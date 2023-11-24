@@ -1,14 +1,12 @@
 version: '3.8'
 
 services:
-  my-python-app:
+  ani-tolqyn:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/code
-    environment:
-      - PYTHONUNBUFFERED=1
     ports:
       - "8000:8000"
     command: ["sh", "./scripts/launch.sh"]

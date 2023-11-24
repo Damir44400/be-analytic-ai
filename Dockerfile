@@ -1,5 +1,5 @@
 FROM python:3.10 as requirements-stage
-
+ENV PYTHONUNBUFFERED 1
 WORKDIR /tmp
 RUN pip install poetry==1.5.0
 COPY ./pyproject.toml ./poetry.lock* /tmp/

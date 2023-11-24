@@ -29,11 +29,11 @@ app.add_middleware(
     allow_headers=env.CORS_HEADERS,
     allow_credentials=True,
 )
-app.include_router(user_route, tags=["User"], prefix="/api")
-app.include_router(anime_route, tags=["Anime"], prefix="/api")
-app.include_router(genre_router, tags=["Genre"], prefix="/api")
-app.include_router(producer_route, tags=["Producer"], prefix="/api")
-app.include_router(superuser_route, tags=['SuperUser'], prefix='/api')
+app.include_router(user_route, tags=["User"], prefix="/api/v1")
+app.include_router(anime_route, tags=["Anime"], prefix="/api/v1")
+app.include_router(genre_router, tags=["Genre"], prefix="/api/v1")
+app.include_router(producer_route, tags=["Producer"], prefix="/api/v1")
+app.include_router(superuser_route, tags=['SuperUser'], prefix='/api/v1')
 
 
 def main():
