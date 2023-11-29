@@ -23,6 +23,11 @@ psycopg2-binary = "^2.9.9"
 requests = "^2.31.0"
 asyncpg = "^0.29.0"
 fastapi-filter = "^1.0.0"
+blacksheep = "^2.0.0"
+cachetools = "^5.3.2"
+aioredis = "^2.0.1"
+bs4 = "^0.0.1"
+scrapy = "^2.11.0"
 
 
 [build-system]

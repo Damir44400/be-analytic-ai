@@ -12,3 +12,10 @@ class ProducerCreate(ProducerBase):
 
 class ProducerUpdate(ProducerBase):
     pass
+
+
+class Producer(ProducerBase):
+    id: int
+
+    class Config:
+        from_attributes = True

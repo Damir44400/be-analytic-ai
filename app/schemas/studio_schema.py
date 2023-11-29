@@ -12,3 +12,10 @@ class StudioCreate(StudioBase):
 
 class StudioUpdate(StudioBase):
     pass
+
+
+class Studio(StudioBase):
+    id: int
+
+    class Config:
+        from_attributes = True

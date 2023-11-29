@@ -9,6 +9,13 @@ class GenreRepository:
         db.commit()
         return genre
 
+    def get_genres_by_ids(self, db: Session, genre_id_list: list):
+        genres = []
+        for genre_id in genre_id_list:
+            genres.append(
+                {"id": self.get_genre_by_id(db, genre_id).id, "genre": self.get_genre_by_id(db, genre_id).name})
+        return genres
+
     def get_genre_by_id(self, db: Session, genre_id: int):
         return db.query(Genre).filter(Genre.id == genre_id).first()
 

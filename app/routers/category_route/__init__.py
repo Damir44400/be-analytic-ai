@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 from app.utils.utils import import_routers
 
-from app.repositories.studio_repository import StudioRepository
+from app.repositories.category_repository import CategoryRepository
 
-studio_repo = StudioRepository()
+category_repo = CategoryRepository()
+
 router = APIRouter()
 
 import_routers(__name__)

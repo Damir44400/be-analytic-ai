@@ -6,16 +6,20 @@ from app.routers.role_router import router as superuser_route
 from app.routers.anime_route import router as anime_route
 from app.routers.producer_route import router as producer_route
 from app.routers.genre_route import router as genre_router
+from app.routers.category_route import router as category_route
+from app.routers.date_announce_route import router as announce_route
+from app.routers.studio_route import router as studio_router
+from app.routers.rating_route import router as rating_router
 from app.database import Base, engine
 from app.config import fastapi_config, env
 from app.repositories.role_repository import RoleRepository
 
 if not os.path.exists("media"):
     os.mkdir("media")
-if not os.path.exists("images"):
-    os.mkdir("images")
-if not os.path.exists("videos"):
-    os.mkdir("videos")
+if not os.path.exists("media/images"):
+    os.mkdir("media/images")
+if not os.path.exists("media/videos"):
+    os.mkdir("media/videos")
 
 Base.metadata.create_all(bind=engine)
 repository = RoleRepository(engine)
@@ -31,6 +35,10 @@ app.add_middleware(
 )
 app.include_router(user_route, tags=["User"], prefix="/api/v1")
 app.include_router(anime_route, tags=["Anime"], prefix="/api/v1")
+app.include_router(rating_router, tags=['Rating'], prefix="/api/v1")
+app.include_router(announce_route, tags=['AnnounceDates'], prefix='/api/v1')
+app.include_router(studio_router, tags=['Studio'], prefix="/api/v1")
+app.include_router(category_route, tags=['Category'], prefix="/api/v1")
 app.include_router(genre_router, tags=["Genre"], prefix="/api/v1")
 app.include_router(producer_route, tags=["Producer"], prefix="/api/v1")
 app.include_router(superuser_route, tags=['SuperUser'], prefix='/api/v1')

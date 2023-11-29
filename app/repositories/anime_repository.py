@@ -39,9 +39,8 @@ class AnimeRepository:
                 detail="Anime not found",
             )
 
-    @staticmethod
-    def delete_anime(db: Session, anime_id: int):
-        anime_db = db.query(Anime).filter(Anime.id == anime_id).first()
+    def delete_anime(self, db: Session, anime_id: int):
+        anime_db = self.get_anime_by_id(db, anime_id)
         if anime_db:
             db.delete(anime_db)
             db.commit()

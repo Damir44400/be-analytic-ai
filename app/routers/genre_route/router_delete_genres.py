@@ -14,5 +14,5 @@ async def delete_producers(genre_id: int, db: Session = Depends(get_db),
         if db_genre:
             genre_repo.delete_genre(db, genre_id)
             return {"message": f"{db_genre.name} successful deleted"}
-        return HTTPException(detail="The producer not found", status_code=status.HTTP_404_NOT_FOUND)
+        return HTTPException(detail="The genre not found", status_code=status.HTTP_404_NOT_FOUND)
     return HTTPException(detail="You are not superuser or moderator", status_code=status.HTTP_403_FORBIDDEN)

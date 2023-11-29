@@ -10,6 +10,10 @@ class ProducerRepository:
         return db.query(Producer).filter(Producer.id == producer_id).first()
 
     @staticmethod
+    def get_producer_by_name(db: Session, name:str):
+        return db.query(Producer).filter(Producer.name == name).first()
+
+    @staticmethod
     def get_all_producers(db: Session):
         return db.query(Producer).all()
 

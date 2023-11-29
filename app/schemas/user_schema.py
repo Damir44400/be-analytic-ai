@@ -14,6 +14,7 @@ class UserRegistration(UserBase):
 
 class UserProfile(UserBase):
     id: int
+    email: Optional[EmailStr]
     profile_photo: Optional[str] = None
     registered_at: Optional[datetime] = None
     is_active: Optional[bool] = None

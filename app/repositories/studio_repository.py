@@ -10,6 +10,10 @@ class StudioRepository:
         return db.query(Studio).filter(Studio.id == studio_id).first()
 
     @staticmethod
+    def get_studio_by_name(db: Session, name: str):
+        return db.query(Studio).filter(Studio.name == name).first()
+
+    @staticmethod
     def get_all_studios(db: Session):
         return db.query(Studio).all()
 

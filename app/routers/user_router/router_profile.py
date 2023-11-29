@@ -12,6 +12,7 @@ async def profile(user: UserOut = Depends(get_current_user), db: Session = Depen
     user_profile = user_repo.get_user_by_id(db, user_id=user.id)
     return UserProfile(
         id=user_profile.id,
+        email=user_profile.email,
         username=user_profile.username,
         profile_photo=user_profile.profile_photo,
         registered_at=user_profile.registered_at,

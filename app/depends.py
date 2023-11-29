@@ -13,7 +13,7 @@ from app.config import env
 from app.schemas.user_schema import UserOut
 from app.utils.jwt_utils import decode_token, validate_date_token
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/sign-in/access-token", scheme_name="JWT")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/sign-in/access-token", scheme_name="JWT")
 user_repo = UserRepository()
 
 
