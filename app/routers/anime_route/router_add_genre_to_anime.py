@@ -10,7 +10,7 @@ from app.schemas.user_schema import UserOut
 from .utilits import check_user_privileges
 
 
-@router.post("/animes/{anime_id}/add-genre")
+@router.post("/animes/{anime_id}/add-genres")
 def add_genre_to_anime(anime_id: int, genres: List[str] = Form(None), db: Session = Depends(get_db),
                        user: UserOut = Depends(get_current_user)):
     check_user_privileges(user)
