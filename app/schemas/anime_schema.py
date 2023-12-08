@@ -1,13 +1,11 @@
-from fastapi import UploadFile
-from typing import Optional, List, Dict
+from typing import Optional, List
 from pydantic import BaseModel
-from datetime import datetime
 
 
 class AnimeBase(BaseModel):
     title: str
     cover: str
-    date_announce: Optional[int]
+    date_announced: Optional[int]
     country: Optional[str] = "Japan"
     description: str
 
@@ -29,26 +27,27 @@ class Anime(BaseModel):
     cover: str
     title: str
     description: str
-    category: Optional[str]
-    date_announce: Optional[int]
-    genres: list
+    category: Optional[dict]
+    date_announced: Optional[int]
+    genres: List[dict]
     country: Optional[str] = "Japan"
-    studio: Optional[str] | None
-    producer: Optional[str] | None
-    date_uploaded: Optional[datetime]
-    date_updated: Optional[datetime]
+    studio: Optional[dict] = None
+    producer: Optional[dict] = None
 
     class Config:
         from_attributes = True
 
 
-class AnimeChapterCreate(BaseModel):
-    anime_videos: str
-    anime_title: str
+class AnimeChapterBase(BaseModel):
+    anime_video_url: str
     chapter: int
 
 
-class GetAnimeChapter(BaseModel):
+class AnimeChapterCreate(AnimeChapterBase):
+    pass
+
+
+class GetAnimeChapter(AnimeChapterBase):
     id: int
 
     class Config:

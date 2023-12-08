@@ -49,6 +49,7 @@ class GenreAnimeRepository:
             if db_anime_genre:
                 self.delete_anime_genre_by_id(db, anime_genre_id)
                 return True
+            return False
         return False
 
     def update_genre_on_anime(self, db: Session, anime_id: int, anime_genre_id: int, genre_name: str):

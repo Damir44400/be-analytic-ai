@@ -37,3 +37,9 @@ class UserOut(UserBase):
     is_active: Optional[bool] = False
     is_superuser: Optional[bool]
     is_moderator: Optional[bool]
+
+
+class UserGet(UserBase):
+    profile_photo: str | None
+    is_active: Optional[bool] = False
+    comments: int

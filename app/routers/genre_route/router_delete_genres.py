@@ -7,7 +7,7 @@ from . import router, genre_repo
 
 
 @router.delete("/genres/{genre_id}")
-async def delete_producers(genre_id: int, db: Session = Depends(get_db),
+async def delete_genre(genre_id: int, db: Session = Depends(get_db),
                            user: UserOut = Depends(get_current_user)):
     if user.is_moderator or user.is_superuser:
         db_genre = genre_repo.get_genre_by_id(db, genre_id)

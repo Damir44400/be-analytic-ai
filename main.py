@@ -4,10 +4,10 @@ from starlette.middleware.cors import CORSMiddleware
 from app.routers.user_router import router as user_route
 from app.routers.role_router import router as superuser_route
 from app.routers.anime_route import router as anime_route
+from app.routers.comment_route import router as comment_route
 from app.routers.producer_route import router as producer_route
 from app.routers.genre_route import router as genre_router
 from app.routers.category_route import router as category_route
-from app.routers.date_announce_route import router as announce_route
 from app.routers.studio_route import router as studio_router
 from app.routers.rating_route import router as rating_router
 from app.database import Base, engine
@@ -35,8 +35,8 @@ app.add_middleware(
 )
 app.include_router(user_route, tags=["User"], prefix="/api/v1")
 app.include_router(anime_route, tags=["Anime"], prefix="/api/v1")
+app.include_router(comment_route, tags=["Comment"], prefix="/api/v1")
 app.include_router(rating_router, tags=['Rating'], prefix="/api/v1")
-app.include_router(announce_route, tags=['AnnounceDates'], prefix='/api/v1')
 app.include_router(studio_router, tags=['Studio'], prefix="/api/v1")
 app.include_router(category_route, tags=['Category'], prefix="/api/v1")
 app.include_router(genre_router, tags=["Genre"], prefix="/api/v1")

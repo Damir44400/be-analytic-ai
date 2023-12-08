@@ -5,7 +5,7 @@ from app.utils.security_utils import hash_password
 from . import router, user_repo
 from app.depends import get_current_user, get_db
 from app.schemas.user_schema import UserUpdate, UserOut
-from app.utils.media_utils import save_media
+from app.utils.media_utils import save_image, delete_file
 
 
 @router.patch("/profile", summary="User update", response_model=UserUpdate)
@@ -20,7 +20,9 @@ async def user_update(
     try:
         filename = None
         if profile_photo:
-            filename = await save_media(profile_photo)
+            db_user = user_repo.get_user_by_id(db, user.id)
+            delete_file(db_user.profile_photo)
+            filename = await save_image(profile_photo, profile_photo.filename)
         if password:
             password = hash_password(password)
         payload = UserUpdate(username=username, email=email, password=password, profile_photo=filename)

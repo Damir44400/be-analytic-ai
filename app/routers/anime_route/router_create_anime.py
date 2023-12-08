@@ -1,13 +1,12 @@
-from datetime import date
 from typing import List
 
 from fastapi import Depends, HTTPException, status, UploadFile, File, Form
 from sqlalchemy.orm import Session
 
-from . import anime_repo, router, genre_repo, genre_anime_repo, announce_repo, category_repo
+from . import anime_repo, router, genre_repo, genre_anime_repo, category_repo
 from app.depends import get_current_user, get_db
 from app.schemas.anime_schema import AnimeCreate
-from app.utils.media_utils import save_media
+from app.utils.media_utils import save_image
 from app.schemas.user_schema import UserOut
 from .utilits import (
     check_user_privileges,
@@ -35,10 +34,7 @@ async def create_anime_title(
         check_user_privileges(user)
         check_duplicate_title(db, title)
 
-        cover = await save_media(cover, (200, 340))
-        if not announce_repo.get_anime_date_by_release_date(db, date_announce):
-            announce_repo.create_anime_date(db, release_date=date_announce)
-
+        cover = await save_image(cover, cover.filename)
         db_category = category_repo.get_category_by_name(db, category)
 
         if not db_category:
@@ -52,7 +48,7 @@ async def create_anime_title(
             country=country,
             category_id=db_category.id,
             description=description,
-            date_announce=date_announce,
+            date_announced=date_announce,
         )
 
         if studio:

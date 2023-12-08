@@ -10,14 +10,14 @@ class RatingRepository:
         db.commit()
         return rating
 
-    def get_rating_by_id(self, db: Session, anime_id: int, user_id: int):
-        return db.query(Rating).filter(Rating.anime_id == anime_id and Rating.user_id == user_id).first()
+    def check_exists_rating_for_anime(self, db: Session, anime_id: int, user_id: int):
+        return db.query(Rating).filter(Rating.anime_id == anime_id, Rating.user_id == user_id).first()
 
     def get_rating_anime(self, db: Session, anime_id: int):
-        return db.query(Rating).filter(Rating.anime_id == anime_id)
+        return db.query(Rating).filter(Rating.anime_id == anime_id).all()
 
-    def delete_rating(self, db: Session, rating_id: int, user_id: int):
-        rating = self.get_rating_anime(db, rating_id, user_id)
+    def delete_rating(self, db: Session, anime_id: int, user_id: int):
+        rating = self.check_exists_rating_for_anime(db, anime_id=anime_id, user_id=user_id)
         if rating:
             db.delete(rating)
             db.commit()

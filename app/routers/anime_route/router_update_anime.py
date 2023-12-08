@@ -1,12 +1,10 @@
-from typing import List
-
 from fastapi import Depends, HTTPException, status, UploadFile, File, Form
 from sqlalchemy.orm import Session
 
-from . import anime_repo, router, genre_repo, genre_anime_repo, announce_repo, category_repo
+from . import anime_repo, router, category_repo
 from app.depends import get_current_user, get_db
 from app.schemas.anime_schema import AnimeUpdate
-from app.utils.media_utils import save_media
+from app.utils.media_utils import save_image
 from app.schemas.user_schema import UserOut
 from .utilits import (
     check_user_privileges,
@@ -17,7 +15,7 @@ from .utilits import (
 
 
 @router.patch("/animes/{anime_id}")
-async def create_anime_title(
+async def update_anime_title(
         anime_id: int,
         title: str = Form(None),
         date_announce: int = Form(None),
@@ -41,7 +39,7 @@ async def create_anime_title(
 
         anime = AnimeUpdate(
             title=title or anime_db.title,
-            cover=await save_media(cover, (200, 340)) if cover else anime_db.cover,
+            cover=await save_image(cover, cover.filename),
             date_announce=date_announce or anime_db.date_announce,
             description=description or anime_db.description,
             country=country or anime_db.country,

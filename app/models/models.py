@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, String, Date, Integer, ForeignKey, JSON, DateTime
+from sqlalchemy import Column, String, URL, Integer, ForeignKey, JSON, DateTime
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -8,14 +8,14 @@ class Category(Base):
     __tablename__ = "Category"
     id = Column(Integer, index=True, primary_key=True)
     name = Column(String, unique=True, index=True)
-    animes = relationship("Anime", back_populates="category", cascade="all,delete")
+    animes = relationship("Anime", back_populates="category")
 
 
 class Genre(Base):
     __tablename__ = "Genre"
     id = Column(Integer, index=True, primary_key=True)
     name = Column(String, unique=True, index=True)
-    animes = relationship("GenreAnime", back_populates="genre", cascade="all,delete")
+    animes = relationship("GenreAnime", back_populates="genre")
 
 
 class GenreAnime(Base):
@@ -24,8 +24,8 @@ class GenreAnime(Base):
     genre_id = Column(Integer, ForeignKey("Genre.id"))
     anime_id = Column(Integer, ForeignKey("Anime.id"))
 
-    anime = relationship("Anime", back_populates="genres", cascade="all,delete")
-    genre = relationship("Genre", back_populates="animes", cascade="all,delete")
+    anime = relationship("Anime", back_populates="genres")
+    genre = relationship("Genre", back_populates="animes")
 
 
 class Anime(Base):
@@ -35,26 +35,18 @@ class Anime(Base):
     cover = Column(String, nullable=False)
     country = Column(String, default="Japan")
     description = Column(String, nullable=False)
+    date_announced = Column(Integer)
     date_uploaded = Column(DateTime, default=datetime.datetime.utcnow)
     date_updated = Column(DateTime, default=datetime.datetime.utcnow)
     studio_id = Column(Integer, ForeignKey("Studio.id"), nullable=True)
     producer_id = Column(Integer, ForeignKey("Producer.id"), nullable=True)
     category_id = Column(Integer, ForeignKey("Category.id"))
-    date_announce = Column(Integer, ForeignKey("AnimeDateCreated.year"))
 
     genres = relationship("GenreAnime", back_populates="anime", cascade="all,delete")
     category = relationship("Category", back_populates="animes", cascade="all,delete")
     chapters = relationship("AnimeChapter", back_populates="anime", cascade="all,delete")
-    date_announces = relationship("AnimeDateCreated", back_populates="animes")
     producer = relationship("Producer", back_populates="animes")
     studio = relationship("Studio", back_populates="animes")
-
-
-class AnimeDateCreated(Base):
-    __tablename__ = "AnimeDateCreated"
-    id = Column(Integer, index=True, primary_key=True)
-    year = Column(Integer, index=True, unique=True)
-    animes = relationship("Anime", back_populates="date_announces", cascade="all,delete")
 
 
 class Role(Base):
@@ -68,8 +60,8 @@ class Role(Base):
 class AnimeChapter(Base):
     __tablename__ = "AnimeChapter"
     id = Column(Integer, index=True, primary_key=True)
-    anime_video = Column(String, nullable=False)
-    chapter = Column(Integer)
+    anime_video_url = Column(String, nullable=False)
+    chapter = Column(Integer, index=True)
     anime_id = Column(Integer, ForeignKey("Anime.id", ondelete="CASCADE"))
     anime = relationship("Anime", back_populates="chapters", cascade="all,delete")
 
@@ -83,7 +75,9 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     registered_at = Column(DateTime, default=datetime.datetime.utcnow)
     role_id = Column(Integer, ForeignKey("Role.id"), default=2)
-    role = relationship("Role", back_populates="users", cascade="all,delete")
+
+    role = relationship("Role", back_populates="users")
+    comments = relationship("Comment", back_populates="user", cascade="all,delete")
 
 
 class Rating(Base):
@@ -106,3 +100,14 @@ class Studio(Base):
     id = Column(Integer, index=True, primary_key=True)
     name = Column(String, unique=True, index=True)
     animes = relationship("Anime", back_populates="studio", cascade="all,delete")
+
+
+class Comment(Base):
+    __tablename__ = "Comment"
+    id = Column(Integer, index=True, primary_key=True)
+    content = Column(String, nullable=False)
+    date_uploaded = Column(DateTime, default=datetime.datetime.utcnow)
+    user_id = Column(Integer, ForeignKey('User.id', ondelete="CASCADE"))
+    anime_id = Column(Integer, ForeignKey('Anime.id', ondelete="CASCADE"))
+
+    user = relationship("User", back_populates="comments", cascade="all,delete")
