@@ -39,13 +39,11 @@ class Anime(Base):
     date_uploaded = Column(DateTime, default=datetime.datetime.utcnow)
     date_updated = Column(DateTime, default=datetime.datetime.utcnow)
     studio_id = Column(Integer, ForeignKey("Studio.id"), nullable=True)
-    producer_id = Column(Integer, ForeignKey("Producer.id"), nullable=True)
     category_id = Column(Integer, ForeignKey("Category.id"))
 
     genres = relationship("GenreAnime", back_populates="anime", cascade="all,delete")
     category = relationship("Category", back_populates="animes", cascade="all,delete")
     chapters = relationship("AnimeChapter", back_populates="anime", cascade="all,delete")
-    producer = relationship("Producer", back_populates="animes")
     studio = relationship("Studio", back_populates="animes")
 
 
@@ -86,13 +84,6 @@ class Rating(Base):
     stars = Column(Integer)
     user_id = Column(Integer, ForeignKey('User.id', ondelete="CASCADE"))
     anime_id = Column(Integer, ForeignKey("Anime.id", ondelete="CASCADE"))
-
-
-class Producer(Base):
-    __tablename__ = "Producer"
-    id = Column(Integer, index=True, primary_key=True)
-    name = Column(String, unique=True, index=True)
-    animes = relationship("Anime", back_populates="producer", cascade="all,delete")
 
 
 class Studio(Base):

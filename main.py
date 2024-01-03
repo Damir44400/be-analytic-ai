@@ -5,7 +5,6 @@ from app.routers.user_router import router as user_route
 from app.routers.role_router import router as superuser_route
 from app.routers.anime_route import router as anime_route
 from app.routers.comment_route import router as comment_route
-from app.routers.producer_route import router as producer_route
 from app.routers.genre_route import router as genre_router
 from app.routers.category_route import router as category_route
 from app.routers.studio_route import router as studio_router
@@ -40,7 +39,6 @@ app.include_router(rating_router, tags=['Rating'], prefix="/api/v1")
 app.include_router(studio_router, tags=['Studio'], prefix="/api/v1")
 app.include_router(category_route, tags=['Category'], prefix="/api/v1")
 app.include_router(genre_router, tags=["Genre"], prefix="/api/v1")
-app.include_router(producer_route, tags=["Producer"], prefix="/api/v1")
 app.include_router(superuser_route, tags=['SuperUser'], prefix='/api/v1')
 
 

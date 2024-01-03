@@ -12,7 +12,6 @@ from .utilits import (
     check_user_privileges,
     check_duplicate_title,
     get_or_create_studio,
-    get_or_create_producer
 )
 
 
@@ -25,7 +24,6 @@ async def create_anime_title(
         genres: List[str] = Form(...),
         category: str = Form(...),
         studio: str = Form(None),
-        producer: str = Form(None),
         cover: UploadFile = File(...),
         db: Session = Depends(get_db),
         user: UserOut = Depends(get_current_user),
@@ -53,8 +51,6 @@ async def create_anime_title(
 
         if studio:
             anime.studio_id = get_or_create_studio(db, studio).id
-        if producer:
-            anime.producer_id = get_or_create_producer(db, producer).id
 
         db_anime = anime_repo.create_anime(db, anime)
 

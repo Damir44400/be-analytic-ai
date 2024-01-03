@@ -1,6 +1,5 @@
-from . import studio_repo, producer_repo, anime_repo
+from . import studio_repo, anime_repo
 from app.schemas.studio_schema import StudioCreate
-from app.schemas.producer_schema import ProducerCreate
 from app.schemas.user_schema import UserOut
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
@@ -27,10 +26,3 @@ def get_or_create_studio(db: Session, studio_name: str):
     if not db_studio:
         db_studio = studio_repo.create_studio(db, StudioCreate(name=studio_name))
     return db_studio
-
-
-def get_or_create_producer(db: Session, producer_name: str):
-    db_producer = producer_repo.get_producer_by_name(db, producer_name)
-    if not db_producer:
-        db_producer = producer_repo.create_producer(db, ProducerCreate(name=producer_name))
-    return db_producer

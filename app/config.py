@@ -57,9 +57,6 @@ class RootUserEmail(BaseSettings):
     model_config = SettingsConfigDict(env_file="../.env")
 
 
-
-
-
 fastapi_config: dict[str, Any] = {
     "title": "API",
 }

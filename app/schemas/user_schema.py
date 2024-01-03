@@ -17,6 +17,8 @@ class UserProfile(UserBase):
     email: Optional[EmailStr]
     profile_photo: Optional[str] = None
     registered_at: Optional[datetime] = None
+    comment: Optional[int]
+    friends: Optional[int]
     is_active: Optional[bool] = None
     is_superuser: Optional[bool]
     is_moderator: Optional[bool]

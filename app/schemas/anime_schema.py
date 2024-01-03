@@ -13,13 +13,11 @@ class AnimeBase(BaseModel):
 class AnimeCreate(AnimeBase):
     category_id: Optional[int]
     studio_id: Optional[int] = None
-    producer_id: Optional[int] = None
 
 
 class AnimeUpdate(AnimeBase):
     category_id: Optional[int]
     studio_id: Optional[int] = None
-    producer_id: Optional[int] = None
 
 
 class Anime(BaseModel):
@@ -32,7 +30,6 @@ class Anime(BaseModel):
     genres: List[dict]
     country: Optional[str] = "Japan"
     studio: Optional[dict] = None
-    producer: Optional[dict] = None
 
     class Config:
         from_attributes = True

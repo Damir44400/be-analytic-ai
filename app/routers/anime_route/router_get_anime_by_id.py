@@ -8,7 +8,6 @@ from . import (router, genre_anime_repo,
                genre_repo,
                category_repo,
                studio_repo,
-               producer_repo,
                rating_repo,
                comment_repo,
                user_repo)
@@ -27,13 +26,6 @@ async def anime_chapter(anime_id: int, db: Session = Depends(get_db)):
                 studio_id = db_studio.id
                 studio_name = db_studio.name
 
-            producer_name = ""
-            producer_id = None
-            db_producer = producer_repo.get_producer_by_id(db, db_anime.producer_id)
-            if db_producer:
-                producer_id = db_producer.id
-                producer_name = db_producer.name
-
             anime_genres = [genre.genre_id for genre in genre_anime_repo.get_genre_anime_by_anime_id(db, anime_id)]
             anime = Anime(
                 id=db_anime.id,
@@ -44,8 +36,7 @@ async def anime_chapter(anime_id: int, db: Session = Depends(get_db)):
                 country=db_anime.country,
                 genres=genre_repo.get_genres_by_ids(db, list(anime_genres)),
                 category={"category_id": db_category.id, "category_name": db_category.name},
-                studio={"studio_id": studio_id, "studio_name": studio_name},
-                producer={"producer_id": producer_id, "producer_name": producer_name}).dict()
+                studio={"studio_id": studio_id, "studio_name": studio_name}).dict()
 
             rating_of_anime = rating_repo.get_rating_anime(db, anime_id)
             ratings = [{"stars": db_rating.stars} for db_rating in rating_of_anime]
@@ -75,5 +66,4 @@ async def anime_chapter(anime_id: int, db: Session = Depends(get_db)):
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The title not found")
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
