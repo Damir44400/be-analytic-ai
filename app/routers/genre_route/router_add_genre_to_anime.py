@@ -7,10 +7,10 @@ from sqlalchemy.orm import Session
 from app.depends import get_current_user, get_db
 from app.schemas.user_schema import UserOut
 
-from .utilits import check_user_privileges
+from app.routers.anime_route.utilits import check_user_privileges
 
 
-@router.post("/animes/{anime_id}/genres")
+@router.post("/genres/{anime_id}")
 def add_genre_to_anime(anime_id: int, genres: List[str] = Form(None), db: Session = Depends(get_db),
                        user: UserOut = Depends(get_current_user)):
     check_user_privileges(user)

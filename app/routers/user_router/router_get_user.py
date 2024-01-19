@@ -2,7 +2,7 @@ from . import router, comment_repo, user_repo
 from app.depends import get_db
 from app.schemas.user_schema import UserGet
 from sqlalchemy.orm import Session
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends
 
 
 @router.get("/users/get-user/{user_id}")

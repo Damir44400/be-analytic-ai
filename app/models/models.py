@@ -28,6 +28,20 @@ class GenreAnime(Base):
     genre = relationship("Genre", back_populates="animes")
 
 
+class FavoriteType(Base):
+    __tablename__ = "user_favorite_type"
+    id = Column(Integer, index=True, primary_key=True)
+    type = Column(String, unique=True, index=True)
+
+
+class UserFavorite(Base):
+    __tablename__ = "user_favorites"
+    id = Column(Integer, index=True, primary_key=True)
+    favorite_id = Column(Integer, ForeignKey("usertype_watch.id"))
+    anime_id = Column(Integer, ForeignKey("Anime.id"))
+    user_id = Column(Integer, ForeignKey("User.id"))
+
+
 class Anime(Base):
     __tablename__ = "Anime"
     id = Column(Integer, index=True, primary_key=True)

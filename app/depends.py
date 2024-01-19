@@ -61,7 +61,6 @@ async def get_current_user(
     return UserOut(
         id=user.id,
         username=user.username,
-        is_active=True,
         is_superuser=is_superuser,
         is_moderator=is_moderator,
     )

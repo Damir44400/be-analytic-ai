@@ -28,3 +28,6 @@ def resize_and_save_image(image_path, size=(230, 340)):
     img = img.resize(size=size)
     img.save(image_path)
     img.close()
+
+
+

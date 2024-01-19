@@ -37,7 +37,6 @@ class Anime(BaseModel):
 
 class AnimeChapterBase(BaseModel):
     anime_video_url: str
-    chapter: int
 
 
 class AnimeChapterCreate(AnimeChapterBase):

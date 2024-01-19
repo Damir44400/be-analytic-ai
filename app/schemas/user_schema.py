@@ -17,9 +17,7 @@ class UserProfile(UserBase):
     email: Optional[EmailStr]
     profile_photo: Optional[str] = None
     registered_at: Optional[datetime] = None
-    comment: Optional[int]
-    friends: Optional[int]
-    is_active: Optional[bool] = None
+    comments: Optional[int]
     is_superuser: Optional[bool]
     is_moderator: Optional[bool]
 
@@ -36,12 +34,10 @@ class UserUpdate(BaseModel):
 
 class UserOut(UserBase):
     id: int
-    is_active: Optional[bool] = False
     is_superuser: Optional[bool]
     is_moderator: Optional[bool]
 
 
 class UserGet(UserBase):
     profile_photo: str | None
-    is_active: Optional[bool] = False
     comments: int

@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
 from app.depends import get_db, get_current_user
 from app.schemas.user_schema import UserOut
-from .utilits import check_user_privileges
+from app.routers.anime_route.utilits import check_user_privileges
 
 
-@router.delete("/animes/{anime_id}/genres/{genre_id}")
+@router.delete("/genres/{anime_id}/genre/{genre_id}")
 def delete_genre_from_anime(anime_id: int, genre_id: int, db: Session = Depends(get_db),
                             user: UserOut = Depends(get_current_user)):
     try:
