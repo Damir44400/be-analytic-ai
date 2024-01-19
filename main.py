@@ -1,4 +1,4 @@
-import sys, uvicorn, re, getpass, os
+import sys, uvicorn, os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from app.routers.user_router import router as user_route
@@ -47,21 +47,11 @@ def main():
     if sys_args[-1] == 'runserver':
         uvicorn.run("main:app", host="localhost", port=8000, reload=True)
     elif sys_args[-1] == 'createsuperuser':
-        email = input("Enter email: ")
-        email_regex = r'^\S+@\S+\.\S+$'
-        while not re.match(email_regex, email):
-            print("Invalid email format. Please enter a valid email.")
-            email = input("Enter email: ")
-        username = input("Enter username: ")
-        while not username:
-            print("Username cannot be empty.")
-            username = input("Enter username: ")
-        password = getpass.getpass("Enter password: ")
-        while not password:
-            print("Password cannot be empty.")
-            password = getpass.getpass("Enter password: ")
-
-        repository.add_super_user(username, email, password)
+        try:
+            repository.add_super_user("tolqyn", "anitolqyn@gmail.com", "1234")
+            print("Created superuser")
+        except Exception as e:
+            print("Already created superuser")
 
 
 if __name__ == "__main__":

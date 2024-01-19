@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, String, URL, Integer, ForeignKey, JSON, DateTime
+from sqlalchemy import Column, String,  Integer, ForeignKey, JSON, DateTime
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -90,6 +90,7 @@ class User(Base):
 
     role = relationship("Role", back_populates="users")
     comments = relationship("Comment", back_populates="user", cascade="all,delete")
+
 
 
 class Rating(Base):
