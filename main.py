@@ -45,7 +45,7 @@ app.include_router(superuser_route, tags=['SuperUser'], prefix='/api/v1')
 def main():
     sys_args = sys.argv
     if sys_args[-1] == 'runserver':
-        uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+        uvicorn.run("main:app", port=8000, reload=True)
     elif sys_args[-1] == 'createsuperuser':
         try:
             repository.add_super_user("tolqyn", "anitolqyn@gmail.com", "1234")

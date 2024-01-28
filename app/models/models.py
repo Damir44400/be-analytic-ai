@@ -37,7 +37,7 @@ class FavoriteType(Base):
 class UserFavorite(Base):
     __tablename__ = "user_favorites"
     id = Column(Integer, index=True, primary_key=True)
-    favorite_id = Column(Integer, ForeignKey("usertype_watch.id"))
+    favorite_id = Column(Integer, ForeignKey("user_favorite_type.id"))
     anime_id = Column(Integer, ForeignKey("Anime.id"))
     user_id = Column(Integer, ForeignKey("User.id"))
 
