@@ -3,6 +3,7 @@ from typing import Optional
 
 
 class CompanyMachineBase(BaseModel):
+    title: str
     train_data: str
 
 

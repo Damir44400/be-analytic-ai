@@ -14,13 +14,10 @@ company_repository = CompanyRepository()
 
 
 @router.post("/companies/{company_id}/train_datas", response_model=CompanyMachine)
-def create_machine(company_id: int, machine: CompanyMachineCreate, db: Session = Depends(get_db),
-                   user: User = Depends(get_current_user)):
-    company_db = company_repository.get_company_by_id(db, company_id)
-    if company_db.user_id != user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail={})
-    machine_db = company_machine_repository.create_machine(db, machine.train_data, user.id)
-    return CompanyMachine(id=machine_db.id, company_id=company_db.id, train_data=machine_db.train_data)
+def create_machine(company_id: int, machine: CompanyMachineCreate, db: Session = Depends(get_db)):
+    machine_db = company_machine_repository.create_machine(db, machine.title, machine.train_data, company_id)
+    return CompanyMachine(id=machine_db.id, company_id=company_id, title=machine_db.title,
+                          train_data=machine_db.train_data)
 
 
 @router.get("/companies/{company_id}/train_datas/{machine_id}", response_model=CompanyMachineCreate)
@@ -32,7 +29,10 @@ def get_machine(company_id: int, machine_id: int, db: Session = Depends(get_db),
     machine_db = company_machine_repository.get_machine_by_id(db, machine_id)
     if machine_db is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Machine not found")
-    return CompanyMachine(id=machine_db.id, company_id=company_db.id, train_data=machine_db.train_data)
+    if company_id == machine_db.company_id:
+        return CompanyMachine(id=machine_db.id, company_id=company_db.id, title=machine_db.title,
+                              train_data=machine_db.train_data)
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
 
 
 @router.put("/{machine_id}")
@@ -44,7 +44,7 @@ def update_machine(machine_id: int, machine: CompanyMachineUpdate, db: Session =
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail={})
     if machine_db is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Machine not found")
-    updated_machine = company_machine_repository.update_machine(db, machine_id, machine.train_data)
+    updated_machine = company_machine_repository.update_machine(db, machine_id, machine.title, machine.train_data)
     return updated_machine.id
 
 
@@ -66,5 +66,6 @@ def get_all_machines_of_company(company_id: int, db: Session = Depends(get_db), 
     if company_db.user_id != user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail={})
     machines = company_machine_repository.get_all_machines(db)
-    return [CompanyMachine(id=machine_db.id, company_id=company_db.id, train_data=machine_db.train_data)
+    return [CompanyMachine(id=machine_db.id, company_id=company_db.id, title=machine_db.title,
+                           train_data=machine_db.train_data)
             for machine_db in machines]

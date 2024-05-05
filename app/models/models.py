@@ -27,6 +27,7 @@ class Company(Base):
 class CompanyMachine(Base):
     __tablename__ = 'company_machines'
     id = Column(Integer, index=True, primary_key=True, autoincrement=True)
+    title = Column(String, unique=True, nullable=True)
     train_data = Column(String, nullable=False)
     company_id = Column(Integer, ForeignKey('companies.id'))
 

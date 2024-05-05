@@ -9,7 +9,7 @@ router = APIRouter()
 company_repository = CompanyRepository()
 
 
-@router.post("/companies", response_model=Company)
+@router.post("/companies/", response_model=Company)
 def create_company(company: CompanyCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     inserted = company_repository.create_company(db=db, company=company, user_id=user.id)
     return Company(id=inserted.id, title=inserted.title, description=inserted.description,
@@ -30,7 +30,7 @@ def get_company(company_id: int, user: User = Depends(get_current_user),
                    user_id=company.id)
 
 
-@router.put("/companies/{company_id}", response_model=Company)
+@router.put("/companies/{company_id}")
 def update_company(company_id: int, company: CompanyCreate, db: Session = Depends(get_db),
                    user: User = Depends(get_current_user)):
     db_company = company_repository.get_company_by_id(db=db, company_id=company_id)
@@ -55,7 +55,7 @@ def delete_company(company_id: int, db: Session = Depends(get_db), user: User = 
     return {"id": company_id}
 
 
-@router.get("/companies", response_model=list[Company])
+@router.get("/companies/", response_model=list[Company])
 def get_all_companies(db: Session = Depends(get_db)):
     companies = company_repository.get_all_companies(db=db)
     return [Company(id=company.id, title=company.title, description=company.description,
@@ -63,9 +63,9 @@ def get_all_companies(db: Session = Depends(get_db)):
                     user_id=company.id) for company in companies]
 
 
-@router.get("/companies/my", response_model=list[Company])
-def get_my_companies(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+@router.get("/companies/my/")
+def get_all_my_companies(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     companies = company_repository.get_all_companies(db=db)
     return [Company(id=company.id, title=company.title, description=company.description,
                     type_company=company.type_company,
-                    user_id=company.id) for company in companies if company.user_id == user.id]
+                    user_id=company.user_id) for company in companies if company.user_id == user.id]

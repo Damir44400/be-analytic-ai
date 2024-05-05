@@ -9,17 +9,18 @@ class CompanyMachineRepository:
         return db.query(CompanyMachine).filter(CompanyMachine.id == machine_id).first()
 
     @staticmethod
-    def create_machine(db: Session, train_data: str, company_id: int):
-        machine_db = CompanyMachine(train_data=train_data, company_id=company_id)
+    def create_machine(db: Session, title: str, train_data: str, company_id: int):
+        machine_db = CompanyMachine(title=title, train_data=train_data, company_id=company_id)
         db.add(machine_db)
         db.commit()
         db.refresh(machine_db)
         return machine_db
 
     @staticmethod
-    def update_machine(db: Session, machine_id: int, new_train_data: str):
+    def update_machine(db: Session, machine_id: int, new_title: str, new_train_data: str):
         machine_db = db.query(CompanyMachine).filter(CompanyMachine.id == machine_id).first()
         if machine_db:
+            machine_db.title = new_title
             machine_db.train_data = new_train_data
             db.commit()
             db.refresh(machine_db)
