@@ -6,13 +6,12 @@ from sqlalchemy.orm import Session
 from app.utils.jwt_utils import create_access_token, validate_date_token, decode_token
 from app.config import env
 from app.depends import get_db
-from app.schemas.token_schema import RefreshSchema, AccessSchema
 
 
-@router.post("/sign-in/refresh-token", response_model=AccessSchema)
-async def token_refresh(response: Response, refresh_token: RefreshSchema, db: Session = Depends(get_db)):
+@router.post("/sign-in/refresh-token")
+async def token_refresh(response: Response, refresh_token: str, db: Session = Depends(get_db)):
     try:
-        payload = decode_token(token=refresh_token.refresh_token, key=env.JWT_REFRESH_SECRET_KEY)
+        payload = decode_token(token=refresh_token, key=env.JWT_REFRESH_SECRET_KEY)
         if not validate_date_token(payload):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

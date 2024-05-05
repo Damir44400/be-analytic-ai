@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from fastapi import status, HTTPException, Depends, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from app.depends import get_db
-from app.schemas.token_schema import TokenSchema
 from app.utils.jwt_utils import (
     create_access_token,
     create_refresh_token,
@@ -12,7 +11,7 @@ from app.utils.security_utils import check_password
 from app.config import env
 
 
-@router.post('/sign-in/access-token', summary="Create access and refresh tokens for user", response_model=TokenSchema)
+@router.post('/sign-in/access-token', summary="Create access and refresh tokens for user")
 async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = user_repo.get_user_by_username(db, form_data.username)
     if user is None:
@@ -20,7 +19,7 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect email or password"
         )
-    if not check_password(password=form_data.password, password_in_db=user.hashed_password):
+    if not check_password(password=form_data.password, password_in_db=user.password):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect email or password"

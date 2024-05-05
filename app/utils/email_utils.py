@@ -1,6 +1,5 @@
 import smtplib
 from email.mime.text import MIMEText
-from app.config import RootUserEmail
 
 import html
 
@@ -38,23 +37,22 @@ class SendEmail:
     def __init__(self, to, message):
         self.to = to
         self.__msg = MIMEText(stylizing_email(message), 'html')
-        self.__sender = RootUserEmail()
+        self.__sender = 'nonegivenalmau@gmail.com'
 
     def send_email(self):
-        self.__msg['Subject'] = "AniTolqyn"
-        self.__msg['From'] = self.__sender.ROOT_EMAIL
+        self.__msg['Subject'] = "Ur Password Reset Code"
+        self.__msg['From'] = self.__sender
         self.__msg['To'] = self.to
         host, port = self.__get_host_and_port()
         try:
             with smtplib.SMTP_SSL(host, port) as smtp_server:
-                smtp_server.login(self.__sender.ROOT_EMAIL, self.__sender.ROOT_PASSWORD)
-                smtp_server.sendmail(self.__sender.ROOT_EMAIL, self.to, self.__msg.as_string())
-            return "send"
+                smtp_server.login(self.__sender, 'fiycgblqapjwlbtk')
+                smtp_server.sendmail(self.__sender, self.to, self.__msg.as_string())
+            return True
         except smtplib.SMTPException as e:
             raise "Internal server error"
 
-    def __get_host_and_port(self):
+    @staticmethod
+    def __get_host_and_port():
         host, port = "smtp.gmail.com", 465
-        if self.__sender.ROOT_EMAIL.endswith("@mail.ru"):
-            host = "smtp.mail.com"
         return [host, port]

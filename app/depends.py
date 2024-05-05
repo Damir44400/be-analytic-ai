@@ -10,7 +10,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.database import SessionLocal
 from app.repositories.user_repository import UserRepository
 from app.config import env
-from app.schemas.user_schema import UserOut
+from app.schemas.user_schema import User
 from app.utils.jwt_utils import decode_token, validate_date_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/sign-in/access-token", scheme_name="JWT")
@@ -28,7 +28,7 @@ def get_db():
 async def get_current_user(
         token: str = Depends(oauth2_scheme),
         db: Session = Depends(get_db)
-) -> UserOut:
+) -> User:
     try:
         payload = decode_token(token, env.JWT_SECRET_KEY)
         if not validate_date_token(payload):
@@ -52,15 +52,5 @@ async def get_current_user(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Could not find user",
         )
-    is_superuser = False
-    is_moderator = False
-    if user.role_id == 1:
-        is_superuser = True
-    elif user.role_id == 3:
-        is_moderator = True
-    return UserOut(
-        id=user.id,
-        username=user.username,
-        is_superuser=is_superuser,
-        is_moderator=is_moderator,
-    )
+    return User(id=user.id, email=user.email, username=user.username, is_superuser=user.is_superuser,
+                is_representative=user.is_representative)

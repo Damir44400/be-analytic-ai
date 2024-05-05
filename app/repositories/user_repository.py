@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.models import User
-from app.schemas.user_schema import UserUpdate
+from app.schemas.user_schema import UserCreate as UserUpdate
 from fastapi import HTTPException, status
 
 
@@ -19,7 +19,7 @@ class UserRepository:
 
     @staticmethod
     def create_user(db: Session, user):
-        user_db = User(username=user["username"], email=user["email"], hashed_password=user["password"])
+        user_db = User(username=user["username"], email=user["email"], password=user["password"])
         db.add(user_db)
         db.commit()
         db.refresh(user_db)
@@ -32,11 +32,9 @@ class UserRepository:
             if user_update.email:
                 user_db.email = user_update.email
             if user_update.password:
-                user_db.hashed_password = user_update.password
+                user_db.password = user_update.password
             if user_update.username:
                 user_db.username = user_update.username
-            if user_update.profile_photo:
-                user_db.profile_photo = user_update.profile_photo
             db.commit()
             db.refresh(user_db)
             return user_db
