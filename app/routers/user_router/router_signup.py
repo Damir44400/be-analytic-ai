@@ -29,5 +29,5 @@ async def create_user(data: UserCreate, db: Session = Depends(get_db)):
         "username": data.username,
         "password": hash_password(data.password),
     }
-    user_repo.create_user(db, user)
-    return {"id": user["id"]}
+    inserted = user_repo.create_user(db, user)
+    return {"id": inserted.id}

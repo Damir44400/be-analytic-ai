@@ -4,7 +4,7 @@ from pydantic import ValidationError
 from sqlalchemy.orm import Session
 from jose import jwt
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 
 from app.database import SessionLocal
@@ -26,6 +26,7 @@ def get_db():
 
 
 async def get_current_user(
+        request: Request,
         token: str = Depends(oauth2_scheme),
         db: Session = Depends(get_db)
 ) -> User:
