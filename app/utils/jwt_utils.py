@@ -2,7 +2,6 @@ from jose import jwt
 from typing import Union, Any
 from datetime import datetime, timedelta
 from app.config import env
-from fastapi import HTTPException, status
 
 
 def create_token(data: Union[str, Any], expires_delta: int = None, secret_key: str = env.JWT_SECRET_KEY):

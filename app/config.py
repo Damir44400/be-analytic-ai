@@ -1,10 +1,5 @@
-import os.path
 from typing import List, Any
-from pydantic import EmailStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 class CorsConfig(BaseSettings):
