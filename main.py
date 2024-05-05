@@ -11,14 +11,15 @@ from app.config import fastapi_config, env
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(**fastapi_config)
+origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=env.CORS_ORIGINS,
-    allow_methods=env.CORS_METHODS,
-    allow_headers=env.CORS_HEADERS,
+    allow_origins=origins,
     allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
 app.include_router(user_route, tags=["User"], prefix="/api/v1")
 app.include_router(company_route, tags=["Company"], prefix="/api/v1")
 app.include_router(machine_router, tags=["Machine"], prefix="/api/v1")
