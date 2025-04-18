@@ -1,11 +1,34 @@
-# Tolqyn APP
+# 🛠️ WeHack Hackathon Application
 
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi) ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+Welcome to the project we built during the **WeHack Hackathon**, where we proudly took **2nd place**! 🎉
 
-![Tolqyn](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/800px-Tsunami_by_hokusai_19th_century.jpg)
+## 🚀 About the Project
 
-## 🤝 Contact with me:
+We created a powerful application designed to help **companies build better communities with their clients**. Our tool allows companies to engage, understand, and grow their user base through seamless interaction and data-driven insights.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/dinmukhammed-arystambek/) [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://www.instagram.com/arystambek.dima/)
+## 🧠 Key Features
 
-- 💬 If you have any questions or feedback, please don't hesitate to reach out to me!
+- 🤖 **OpenAI Integration**: We integrated OpenAI to analyze company data and generate meaningful insights.
+- 📊 **Client Engagement Analytics**: Understand how your community interacts with your brand.
+- 💬 **Community Tools**: Features that help strengthen communication between companies and their clients.
+- 🔐 **Company-Specific Intelligence**: We securely provide OpenAI with company-specific data to tailor responses and insights.
+
+## 🛠️ Tech Stack
+
+- Python / Django
+- React (or relevant frontend framework)
+- OpenAI API
+- PostgreSQL
+- Docker
+
+## 🏆 Hackathon Achievement
+
+- 🥈 **2nd Place Winner at WeHack Hackathon**
+
+## 📢 Team
+
+Built with passion and no sleep by a group of ambitious developers during the WeHack event 💪
+
+---
+
+Feel free to fork, explore, and reach out if you want to collaborate or learn more!
