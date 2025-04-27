@@ -15,7 +15,7 @@ We created a powerful application designed to help **companies build better comm
 
 ## 🛠️ Tech Stack
 
-- Python / Django
+- Python / FastAPI
 - React (or relevant frontend framework)
 - OpenAI API
 - PostgreSQL
