@@ -6,8 +6,10 @@ from src.gateway.domain.entity import EntityMeta
 
 @dataclass
 class UserEntity(EntityMeta):
-    email: str
     id: Optional[int] = None
+    email: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
     password: Optional[bytes] = None
     is_staff: Optional[bool] = None
 
@@ -23,3 +25,4 @@ class Token:
 @dataclass
 class Payload:
     user_id: int
+    exp: Optional[int] = None

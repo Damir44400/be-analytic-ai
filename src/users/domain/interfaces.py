@@ -19,7 +19,7 @@ class IUserCreateUserDAO(Protocol):
 
 
 class IUserUpdateUserDAO(Protocol):
-    async def update_user(self, user: UserEntity) -> UserEntity:
+    async def update_user(self, user_id: int, user: UserEntity) -> UserEntity:
         pass
 
 

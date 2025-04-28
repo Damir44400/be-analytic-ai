@@ -4,7 +4,6 @@ from typing import TypeVar, ClassVar, Any, Dict, Optional, Union
 T = TypeVar("T")
 
 
-@dataclass
 class EntityMeta:
     _entity_meta_options: ClassVar[Dict[str, Any]] = {'exclude_none': False}
 
@@ -19,19 +18,16 @@ class EntityMeta:
     def to_dict(self, exclude_none: Optional[bool] = None) -> Dict[str, Any]:
         if exclude_none is None:
             exclude_none = self._entity_meta_options.get('exclude_none', False)
-
         data = asdict(self)
-
         if exclude_none:
             return {k: v for k, v in data.items() if v is not None}
         else:
             return data
 
     @classmethod
-    def to_domain(cls, obj) -> Union["EntityMeta", None]:
+    def to_domain(cls, obj):
         if obj:
-            for key, value in obj.__dict__.items():
-                if hasattr(cls, key):
-                    setattr(cls, key, value)
-            return cls
+            instance_data = {key: value for key, value in obj.__dict__.items()}
+            instance_data.pop('_sa_instance_state')
+            return cls(**instance_data)
         return None
