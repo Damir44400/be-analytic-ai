@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.users.domain.entities import UserEntity
@@ -41,4 +41,11 @@ class UserDAO(IUserDAO):
         user = await self._session.execute(stmt)
         user = user.scalars().first()
         print(user.__dict__)
+        return UserEntity.to_domain(user)
+
+    async def update_user(self, user_id: int, user: UserEntity) -> UserEntity:
+        print(user.to_dict())
+        stmt = update(User).values(**user.to_dict()).where(User.id == user_id).returning(User)
+        user = await self._session.execute(stmt)
+        user = user.scalars().first()
         return UserEntity.to_domain(user)
