@@ -3,7 +3,7 @@ from dishka.integrations.fastapi import inject
 from fastapi import APIRouter
 from fastapi.params import Depends
 
-from src.gateway.authentication import get_current_user
+from src.core.authentication import get_current_user
 from src.users.domain.entities import UserEntity
 from src.users.domain.use_cases.profile.interfaces import IProfileUseCase, IProfileUpdateUseCase
 from src.users.presentation.schemas.user import UserProfile, UserProfileUpdate

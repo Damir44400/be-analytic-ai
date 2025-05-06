@@ -1,4 +1,4 @@
-from src.gateway.domain.interfaces import IUoW
+from src.core.domain.interfaces import IUoW
 from src.users.domain.entities import UserEntity
 from src.users.domain.exeptions import UserAlreadyExistsException
 from src.users.domain.interfaces import IPasswordBcrypt

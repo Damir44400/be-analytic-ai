@@ -1,12 +1,37 @@
 version: '3.8'
 
 services:
-  ani-tolqyn:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - .:/code
+    container_name: be-analytic
     ports:
       - "8000:8000"
-    command: ["sh", "./scripts/launch.sh"]
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - main-nt
+    depends_on:
+      - database
+
+  database:
+    image: postgres:latest
+    container_name: be-analytic-database
+    volumes:
+      - ./pg_data:/var/lib/postgresql
+    networks:
+      - main-nt
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    restart: always
+
+  minio:
+    image: minio
+volumes:
+  pg_data: { }
+networks:
+  main-nt: { }

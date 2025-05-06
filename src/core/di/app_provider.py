@@ -1,7 +1,7 @@
 from dishka import make_async_container, Provider, Scope, provide
 
-from src.gateway.config import Config
-from src.gateway.di.alchemy_provider import AlchemyProvider
+from src.core.config import Config
+from src.core.di.alchemy_provider import AlchemyProvider
 from src.users.domain.providers import UserProvider
 
 

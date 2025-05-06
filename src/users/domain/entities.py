@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from src.gateway.domain.entity import EntityMeta
+from src.core.domain.entity import EntityMeta
 
 
 @dataclass

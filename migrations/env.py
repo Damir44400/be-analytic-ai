@@ -4,8 +4,8 @@ from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from src.gateway.config import DataBaseConfig
-from src.gateway.infrastructure.database import Base
+from src.core.config import DataBaseConfig
+from src.core.infrastructure.database import Base
 from src.users.infrastructure.models import User
 
 __tables__ = [

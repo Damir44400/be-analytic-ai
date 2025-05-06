@@ -3,7 +3,7 @@ from datetime import datetime
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 
-from src.gateway.infrastructure.database import Base
+from src.core.infrastructure.database import Base
 
 
 class MessageFiles(Base):

@@ -1,0 +1,2 @@
+class MinioService:
+    pass

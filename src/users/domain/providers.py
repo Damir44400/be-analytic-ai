@@ -1,8 +1,8 @@
 from dishka import Provider, provide, Scope
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.gateway.config import Config
-from src.gateway.domain.interfaces import IUoW
+from src.core.config import Config
+from src.core.domain.interfaces import IUoW
 from src.users.domain.interfaces import IPasswordBcrypt, IJwtService
 from src.users.domain.use_cases.login.interfaces import ILoginUseCase
 from src.users.domain.use_cases.profile.interfaces import IProfileUseCase, IProfileUpdateUseCase

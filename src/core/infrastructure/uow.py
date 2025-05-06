@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.gateway.domain.interfaces import IUoW
+from src.core.domain.interfaces import IUoW
 
 
 class UoW(IUoW):
