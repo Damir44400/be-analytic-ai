@@ -1,7 +1,6 @@
 from dishka import FromDishka
 from dishka.integrations.fastapi import inject
 from fastapi import APIRouter, Body
-from pydantic import Field
 
 from src.users.domain.use_cases.login.entities import LoginRequest
 from src.users.domain.use_cases.login.interfaces import ILoginUseCase
@@ -42,5 +41,5 @@ async def register(form: UserBody, register_use_case: FromDishka[IRegisterUseCas
 
 @router.post("/refresh", response_model=TokenResponse)
 @inject
-async def refresh(refresh_use_case: FromDishka[IRefreshUseCase], refresh_token: str = Body(..., embed=True) ):
+async def refresh(refresh_use_case: FromDishka[IRefreshUseCase], refresh_token: str = Body(..., embed=True)):
     return await refresh_use_case.execute(refresh_token)
