@@ -1,7 +1,7 @@
 import jwt
 
 from src.users.domain.entities import Payload
-from src.core.exeptions import BadRequestException
+from src.core.exceptions import BadRequestException
 from src.users.domain.interfaces import IJwtService
 from src.users.domain.use_cases.refresh.interfaces import IRefreshUseCase
 from src.users.presentation.schemas.auth import TokenResponse

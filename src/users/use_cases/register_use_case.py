@@ -1,5 +1,5 @@
 from src.core.domain.interfaces import IUoW
-from src.core.exeptions import AlreadyExistsException
+from src.core.exceptions import AlreadyExistsException
 from src.users.domain.entities import UserEntity
 from src.users.domain.interfaces import IPasswordBcrypt
 from src.users.domain.use_cases.register.entities import RegisterRequest, RegisterResponse

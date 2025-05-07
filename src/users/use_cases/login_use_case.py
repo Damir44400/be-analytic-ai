@@ -1,4 +1,4 @@
-from src.core.exeptions import UnauthorizedException, BadRequestException
+from src.core.exceptions import UnauthorizedException, BadRequestException
 from src.users.domain.entities import Payload, Token
 from src.users.domain.interfaces import IPasswordBcrypt, IJwtService
 from src.users.domain.use_cases.login.entities import TokenResponse, LoginRequest
