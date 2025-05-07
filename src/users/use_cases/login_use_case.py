@@ -1,5 +1,5 @@
+from src.core.exeptions import UnauthorizedException, BadRequestException
 from src.users.domain.entities import Payload, Token
-from src.users.domain.exeptions import UnauthorizedException, UserBadRequestException
 from src.users.domain.interfaces import IPasswordBcrypt, IJwtService
 from src.users.domain.use_cases.login.entities import TokenResponse, LoginRequest
 from src.users.domain.use_cases.login.interfaces import UserGetGateway, ILoginUseCase
@@ -30,7 +30,7 @@ class LoginUseCase(ILoginUseCase):
                 )
             )
         except Exception as e:
-            raise UserBadRequestException(str(e))
+            raise BadRequestException(str(e))
         if not check_pw:
             raise UnauthorizedException("Password does not match")
 

@@ -4,8 +4,8 @@ from dishka.integrations.fastapi import inject
 from fastapi import Depends
 from fastapi.security.http import HTTPBearer, HTTPAuthorizationCredentials
 
+from src.core.exeptions import UnauthorizedException
 from src.users.domain.entities import UserEntity
-from src.users.domain.exeptions import UnauthorizedException
 from src.users.domain.interfaces import IJwtService
 from src.users.infrastructure.dao import IUserDAO
 
