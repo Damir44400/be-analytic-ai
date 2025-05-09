@@ -21,7 +21,7 @@ class Company(Base):
     __tablename__ = "companies"
 
     id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
-    company_logo: orm.Mapped[str] = orm.mapped_column(sa.String)
+    company_logo: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
     company_name: orm.Mapped[str] = orm.mapped_column(sa.String, index=True)
     business_type: orm.Mapped[BusinessTypeEnum] = orm.mapped_column(
         sa.Enum(BusinessTypeEnum),
@@ -34,7 +34,7 @@ class Company(Base):
     description: orm.Mapped[str] = orm.mapped_column(sa.String)
     company_website: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
 
-    company_phone_number: orm.Mapped[str] = orm.mapped_column(sa.String)
+    company_phone_number: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
     user_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("users.id"))
 
     branches = orm.relationship("CompanyBranch", back_populates="company")

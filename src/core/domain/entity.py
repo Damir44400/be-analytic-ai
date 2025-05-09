@@ -28,6 +28,10 @@ class EntityMeta:
     def to_domain(cls, obj):
         if obj:
             instance_data = {key: value for key, value in obj.__dict__.items()}
-            instance_data.pop('_sa_instance_state')
-            return cls(**instance_data)
+            formatted_data = {}
+            for key, value in instance_data.items():
+                if not key.startswith('_'):
+                    formatted_data[key] = value
+
+            return cls(**formatted_data)
         return None

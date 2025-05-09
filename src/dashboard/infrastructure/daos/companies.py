@@ -13,8 +13,9 @@ class CompaniesDAO(ICompaniesDAO):
         self._session = session
 
     async def create(self, company: CompanyEntity) -> CompanyEntity:
-        stmt = insert(Company).values(company.to_dict(exclude_none=True))
+        stmt = insert(Company).values(company.to_dict(exclude_none=True)).returning(Company)
         company = await self._session.execute(stmt)
+        company = company.scalars().first()
         return CompanyEntity.to_domain(company)
 
     async def get_by_id(self, id: int) -> Company:

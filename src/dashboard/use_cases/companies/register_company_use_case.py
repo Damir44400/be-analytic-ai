@@ -35,10 +35,14 @@ class RegisterCompanyUseCase(IRegisterCompanyUseCase):
 
     async def execute(self, company: CompanyRegisterForm, user_id: int) -> Dict[str, str]:
         company_data = asdict(company)
+        company_data['user_id'] = user_id
+        if company_data.get('company_website', None):
+            company_data['company_website'] = str(company_data['company_website'])
         branches_data = company_data.pop('branches', [])
         async with self._uow:
-            await self._company_dao.create(CompanyEntity(**company_data))
+            company = await self._company_dao.create(CompanyEntity(**company_data))
             for branch_data in branches_data:
+                branch_data['company_id'] = company.id
                 await self._company_branch_dao.create(CompanyBranchEntity(**branch_data))
 
         return {

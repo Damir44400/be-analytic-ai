@@ -24,7 +24,8 @@ async def get_current_user(
         payload = jwt_service.decode(token.credentials)
     except jwt.ExpiredSignatureError:
         raise UnauthorizedException("Expired token")
-    print(payload)
+    except jwt.DecodeError:
+        raise UnauthorizedException("Invalid token")
 
     db_user = await user_dao.get_user_by_id(payload.user_id)
     if not db_user:
