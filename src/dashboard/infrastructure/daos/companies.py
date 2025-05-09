@@ -1,27 +1,11 @@
 from typing import List
 
-from sqlalchemy import insert, select, update
+from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.companies import CompanyEntity
-from src.dashboard.domain.interfaces.companies import (
-    ICompanyGetDAO,
-    ICompanyCreateDAO,
-    ICompanyGetByUserDAO,
-    ICompanyUpdateDAO,
-    ICompaniesListByUsersDAO
-)
+from src.dashboard.domain.interfaces.companies import ICompaniesDAO
 from src.dashboard.infrastructure.models.companies import Company
-
-
-class ICompaniesDAO(
-    ICompanyGetDAO,
-    ICompanyCreateDAO,
-    ICompanyGetByUserDAO,
-    ICompanyUpdateDAO,
-    ICompaniesListByUsersDAO
-):
-    pass
 
 
 class CompaniesDAO(ICompaniesDAO):
@@ -52,6 +36,17 @@ class CompaniesDAO(ICompaniesDAO):
         return [CompanyEntity.to_domain(company) for company in companies]
 
     async def update(self, company_id: int, company: CompanyEntity) -> CompanyEntity:
-        stmt = update(Company).where(Company.id == company_id).values(company.to_dict(exclude_none=True))
+        stmt = (
+            update(Company)
+            .where(
+                Company.id == company_id)
+            .values(
+                company.to_dict(exclude_none=True)
+            )
+            .returning(Company)
+        )
         company = await self._session.execute(stmt)
         return CompanyEntity.to_domain(company)
+
+    async def delete(self, company_id: int) -> None:
+        await self._session.execute(delete(Company).where(Company.id == company_id))

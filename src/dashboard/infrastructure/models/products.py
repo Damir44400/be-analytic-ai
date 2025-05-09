@@ -14,4 +14,4 @@ class Product(Base):
     price: orm.Mapped[float] = orm.mapped_column(sa.Float, nullable=False)
     branch_id: orm.Mapped[int] = orm.mapped_column(sa.Integer, sa.ForeignKey("company_branches.id"), nullable=False)
 
-    branch = orm.relationship("Branch", back_populates="products")
+    branch = orm.relationship("CompanyBranch", back_populates="products")

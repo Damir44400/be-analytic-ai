@@ -12,3 +12,7 @@ class BadRequestException(AppBaseException):
 
 class AlreadyExistsException(AppBaseException):
     status_code = 409
+
+
+class NotFoundException(AppBaseException):
+    status_code = 404

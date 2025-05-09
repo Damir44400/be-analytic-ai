@@ -25,7 +25,7 @@ class LoginUseCase(ILoginUseCase):
                 self
                 ._password_bcrypt
                 .verify_password(
-                    user.password.encode("utf-8"),
+                    user.password,
                     db_user.password.encode("utf-8")
                 )
             )
