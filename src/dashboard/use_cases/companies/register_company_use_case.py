@@ -3,9 +3,9 @@ from typing import Dict
 
 from src.core.domain.interfaces import IUoW
 from ...domain.entities.companies import CompanyEntity
-from ...domain.entities.company_branches import CompanyBranchEntity
+from ...domain.entities.branches import CompanyBranchEntity
 from ...domain.interfaces.companies import ICompanyCreateDAO
-from ...domain.interfaces.company_branches import (
+from ...domain.interfaces.branches import (
     ICompanyBranchCreateDAO
 )
 from ...domain.use_cases.companies import (

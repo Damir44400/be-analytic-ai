@@ -27,12 +27,16 @@ class ICompaniesListByUsersDAO(Protocol):
     async def user_companies(self, user_id: int) -> List[CompanyEntity]:
         ...
 
+class ICompanyDeleteDAO(Protocol):
+    async def delete(self, company_id: int) -> CompanyEntity:
+        ...
 
 class ICompaniesDAO(
     ICompanyGetDAO,
     ICompanyCreateDAO,
     ICompanyGetByUserIdDAO,
     ICompanyUpdateDAO,
-    ICompaniesListByUsersDAO
+    ICompaniesListByUsersDAO,
+    ICompanyDeleteDAO,
 ):
     ...

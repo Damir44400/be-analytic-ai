@@ -2,9 +2,9 @@ from dishka import Provider, provide, Scope
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.interfaces.companies import ICompaniesDAO
-from src.dashboard.domain.interfaces.company_branches import IBranchesDAO
+from src.dashboard.domain.interfaces.branches import IBranchesDAO
 from src.dashboard.infrastructure.daos.companies import CompaniesDAO
-from src.dashboard.infrastructure.daos.company_branches import BranchesDAO
+from src.dashboard.infrastructure.daos.branches import BranchesDAO
 
 
 class DashboardDaosProviders(Provider):

@@ -7,7 +7,7 @@ from sqlalchemy import pool
 from src.core.config import DataBaseConfig
 from src.core.infrastructure.database import Base
 from src.dashboard.infrastructure.models.companies import Company
-from src.dashboard.infrastructure.models.company_branches import CompanyBranch
+from src.dashboard.infrastructure.models.branches import CompanyBranch
 from src.dashboard.infrastructure.models.products import Product
 from src.users.infrastructure.models import User
 

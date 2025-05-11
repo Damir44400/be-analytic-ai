@@ -8,12 +8,19 @@ from fastapi.params import Depends
 from src.core.authentication import get_current_user
 from src.dashboard.domain.use_cases.companies import (
     IRegisterCompanyUseCase,
-    CompanyRegisterForm, IUpdateCompanyUseCase, IDeleteCompanyUseCase, IGetCompanyDetailUseCase, CompanyUpdateForm
+    CompanyRegisterForm,
+    IUpdateCompanyUseCase,
+    IDeleteCompanyUseCase,
+    IGetCompanyDetailUseCase,
+    CompanyUpdateForm
 )
 from src.users.domain.entities import UserEntity
 from ..schemas.companies import (
     CompanyCreate,
-    UserCompaniesRead, CompanyRead, CompanyUpdate
+    UserCompaniesRead,
+    CompanyRead,
+    CompanyUpdate,
+    CompanyReadBranch
 )
 from ...domain.use_cases.companies import IGetUserCompaniesUseCase
 
@@ -51,14 +58,14 @@ async def get_user_companies(
     return await use_case.execute(auth_user.id)
 
 
-@router.get("/{company_id}", response_model=CompanyRead)
+@router.get("/{company_id}", response_model=CompanyReadBranch)
 @inject
 async def get_company_detail(
         company_id: int,
         use_case: FromDishka[IGetCompanyDetailUseCase],
         auth_user: UserEntity = Depends(get_current_user),
 ):
-    return await use_case.execute(company_id, auth_user.id)
+    return await use_case.execute(user_id=auth_user.id, company_id=company_id)
 
 
 @router.patch("/{company_id}", response_model=CompanyRead)

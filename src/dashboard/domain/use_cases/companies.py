@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Protocol, Dict, Optional, List
 
 from src.dashboard.domain.entities.companies import CompanyEntity
-from src.dashboard.domain.use_cases.company_branches import CompanyBranchForm
 from src.dashboard.infrastructure.models.companies import BusinessTypeEnum, BusinessActivityEnum
+from src.dashboard.presentation.schemas.branches import CompanyBranchForm
 
 
 @dataclass

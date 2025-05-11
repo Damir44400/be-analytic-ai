@@ -3,9 +3,10 @@ from typing import List
 from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.dashboard.domain.entities.company_branches import CompanyBranchEntity
-from src.dashboard.domain.interfaces.company_branches import IBranchesDAO
-from src.dashboard.infrastructure.models.company_branches import CompanyBranch
+from src.dashboard.domain.entities.branches import CompanyBranchEntity
+from src.dashboard.domain.interfaces.branches import IBranchesDAO
+from src.dashboard.infrastructure.models.branches import CompanyBranch
+from src.dashboard.infrastructure.models.companies import Company
 
 
 class BranchesDAO(IBranchesDAO):
@@ -44,3 +45,13 @@ class BranchesDAO(IBranchesDAO):
     async def delete(self, branch_id: int) -> None:
         stmt = delete(CompanyBranch).where(CompanyBranch.id == branch_id)
         await self._session.execute(stmt)
+
+    async def get_by_user_id(self, user_id: int, branch_id: int) -> CompanyBranchEntity:
+        stmt = (
+            select(CompanyBranch)
+            .join(Company, Company.id == CompanyBranch.company_id)
+            .where(Company.user_id == user_id, CompanyBranch.id == branch_id)
+        )
+        result = await self._session.execute(stmt)
+        branch = result.scalar_one_or_none()
+        return CompanyBranchEntity.to_domain(branch)

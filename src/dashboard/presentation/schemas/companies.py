@@ -3,7 +3,7 @@ from typing import Optional, List
 from pydantic import BaseModel, HttpUrl, constr
 
 from src.dashboard.infrastructure.models.companies import BusinessTypeEnum, BusinessActivityEnum
-from .company_branches import CompanyBranchForm
+from .branches import CompanyBranchForm, CompanyBranchRead
 
 
 class CompanyBase(BaseModel):
@@ -37,6 +37,10 @@ class CompanyRead(CompanyBase):
 
     class Config:
         from_attributes = True
+
+
+class CompanyReadBranch(CompanyRead):
+    branches: List[CompanyBranchRead]
 
 
 class UserCompaniesRead(BaseModel):

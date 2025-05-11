@@ -1,6 +1,6 @@
 from typing import Protocol, List
 
-from ...domain.entities.company_branches import CompanyBranchEntity
+from ...domain.entities.branches import CompanyBranchEntity
 
 
 class ICompanyBranchCreateDAO(Protocol):
@@ -19,7 +19,11 @@ class ICompanyBranchGetByCompanyDAO(Protocol):
 
 
 class ICompanyBranchUpdateDAO(Protocol):
-    async def update(self, branch_id: int, branch: CompanyBranchEntity) -> CompanyBranchEntity:
+    async def update(
+            self,
+            branch_id: int,
+            branch: CompanyBranchEntity
+    ) -> CompanyBranchEntity:
         pass
 
 
@@ -28,11 +32,17 @@ class ICompanyBranchDeleteDAO(Protocol):
         pass
 
 
+class ICompanyBranchGetByUserIdDAO(Protocol):
+    async def get_by_user_id(self, user_id: int, branch_id: int) -> CompanyBranchEntity:
+        pass
+
+
 class IBranchesDAO(
     ICompanyBranchCreateDAO,
     ICompanyBranchGetDAO,
     ICompanyBranchGetByCompanyDAO,
     ICompanyBranchUpdateDAO,
-    ICompanyBranchDeleteDAO
+    ICompanyBranchDeleteDAO,
+    ICompanyBranchGetByUserIdDAO,
 ):
     ...

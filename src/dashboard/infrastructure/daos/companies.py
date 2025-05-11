@@ -2,6 +2,7 @@ from typing import List
 
 from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
 from src.dashboard.domain.entities.companies import CompanyEntity
 from src.dashboard.domain.interfaces.companies import ICompaniesDAO
@@ -25,9 +26,18 @@ class CompaniesDAO(ICompaniesDAO):
         return CompanyEntity.to_domain(company)
 
     async def get_by_user_id(self, user_id: int, company_id: int) -> Company:
-        stmt = select(Company).where(Company.id == company_id, Company.user_id == user_id)
+        stmt = (
+            select(Company)
+            .where(
+                Company.id == company_id,
+                Company.user_id == user_id
+            )
+            .options(
+                joinedload(Company.branches)
+            )
+        )
         company = await self._session.execute(stmt)
-        company = company.scalar_one_or_none()
+        company = company.scalars().first()
         return CompanyEntity.to_domain(company)
 
     async def user_companies(self, user_id: int) -> List[CompanyEntity]:
