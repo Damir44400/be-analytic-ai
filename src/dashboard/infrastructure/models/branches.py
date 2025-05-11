@@ -11,7 +11,6 @@ class CompanyBranch(Base):
     id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
     city: orm.Mapped[str] = orm.mapped_column(sa.String)
     country: orm.Mapped[str] = orm.mapped_column(sa.String)
-    postal_code: orm.Mapped[str] = orm.mapped_column(sa.String)
     address: orm.Mapped[str] = orm.mapped_column(sa.String)
     company_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("companies.id", ondelete="CASCADE"))
     company = orm.relationship("Company", back_populates="branches")

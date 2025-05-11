@@ -8,7 +8,6 @@ from src.dashboard.domain.entities.branches import CompanyBranchEntity
 class CompanyBranchRegisterForm:
     city: str
     country: str
-    postal_code: str
     address: str
     company_id: int
 
@@ -17,7 +16,6 @@ class CompanyBranchRegisterForm:
 class CompanyBranchUpdateForm:
     city: Optional[str] = None
     country: Optional[str] = None
-    postal_code: Optional[str] = None
     address: Optional[str] = None
 
 
@@ -28,11 +26,6 @@ class IRegisterCompanyBranchUseCase(Protocol):
 
 class IGetCompanyBranchesUseCase(Protocol):
     async def execute(self, company_id: int) -> List[CompanyBranchEntity]:
-        ...
-
-
-class IGetCompanyBranchDetailUseCase(Protocol):
-    async def execute(self, branch_id: int) -> CompanyBranchEntity:
         ...
 
 
