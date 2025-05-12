@@ -12,6 +12,14 @@ class Product(Base):
     quantity: orm.Mapped[int] = orm.mapped_column(sa.Integer, nullable=False)
     type: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=False)
     price: orm.Mapped[float] = orm.mapped_column(sa.Float, nullable=False)
-    branch_id: orm.Mapped[int] = orm.mapped_column(sa.Integer, sa.ForeignKey("company_branches.id"), nullable=False)
 
-    branch = orm.relationship("CompanyBranch", back_populates="products")
+    categories = orm.relationship(
+        "Category",
+        secondary="product_categories",
+        back_populates="products"
+    )
+    warehouses = orm.relationship(
+        "Warehouse",
+        secondary="warehouse_products",
+        back_populates="products"
+    )

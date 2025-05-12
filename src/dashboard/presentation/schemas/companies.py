@@ -2,14 +2,13 @@ from typing import Optional, List
 
 from pydantic import BaseModel, HttpUrl, constr
 
-from src.dashboard.infrastructure.models.companies import BusinessTypeEnum, BusinessActivityEnum
+from src.dashboard.infrastructure.models.companies import BusinessTypeEnum
 from .branches import CompanyBranchForm, CompanyBranchRead
 
 
 class CompanyBase(BaseModel):
     company_name: constr(strip_whitespace=True, min_length=1)
     business_type: BusinessTypeEnum
-    business_activity: BusinessActivityEnum
     description: str
     company_website: Optional[HttpUrl] = None
     company_phone_number: Optional[str] = None
@@ -23,7 +22,6 @@ class CompanyCreate(CompanyBase):
 class CompanyUpdate(CompanyBase):
     company_name: Optional[constr(strip_whitespace=True, min_length=1)] = None
     business_type: BusinessTypeEnum = None
-    business_activity: BusinessActivityEnum = None
     description: str = None
     company_website: Optional[HttpUrl] = None
     company_phone_number: Optional[str] = None

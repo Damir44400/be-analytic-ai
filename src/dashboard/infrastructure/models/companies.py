@@ -27,13 +27,8 @@ class Company(Base):
         sa.Enum(BusinessTypeEnum),
         default=BusinessTypeEnum.SOLE_PROPRIETORSHIP
     )
-    business_activity: orm.Mapped[BusinessActivityEnum] = orm.mapped_column(
-        sa.Enum(BusinessActivityEnum),
-        default=BusinessActivityEnum.PHYSICAL_COMPANY
-    )
     description: orm.Mapped[str] = orm.mapped_column(sa.String)
     company_website: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
-
     company_phone_number: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
     user_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("users.id"))
 

@@ -15,7 +15,6 @@ class CompanyEntity(EntityMeta):
     company_logo: Optional[str] = None
     company_name: Optional[str] = None
     business_type: Optional[BusinessTypeEnum] = None
-    business_activity: Optional[BusinessActivityEnum] = None
     description: Optional[str] = None
     company_website: Optional[str] = None
     company_phone_number: Optional[str] = None
