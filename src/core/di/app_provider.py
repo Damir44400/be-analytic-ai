@@ -2,9 +2,9 @@ from dishka import make_async_container, Provider, Scope, provide
 
 from src.core.config import Config
 from src.core.di.alchemy_provider import AlchemyProvider
-from src.dashboard.providers.daos_provider import DashboardDaosProviders
-from src.dashboard.providers.companies_case_provider import DashboardUseCasesProvider
-from src.users.providers import UserProvider
+from src.core.di.companies_case_provider import DashboardUseCasesProvider
+from src.core.di.daos_provider import DashboardDaosProviders
+from src.core.di.users_providers import UserProvider
 
 
 class AppProvider(Provider):

@@ -1,4 +1,5 @@
 from typing import Protocol, List
+
 from src.dashboard.domain.entities.products import ProductEntity
 
 

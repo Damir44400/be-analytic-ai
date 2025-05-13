@@ -1,25 +1,46 @@
-import sqlalchemy as sa
-import sqlalchemy.orm as orm
+from typing import List
 
-from src.core.infrastructure.database import Base
+from sqlalchemy import insert, select, update, delete
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.dashboard.domain.entities.products import ProductEntity
+from src.dashboard.domain.interfaces.products import IProductsDAO
+from src.dashboard.infrastructure.models.products import Product
 
 
-class Product(Base):
-    __tablename__ = "products"
+class ProductsDAO(IProductsDAO):
+    def __init__(self, session: AsyncSession):
+        self._session = session
 
-    id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
-    name: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=False)
-    quantity: orm.Mapped[int] = orm.mapped_column(sa.Integer, nullable=False)
-    type: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=False)
-    price: orm.Mapped[float] = orm.mapped_column(sa.Float, nullable=False)
+    async def create(self, product: ProductEntity) -> ProductEntity:
+        stmt = insert(Product).values(product.to_dict(exclude_none=True)).returning(Product)
+        result = await self._session.execute(stmt)
+        row = result.scalar_one()
+        return ProductEntity.to_domain(row)
 
-    categories = orm.relationship(
-        "Category",
-        secondary="product_categories",
-        back_populates="products"
-    )
-    warehouses = orm.relationship(
-        "Warehouse",
-        secondary="warehouse_products",
-        back_populates="products"
-    )
+    async def update(self, id: int, product: ProductEntity) -> ProductEntity:
+        stmt = (
+            update(Product)
+            .where(Product.id == id)
+            .values(product.to_dict(exclude_none=True))
+            .returning(Product)
+        )
+        result = await self._session.execute(stmt)
+        updated = result.scalar_one()
+        return ProductEntity.to_domain(updated)
+
+    async def delete(self, id: int) -> None:
+        stmt = delete(Product).where(Product.id == id)
+        await self._session.execute(stmt)
+
+    async def get_by_id(self, id: int) -> ProductEntity:
+        stmt = select(Product).where(Product.id == id)
+        result = await self._session.execute(stmt)
+        row = result.scalar_one_or_none()
+        return ProductEntity.to_domain(row)
+
+    async def list_all(self) -> List[ProductEntity]:
+        stmt = select(Product)
+        result = await self._session.execute(stmt)
+        rows = result.scalars().all()
+        return [ProductEntity.to_domain(row) for row in rows]

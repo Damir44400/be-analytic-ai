@@ -1,52 +1,44 @@
-from datetime import datetime
+from typing import List
 
-import sqlalchemy as sa
-import sqlalchemy.orm as orm
+from sqlalchemy import insert, select, or_
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.core.infrastructure.database import Base
+from src.dashboard.domain.entities.warehouse_transfer import WarehouseTransferEntity
+from src.dashboard.domain.interfaces.warehouse_transfers import IWarehouseTransfersDAO
+from src.dashboard.infrastructure.models.warehouse_transfers import WarehouseTransfer
 
 
-class WarehouseTransfer(Base):
-    __tablename__ = "warehouse_transfers"
+class WarehouseTransfersDAO(IWarehouseTransfersDAO):
+    def __init__(self, session: AsyncSession):
+        self._session = session
 
-    id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
+    async def create(self, transfer: WarehouseTransferEntity) -> WarehouseTransferEntity:
+        stmt = insert(WarehouseTransfer).values(
+            transfer.to_dict(exclude_none=True)
+        ).returning(WarehouseTransfer)
+        result = await self._session.execute(stmt)
+        row = result.scalar_one()
+        return WarehouseTransferEntity.to_domain(row)
 
-    product_id: orm.Mapped[int] = orm.mapped_column(
-        sa.ForeignKey("products.id", ondelete="CASCADE"),
-        nullable=False
-    )
+    async def get_by_id(self, id: int) -> WarehouseTransferEntity:
+        stmt = select(WarehouseTransfer).where(WarehouseTransfer.id == id)
+        result = await self._session.execute(stmt)
+        row = result.scalar_one_or_none()
+        return WarehouseTransferEntity.to_domain(row)
 
-    from_warehouse_id: orm.Mapped[int] = orm.mapped_column(
-        sa.ForeignKey("warehouses.id", ondelete="CASCADE"),
-        nullable=False
-    )
+    async def list_by_product(self, product_id: int) -> List[WarehouseTransferEntity]:
+        stmt = select(WarehouseTransfer).where(WarehouseTransfer.product_id == product_id)
+        result = await self._session.execute(stmt)
+        rows = result.scalars().all()
+        return [WarehouseTransferEntity.to_domain(r) for r in rows]
 
-    to_warehouse_id: orm.Mapped[int] = orm.mapped_column(
-        sa.ForeignKey("warehouses.id", ondelete="CASCADE"),
-        nullable=False
-    )
-
-    quantity: orm.Mapped[int] = orm.mapped_column(sa.Integer, nullable=False)
-
-    transfer_date: orm.Mapped[datetime] = orm.mapped_column(
-        sa.DateTime(timezone=True),
-        default=datetime.utcnow,
-        nullable=False
-    )
-
-    comment: orm.Mapped[str] = orm.mapped_column(sa.Text, nullable=True)
-
-    product = orm.relationship(
-        "Product",
-        backref="transfers"
-    )
-    from_warehouse = orm.relationship(
-        "Warehouse",
-        foreign_keys=[from_warehouse_id],
-        backref="outgoing_transfers"
-    )
-    to_warehouse = orm.relationship(
-        "Warehouse",
-        foreign_keys=[to_warehouse_id],
-        backref="incoming_transfers"
-    )
+    async def list_by_warehouse(self, warehouse_id: int) -> List[WarehouseTransferEntity]:
+        stmt = select(WarehouseTransfer).where(
+            or_(
+                WarehouseTransfer.from_warehouse_id == warehouse_id,
+                WarehouseTransfer.to_warehouse_id == warehouse_id
+            )
+        )
+        result = await self._session.execute(stmt)
+        rows = result.scalars().all()
+        return [WarehouseTransferEntity.to_domain(r) for r in rows]
