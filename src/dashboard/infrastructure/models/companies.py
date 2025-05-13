@@ -32,4 +32,4 @@ class Company(Base):
     company_phone_number: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
     user_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("users.id"))
 
-    branches = orm.relationship("CompanyBranch", back_populates="company")
+    user = orm.relationship("User", backref="companies")

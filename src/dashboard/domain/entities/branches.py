@@ -1,7 +1,9 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
 from src.core.domain.entity import EntityMeta
+from .branch_employees import BranchEmployeeEntity
+from .warehouse import WarehouseEntity
 
 
 @dataclass(frozen=True)
@@ -11,3 +13,5 @@ class CompanyBranchEntity(EntityMeta):
     country: Optional[str] = None
     address: Optional[str] = None
     company_id: Optional[int] = None
+    warehouses: List[WarehouseEntity] = None
+    employees: List[BranchEmployeeEntity] = None

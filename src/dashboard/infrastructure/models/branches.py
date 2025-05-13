@@ -12,6 +12,4 @@ class CompanyBranch(Base):
     country: orm.Mapped[str] = orm.mapped_column(sa.String)
     address: orm.Mapped[str] = orm.mapped_column(sa.String)
     company_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("companies.id", ondelete="CASCADE"))
-    company = orm.relationship("Company", back_populates="branches")
-
-    employees = orm.relationship("BranchEmployees", back_populates="branch")
+    company = orm.relationship("Company", backref="branches")

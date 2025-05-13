@@ -26,7 +26,11 @@ class BranchesDAO(IBranchesDAO):
         return CompanyBranchEntity.to_domain(branch)
 
     async def get_by_company_id(self, company_id: int) -> List[CompanyBranchEntity]:
-        stmt = select(CompanyBranch).where(CompanyBranch.company_id == company_id)
+        stmt = (
+            select(CompanyBranch)
+            .where(CompanyBranch.company_id == company_id)
+            .options(CompanyBranch.warehouses)
+        )
         result = await self._session.execute(stmt)
         branches = result.scalars().all()
         return [CompanyBranchEntity.to_domain(branch) for branch in branches]

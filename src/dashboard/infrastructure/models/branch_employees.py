@@ -42,5 +42,5 @@ class BranchEmployees(Base):
 
     branch = orm.relationship(
         "CompanyBranch",
-        back_populates="employees",
+        backref="employees",
     )

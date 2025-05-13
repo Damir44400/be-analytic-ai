@@ -16,10 +16,10 @@ class Product(Base):
     categories = orm.relationship(
         "Category",
         secondary="product_categories",
-        back_populates="products"
+        backref="products"
     )
     warehouses = orm.relationship(
         "Warehouse",
         secondary="warehouse_products",
-        back_populates="products"
+        backref="products"
     )

@@ -1,11 +1,11 @@
-from dataclasses import dataclass, asdict
-from typing import TypeVar, ClassVar, Any, Dict, Optional, Union
+from dataclasses import asdict
+from typing import TypeVar, ClassVar, Any, Dict, Optional
 
 T = TypeVar("T")
 
 
 class EntityMeta:
-    _entity_meta_options: ClassVar[Dict[str, Any]] = {'exclude_none': False}
+    _entity_meta_options: ClassVar[Dict[str, Any]] = {"exclude_none": False}
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -27,11 +27,6 @@ class EntityMeta:
     @classmethod
     def to_domain(cls, obj):
         if obj:
-            instance_data = {key: value for key, value in obj.__dict__.items()}
-            formatted_data = {}
-            for key, value in instance_data.items():
-                if not key.startswith('_'):
-                    formatted_data[key] = value
-
-            return cls(**formatted_data)
+            instance_data = {k: v for k, v in obj.__dict__.items() if not k.startswith("_")}
+            return cls(**instance_data)
         return None

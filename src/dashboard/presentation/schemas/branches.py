@@ -27,3 +27,8 @@ class CompanyBranchRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+class CompanyBranchReadDetailed(CompanyBranchRead):
+    ...
+    class Config:
+        from_attributes = True

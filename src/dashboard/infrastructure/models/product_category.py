@@ -5,7 +5,7 @@ from src.core.infrastructure.database import Base
 
 
 class ProductsCategory(Base):
-    __tablename__ = "products_category"
+    __tablename__ = "product_categories"
     id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
     category_id: orm.Mapped[int] = orm.mapped_column(
         sa.ForeignKey(
