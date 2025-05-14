@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Protocol, List
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
 

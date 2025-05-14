@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from typing import Optional, List
 
 from src.core.domain.entity import EntityMeta
+from .branches import CompanyBranchEntity
+from .products import ProductEntity
 from ...infrastructure.models.companies import (
-    BusinessActivityEnum,
     BusinessTypeEnum
 )
-from ...infrastructure.models.branches import CompanyBranch
 
 
 @dataclass(frozen=True)
@@ -19,4 +19,5 @@ class CompanyEntity(EntityMeta):
     company_website: Optional[str] = None
     company_phone_number: Optional[str] = None
     user_id: Optional[int] = None
-    branches: Optional[List[CompanyBranch]] = None
+    branches: Optional[List[CompanyBranchEntity]] = None
+    products: Optional[List[ProductEntity]] = None

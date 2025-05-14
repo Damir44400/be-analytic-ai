@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, constr
 
@@ -28,7 +28,16 @@ class CompanyBranchRead(BaseModel):
     class Config:
         from_attributes = True
 
-class CompanyBranchReadDetailed(CompanyBranchRead):
-    ...
+
+class CompanyBranchReadWarehouses(CompanyBranchRead):
+    warehouses: List[dict]
+
+    class Config:
+        from_attributes = True
+
+
+class CompanyBranchReadEmployees(CompanyBranchRead):
+    employees: List[dict]
+
     class Config:
         from_attributes = True
