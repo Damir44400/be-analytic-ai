@@ -6,6 +6,8 @@ from sqlalchemy.orm import joinedload
 
 from src.dashboard.domain.entities.companies import CompanyEntity
 from src.dashboard.domain.interfaces.companies import ICompaniesDAO
+from src.dashboard.infrastructure.models.branch_employees import BranchEmployees
+from src.dashboard.infrastructure.models.branches import CompanyBranch
 from src.dashboard.infrastructure.models.companies import Company
 
 
@@ -39,6 +41,26 @@ class CompaniesDAO(ICompaniesDAO):
         company = await self._session.execute(stmt)
         company = company.scalars().first()
         return CompanyEntity.to_domain(company)
+
+    async def get_by_employee_id(self, employee_id: int, company_id: int) -> List[CompanyEntity]:
+        stmt = (
+            select(Company)
+            .join(
+                CompanyBranch,
+                CompanyBranch.company_id == company_id
+            )
+            .join(
+                BranchEmployees,
+                BranchEmployees.branch_id == CompanyBranch.id
+            )
+            .where(
+                Company.id == company_id,
+                BranchEmployees.id == employee_id
+            )
+        )
+        result = await self._session.execute(stmt)
+        companies = result.scalars().all()
+        return [CompanyEntity.to_domain(company) for company in companies]
 
     async def user_companies(self, user_id: int) -> List[CompanyEntity]:
         stmt = select(Company).where(Company.user_id == user_id)

@@ -12,6 +12,7 @@ class UserEntity(EntityMeta):
     last_name: Optional[str] = None
     password: Optional[bytes] = None
     is_staff: Optional[bool] = None
+    is_employee: Optional[bool] = None
 
     class Meta:
         exclude_none = True
