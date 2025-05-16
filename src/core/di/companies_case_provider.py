@@ -10,15 +10,15 @@ from src.dashboard.domain.use_cases.companies import (
     IDeleteCompanyUseCase
 )
 from src.dashboard.domain.use_cases.companies import IRegisterCompanyUseCase
-from src.dashboard.use_cases.companies.delete_company_use_case import DeleteCompanyUseCase
-from src.dashboard.use_cases.companies.get_detailed_companies_use_case import GetDetailedCompaniesUseCase
-from src.dashboard.use_cases.companies.get_user_companies_use_case import (
+from src.dashboard.use_cases.companies.delete_company import DeleteCompanyUseCase
+from src.dashboard.use_cases.companies.get_detailed_companies import GetDetailedCompaniesUseCase
+from src.dashboard.use_cases.companies.get_user_companies import (
     GetUserCompaniesUseCase
 )
-from src.dashboard.use_cases.companies.register_company_use_case import (
+from src.dashboard.use_cases.companies.register_company import (
     RegisterCompanyUseCase
 )
-from src.dashboard.use_cases.companies.update_company_use_case import UpdateCompanyUseCase
+from src.dashboard.use_cases.companies.update_company import UpdateCompanyUseCase
 
 
 class DashboardUseCasesProvider(Provider):

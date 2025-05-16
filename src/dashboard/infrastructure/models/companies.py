@@ -20,8 +20,12 @@ class BusinessActivityEnum(enum.Enum):
 class Company(Base):
     __tablename__ = "companies"
 
-    id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
-    company_logo: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
+    id: orm.Mapped[int] = orm.mapped_column(
+        sa.Integer, primary_key=True
+    )
+    company_logo: orm.Mapped[str] = orm.mapped_column(
+        sa.String, nullable=True
+    )
     company_name: orm.Mapped[str] = orm.mapped_column(sa.String, index=True)
     business_type: orm.Mapped[BusinessTypeEnum] = orm.mapped_column(
         sa.Enum(BusinessTypeEnum),
@@ -29,7 +33,13 @@ class Company(Base):
     )
     description: orm.Mapped[str] = orm.mapped_column(sa.String)
     company_website: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
-    company_phone_number: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
-    user_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("users.id"))
+    company_phone_number: orm.Mapped[str] = orm.mapped_column(
+        sa.String,
+        nullable=True
+    )
 
-    user = orm.relationship("User", backref="companies")
+    employees = orm.relationship(
+        "User",
+        secondary="employees",
+        backref="companies",
+    )

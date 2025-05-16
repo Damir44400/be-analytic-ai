@@ -4,11 +4,10 @@ from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.categories import CategoryEntity
-from src.dashboard.domain.interfaces.categories import ICategoriesDAO
 from src.dashboard.infrastructure.models.categories import Category
 
 
-class CategoriesDAO(ICategoriesDAO):
+class CategoriesDAO:
     def __init__(self, session: AsyncSession):
         self._session = session
 

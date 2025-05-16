@@ -4,12 +4,14 @@ from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
-from src.dashboard.domain.interfaces.warehouses import IWarehousesDAO
 from src.dashboard.infrastructure.models.warehouse import Warehouse
 
 
-class WarehousesDAO(IWarehousesDAO):
-    def __init__(self, session: AsyncSession):
+class WarehousesDAO:
+    def __init__(
+            self,
+            session: AsyncSession
+    ):
         self._session = session
 
     async def create(self, warehouse: WarehouseEntity) -> WarehouseEntity:

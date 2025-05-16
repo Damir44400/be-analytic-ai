@@ -1,16 +1,20 @@
 from typing import Protocol, List
 
-from ..entities.warehouse import WarehouseEntity
 from ...domain.entities.branches import CompanyBranchEntity
 
 
 class ICompanyBranchCreateDAO(Protocol):
-    async def create(self, branch: CompanyBranchEntity) -> CompanyBranchEntity:
+    async def create(
+            self,
+            branch: CompanyBranchEntity
+    ) -> CompanyBranchEntity:
         ...
 
 
 class ICompanyBranchGetDAO(Protocol):
-    async def get_by_id(self, id: int) -> CompanyBranchEntity:
+    async def get_by_id(
+            self, id: int
+    ) -> CompanyBranchEntity:
         ...
 
 
@@ -34,7 +38,12 @@ class ICompanyBranchDeleteDAO(Protocol):
 
 
 class ICompanyBranchGetByUserIdDAO(Protocol):
-    async def get_by_user_id(self, user_id: int, branch_id: int) -> CompanyBranchEntity:
+    async def get_by_user_id(
+            self,
+            user_id: int,
+            branch_id: int,
+            user_role: str
+    ) -> CompanyBranchEntity:
         ...
 
 

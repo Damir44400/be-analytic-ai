@@ -8,10 +8,10 @@ from src.dashboard.domain.use_cases.branches import (
     IDeleteCompanyBranchUseCase,
     IUpdateCompanyBranchUseCase
 )
-from src.dashboard.use_cases.branches.delete_company_branch_use_case import DeleteCompanyBranchUseCase
-from src.dashboard.use_cases.branches.get_company_branches_use_case import GetCompanyBranchesUseCase
-from src.dashboard.use_cases.branches.register_company_branch_use_case import RegisterCompanyBranchUseCase
-from src.dashboard.use_cases.branches.update_company_branch_use_case import UpdateCompanyBranchUseCase
+from src.dashboard.use_cases.branches.delete_company_branch import DeleteCompanyBranchUseCase
+from src.dashboard.use_cases.branches.get_company_branches import GetCompanyBranchesUseCase
+from src.dashboard.use_cases.branches.register_company_branch import RegisterCompanyBranchUseCase
+from src.dashboard.use_cases.branches.update_company_branch import UpdateCompanyBranchUseCase
 
 
 class CompanyBranchUseCasesProvider(Provider):

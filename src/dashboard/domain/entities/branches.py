@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional, List
 
 from src.core.domain.entity import EntityMeta
-from .branch_employees import BranchEmployeeEntity
+from .employees import BranchEmployeeEntity
 from .warehouse import WarehouseEntity
 
 

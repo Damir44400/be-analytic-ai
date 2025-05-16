@@ -24,5 +24,5 @@ class IWarehouseDetailUseCase(Protocol):
 
 
 class IWarehouseListUseCase(Protocol):
-    async def execute(self, branch_id: int) -> List[WarehouseEntity]:
+    async def execute(self, branch_id: int, user_id: int) -> List[WarehouseEntity]:
         ...

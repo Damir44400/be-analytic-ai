@@ -4,12 +4,12 @@ from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.branches import CompanyBranchEntity
-from src.dashboard.domain.interfaces.branches import IBranchesDAO
 from src.dashboard.infrastructure.models.branches import CompanyBranch
 from src.dashboard.infrastructure.models.companies import Company
+from src.dashboard.infrastructure.models.employees import Employee
 
 
-class BranchesDAO(IBranchesDAO):
+class BranchesDAO:
     def __init__(self, session: AsyncSession):
         self._session = session
 
@@ -50,11 +50,21 @@ class BranchesDAO(IBranchesDAO):
         stmt = delete(CompanyBranch).where(CompanyBranch.id == branch_id)
         await self._session.execute(stmt)
 
-    async def get_by_user_id(self, user_id: int, branch_id: int) -> CompanyBranchEntity:
+    async def get_by_user_id(
+            self,
+            user_id: int,
+            branch_id: int,
+            user_role: str
+    ) -> CompanyBranchEntity:
         stmt = (
             select(CompanyBranch)
             .join(Company, Company.id == CompanyBranch.company_id)
-            .where(Company.user_id == user_id, CompanyBranch.id == branch_id)
+            .join(Employee, Employee.company_id == Company.id)
+            .where(
+                Employee.user_id == user_id,
+                CompanyBranch.id == branch_id,
+                Employee.role == user_role
+            )
         )
         result = await self._session.execute(stmt)
         branch = result.scalar_one_or_none()

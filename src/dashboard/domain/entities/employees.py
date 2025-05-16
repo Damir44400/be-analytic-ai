@@ -5,9 +5,10 @@ from src.core.domain.entity import EntityMeta
 
 
 @dataclass(frozen=True)
-class BranchEmployeeEntity(EntityMeta):
+class EmployeeEntity(EntityMeta):
     id: Optional[int] = None
     user_id: Optional[int] = None
-    branch_id: Optional[int] = None
-    salary: float = None
-    status: str = None
+    company_id: Optional[int] = None
+    salary: Optional[float] = None
+    status: Optional[str] = None
+    role: Optional[str] = None
