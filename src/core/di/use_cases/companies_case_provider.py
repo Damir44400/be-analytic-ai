@@ -1,8 +1,8 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.companies import ICompaniesDAO
 from src.dashboard.domain.interfaces.branches import IBranchesDAO
+from src.dashboard.domain.interfaces.companies import ICompaniesDAO
 from src.dashboard.domain.use_cases.companies import (
     IGetUserCompaniesUseCase,
     IUpdateCompanyUseCase,
@@ -21,7 +21,7 @@ from src.dashboard.use_cases.companies.register_company import (
 from src.dashboard.use_cases.companies.update_company import UpdateCompanyUseCase
 
 
-class DashboardUseCasesProvider(Provider):
+class CompanyUseCasesProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def get_register_company_use_case(
             self,

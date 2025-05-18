@@ -23,11 +23,6 @@ class ICategoryGetByIdDAO(Protocol):
         ...
 
 
-class ICategoryGetByNameDAO(Protocol):
-    async def get_by_name(self, name: str) -> CategoryEntity:
-        ...
-
-
 class ICategoryListByCompanyIdDAO(Protocol):
     async def list_by_company_id(
             self,
@@ -46,7 +41,6 @@ class ICategoriesDAO(
     ICategoryUpdateDAO,
     ICategoryDeleteDAO,
     ICategoryGetByIdDAO,
-    ICategoryGetByNameDAO,
     ICategoryListByCompanyIdDAO,
     ICategoryGetByNameCompanyDAO
 ):
