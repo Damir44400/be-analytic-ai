@@ -46,3 +46,6 @@ class WarehousesDAO:
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
         return [WarehouseEntity.to_domain(r) for r in rows]
+
+    async def get_by_company(self, name: str, branch_id: int) -> WarehouseEntity:
+        pass

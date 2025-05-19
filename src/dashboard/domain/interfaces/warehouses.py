@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 from typing import Protocol, List
+
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
 
 
@@ -28,11 +28,17 @@ class IWarehouseListByBranchDAO(Protocol):
         ...
 
 
+class IWarehouseGetByNameCompany(Protocol):
+    async def get_by_company(self, name: str, branch_id: int) -> WarehouseEntity:
+        ...
+
+
 class IWarehousesDAO(
     IWarehouseCreateDAO,
     IWarehouseUpdateDAO,
     IWarehouseDeleteDAO,
     IWarehouseGetByIdDAO,
     IWarehouseListByBranchDAO,
+    IWarehouseGetByNameCompany
 ):
     ...

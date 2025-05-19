@@ -4,7 +4,7 @@ from src.core.domain.interfaces import IUoW
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.companies import CompanyEntity
 from src.dashboard.domain.interfaces.companies import ICompanyUpdateDAO, ICompanyGetByUserIdDAO
-from src.dashboard.domain.use_cases.companies import IUpdateCompanyUseCase, CompanyUpdateForm
+from src.dashboard.domain.use_cases.companies import CompanyUpdateForm
 
 
 class GetUpdateCompanyGateway(
@@ -14,7 +14,7 @@ class GetUpdateCompanyGateway(
     ...
 
 
-class UpdateCompanyUseCase(IUpdateCompanyUseCase):
+class UpdateCompanyUseCase:
     def __init__(
             self,
             uow: IUoW,

@@ -1,10 +1,9 @@
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.companies import CompanyEntity
 from src.dashboard.domain.interfaces.companies import ICompanyGetByUserIdDAO
-from src.dashboard.domain.use_cases.companies import IGetCompanyDetailUseCase
 
 
-class GetDetailedCompaniesUseCase(IGetCompanyDetailUseCase):
+class GetDetailedCompaniesUseCase:
     def __init__(
             self,
             company_dao: ICompanyGetByUserIdDAO

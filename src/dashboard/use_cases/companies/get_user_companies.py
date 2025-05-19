@@ -2,10 +2,9 @@ from typing import List
 
 from src.dashboard.domain.entities.companies import CompanyEntity
 from src.dashboard.domain.interfaces.companies import ICompaniesListByUsersDAO
-from src.dashboard.domain.use_cases.companies import IGetUserCompaniesUseCase
 
 
-class GetUserCompaniesUseCase(IGetUserCompaniesUseCase):
+class GetUserCompaniesUseCase:
     def __init__(
             self,
             company_dao: ICompaniesListByUsersDAO,

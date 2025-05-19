@@ -3,14 +3,16 @@ from typing import Dict
 from src.core.domain.interfaces import IUoW
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.interfaces.companies import ICompanyDeleteDAO, ICompanyGetByUserIdDAO
-from src.dashboard.domain.use_cases.companies import IDeleteCompanyUseCase
 
 
-class Gateway(ICompanyDeleteDAO, ICompanyGetByUserIdDAO):
+class Gateway(
+    ICompanyDeleteDAO,
+    ICompanyGetByUserIdDAO
+):
     pass
 
 
-class DeleteCompanyUseCase(IDeleteCompanyUseCase):
+class DeleteCompanyUseCase:
     def __init__(
             self,
             uow: IUoW,

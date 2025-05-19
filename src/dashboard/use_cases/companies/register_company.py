@@ -2,14 +2,13 @@ from dataclasses import asdict
 from typing import Dict
 
 from src.core.domain.interfaces import IUoW
-from ...domain.entities.companies import CompanyEntity
 from ...domain.entities.branches import CompanyBranchEntity
-from ...domain.interfaces.companies import ICompanyCreateDAO
+from ...domain.entities.companies import CompanyEntity
 from ...domain.interfaces.branches import (
     ICompanyBranchCreateDAO
 )
+from ...domain.interfaces.companies import ICompanyCreateDAO
 from ...domain.use_cases.companies import (
-    IRegisterCompanyUseCase,
     CompanyRegisterForm
 )
 
@@ -22,7 +21,7 @@ class CompanyBranchCreateGateway(ICompanyBranchCreateDAO):
     ...
 
 
-class RegisterCompanyUseCase(IRegisterCompanyUseCase):
+class RegisterCompanyUseCase:
     def __init__(
             self,
             uow: IUoW,
