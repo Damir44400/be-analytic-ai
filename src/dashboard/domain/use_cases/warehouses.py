@@ -18,11 +18,11 @@ class IWarehouseDeleteUseCase(Protocol):
         ...
 
 
-class IWarehouseDetailUseCase(Protocol):
-    async def execute(self, warehouse_id: int) -> WarehouseEntity:
+class IWarehouseListUseCase(Protocol):
+    async def execute(self, branch_id: int, user_id: int) -> List[WarehouseEntity]:
         ...
 
 
-class IWarehouseListUseCase(Protocol):
-    async def execute(self, branch_id: int, user_id: int) -> List[WarehouseEntity]:
+class ICompanyWarehouseUseCase(Protocol):
+    async def execute(self, company_id: int) -> List[WarehouseEntity]:
         ...

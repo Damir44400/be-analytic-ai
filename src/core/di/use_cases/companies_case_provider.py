@@ -23,7 +23,7 @@ from src.dashboard.use_cases.companies.update_company import UpdateCompanyUseCas
 
 class CompanyUseCasesProvider(Provider):
     @provide(scope=Scope.REQUEST)
-    def get_register_company_use_case(
+    async def get_register_company_use_case(
             self,
             uow: IUoW,
             company_dao: ICompaniesDAO,
@@ -32,28 +32,28 @@ class CompanyUseCasesProvider(Provider):
         return RegisterCompanyUseCase(uow, company_dao, company_branch_dao)
 
     @provide(scope=Scope.REQUEST)
-    def get_user_companies_use_case(
+    async def get_user_companies_use_case(
             self,
             company_dao: ICompaniesDAO,
     ) -> IGetUserCompaniesUseCase:
         return GetUserCompaniesUseCase(company_dao)
 
     @provide(scope=Scope.REQUEST)
-    def get_company_update_use_case(
+    async def get_company_update_use_case(
             self,
             uow: IUoW,
             company_dao: ICompaniesDAO) -> IUpdateCompanyUseCase:
         return UpdateCompanyUseCase(uow, company_dao)
 
     @provide(scope=Scope.REQUEST)
-    def get_company_detailed_use_case(
+    async def get_company_detailed_use_case(
             self,
             company_dao: ICompaniesDAO
     ) -> IGetCompanyDetailUseCase:
         return GetDetailedCompaniesUseCase(company_dao)
 
     @provide(scope=Scope.REQUEST)
-    def update_company_detailed_use_case(
+    async def update_company_detailed_use_case(
             self,
             uow: IUoW,
             company_dao: ICompaniesDAO,
@@ -61,7 +61,7 @@ class CompanyUseCasesProvider(Provider):
         return UpdateCompanyUseCase(uow, company_dao)
 
     @provide(scope=Scope.REQUEST)
-    def delete_company_detailed_use_case(
+    async def delete_company_detailed_use_case(
             self,
             uow: IUoW,
             company_dao: ICompaniesDAO

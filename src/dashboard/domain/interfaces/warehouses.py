@@ -28,8 +28,8 @@ class IWarehouseListByBranchDAO(Protocol):
         ...
 
 
-class IWarehouseGetByNameCompany(Protocol):
-    async def get_by_company(self, name: str, branch_id: int) -> WarehouseEntity:
+class IWarehousesGetByCompany(Protocol):
+    async def get_by_company(self, company_id: int) -> List[WarehouseEntity]:
         ...
 
 
@@ -39,6 +39,6 @@ class IWarehousesDAO(
     IWarehouseDeleteDAO,
     IWarehouseGetByIdDAO,
     IWarehouseListByBranchDAO,
-    IWarehouseGetByNameCompany
+    IWarehousesGetByCompany
 ):
     ...

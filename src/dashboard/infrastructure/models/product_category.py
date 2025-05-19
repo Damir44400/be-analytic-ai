@@ -20,7 +20,7 @@ class ProductsCategory(Base):
         )
     )
 
-    __table_args__ = (
+    __table_args__ = tuple(
         sa.UniqueConstraint(
             "category_id",
             "product_id",

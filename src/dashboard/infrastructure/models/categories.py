@@ -11,6 +11,6 @@ class Category(Base):
     name: orm.Mapped[str] = orm.mapped_column(sa.String, index=True)
     company_id: orm.Mapped[int] = orm.mapped_column(sa.Integer)
 
-    __table_args__ = (
-        sa.UniqueConstraint("company_id", "name"),
+    __table_args__ = tuple(
+        sa.UniqueConstraint("company_id", "name")
     )

@@ -34,7 +34,7 @@ class CompanyRead(CompanyBase):
     company_logo: Optional[str] = None
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class CompanyReadBranch(CompanyRead):
@@ -46,4 +46,4 @@ class UserCompaniesRead(BaseModel):
     company_name: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True

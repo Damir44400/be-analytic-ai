@@ -61,7 +61,7 @@ class Employee(Base):
         default=EmployeeRoleStatusEnum.EMPLOYEE
     )
 
-    __table_args__ = (
+    __table_args__ = tuple(
         sa.UniqueConstraint(
             "user_id",
             "role"

@@ -53,8 +53,7 @@ class BranchesDAO:
     async def get_by_user_id(
             self,
             user_id: int,
-            branch_id: int,
-            user_role: str
+            branch_id: int
     ) -> CompanyBranchEntity:
         stmt = (
             select(CompanyBranch)
@@ -62,8 +61,7 @@ class BranchesDAO:
             .join(Employee, Employee.company_id == Company.id)
             .where(
                 Employee.user_id == user_id,
-                CompanyBranch.id == branch_id,
-                Employee.role == user_role
+                CompanyBranch.id == branch_id
             )
         )
         result = await self._session.execute(stmt)

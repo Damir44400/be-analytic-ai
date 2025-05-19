@@ -41,8 +41,7 @@ class ICompanyBranchGetByUserIdDAO(Protocol):
     async def get_by_user_id(
             self,
             user_id: int,
-            branch_id: int,
-            user_role: str
+            branch_id: int
     ) -> CompanyBranchEntity:
         ...
 

@@ -4,6 +4,7 @@ from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
+from src.dashboard.infrastructure.models.branches import CompanyBranch
 from src.dashboard.infrastructure.models.warehouse import Warehouse
 
 
@@ -47,5 +48,13 @@ class WarehousesDAO:
         rows = result.scalars().all()
         return [WarehouseEntity.to_domain(r) for r in rows]
 
-    async def get_by_company(self, name: str, branch_id: int) -> WarehouseEntity:
-        pass
+    async def get_by_company(self, company_id: int) -> List[WarehouseEntity]:
+        stmt = (
+            select(Warehouse)
+            .join(CompanyBranch, CompanyBranch.company_id == company_id)
+            .where(Warehouse.branch_id == CompanyBranch.id)
+            .distinct(Warehouse.name, Warehouse.branch_id)
+        )
+        result = await self._session.execute(stmt)
+        rows = result.scalars().all()
+        return [WarehouseEntity.to_domain(r) for r in rows]

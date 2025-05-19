@@ -16,7 +16,7 @@ from src.dashboard.use_cases.branches.update_company_branch import UpdateCompany
 
 class CompanyBranchUseCasesProvider(Provider):
     @provide(scope=Scope.REQUEST)
-    def get_register_company_branch_use_case(
+    async def get_register_company_branch_use_case(
             self,
             uow: IUoW,
             branch_dao: IBranchesDAO
@@ -24,14 +24,14 @@ class CompanyBranchUseCasesProvider(Provider):
         return RegisterCompanyBranchUseCase(uow, branch_dao)
 
     @provide(scope=Scope.REQUEST)
-    def get_company_branches_use_case(
+    async def get_company_branches_use_case(
             self,
             branch_dao: IBranchesDAO
     ) -> IGetCompanyBranchesUseCase:
         return GetCompanyBranchesUseCase(branch_dao)
 
     @provide(scope=Scope.REQUEST)
-    def get_delete_company_branch_use_case(
+    async def get_delete_company_branch_use_case(
             self,
             uow: IUoW,
             branch_dao: IBranchesDAO
@@ -39,7 +39,7 @@ class CompanyBranchUseCasesProvider(Provider):
         return DeleteCompanyBranchUseCase(uow, branch_dao)
 
     @provide(scope=Scope.REQUEST)
-    def get_update_company_branch_use_case(
+    async def get_update_company_branch_use_case(
             self,
             uow: IUoW,
             branch_dao: IBranchesDAO

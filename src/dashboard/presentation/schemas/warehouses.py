@@ -1,8 +1,25 @@
-from fastapi import APIRouter
+from typing import Optional
 
-router = APIRouter()
+from pydantic import BaseModel
 
 
-@router.get("/")
-async def get_warehouses():
-    pass
+class WarehouseCreate(BaseModel):
+    name: str
+    branch_id: int
+    address: str
+
+
+class WarehouseUpdate(BaseModel):
+    name: Optional[str] = None
+    branch_id: Optional[int] = None
+    address: Optional[str] = None
+
+
+class WarehouseRead(BaseModel):
+    id: int
+    name: str
+    branch_id: int
+    address: str
+
+    class Config:
+        orm_mode = True
