@@ -36,8 +36,21 @@ class IEmployeeGetByIdDAO(Protocol):
         ...
 
 
+class IEmployeeGetByUserIdDAO(Protocol):
+    async def get_by_user_id(
+            self,
+            user_id: int
+    ) -> EmployeeEntity:
+        ...
+
+
 class IEmployeeListByCompanyDAO(Protocol):
     async def list_by_company(self, company_id: int) -> List[EmployeeEntity]:
+        ...
+
+
+class IEmployeeGetByUserCompanyDAO(Protocol):
+    async def get_by_user_and_company(self, user_id: int, company_id: int) -> EmployeeEntity:
         ...
 
 
@@ -46,6 +59,7 @@ class IEmployeesDAO(
     IEmployeeUpdateDAO,
     IEmployeeDeleteDAO,
     IEmployeeGetByIdDAO,
+    IEmployeeGetByUserIdDAO,
     IEmployeeListByCompanyDAO
 ):
     ...

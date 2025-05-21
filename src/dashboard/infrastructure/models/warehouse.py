@@ -10,6 +10,6 @@ class Warehouse(Base):
     id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
     name: orm.Mapped[str] = orm.mapped_column(sa.String)
     address: orm.Mapped[str] = orm.mapped_column(sa.String)
-    branch_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("branches.id"))
+    branch_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("company_branches.id"))
 
-    branch = orm.relationship("Branch", backref="warehouses")
+    branch = orm.relationship("CompanyBranch", backref="warehouses")

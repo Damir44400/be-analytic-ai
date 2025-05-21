@@ -1,6 +1,7 @@
 from typing import Protocol
 
-from src.users.domain.entities import UserEntity, Token, Payload
+from src.dashboard.domain.entities.tokens import Token
+from src.dashboard.domain.entities.users import UserEntity
 
 
 class IUserGetByIdDAO(Protocol):

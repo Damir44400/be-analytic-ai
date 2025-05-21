@@ -18,4 +18,4 @@ class UserProfile(BaseUserProfile):
     id: int
 
     class Meta:
-        orm_mode = True
+        from_attributes = True

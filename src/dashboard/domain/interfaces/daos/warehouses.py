@@ -23,6 +23,11 @@ class IWarehouseGetByIdDAO(Protocol):
         ...
 
 
+class IWarehouseGetByUserDAO(Protocol):
+    async def get_by_user(self, id: int, user_id: int) -> WarehouseEntity:
+        ...
+
+
 class IWarehouseListByBranchDAO(Protocol):
     async def list_by_branch_id(self, branch_id: int) -> List[WarehouseEntity]:
         ...
@@ -39,6 +44,7 @@ class IWarehousesDAO(
     IWarehouseDeleteDAO,
     IWarehouseGetByIdDAO,
     IWarehouseListByBranchDAO,
-    IWarehousesGetByCompany
+    IWarehousesGetByCompany,
+    IWarehouseGetByUserDAO
 ):
     ...

@@ -1,24 +1,4 @@
-from dataclasses import asdict
-from datetime import datetime
-from datetime import timedelta
-
-import bcrypt
-import jwt
-
-from src.users.domain.entities import Payload, Token
-from src.users.domain.interfaces import IPasswordBcrypt, IJwtService
-
-
-class PasswordBcrypt(IPasswordBcrypt):
-    def verify_password(self, password: bytes, hash_password: bytes) -> bool:
-        print(password, hash_password)
-        return bcrypt.checkpw(password, hash_password)
-
-    def hash_password(self, password: str) -> bytes:
-        return bcrypt.hashpw(password, bcrypt.gensalt())
-
-
-class JwtService(IJwtService):
+class JwtService:
     def __init__(self, config):
         self._access_key = config.JWT_ACCESS_SECRET_KEY
         self._refresh_key = config.JWT_REFRESH_SECRET_KEY
