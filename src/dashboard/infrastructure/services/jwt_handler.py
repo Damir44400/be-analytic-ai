@@ -1,3 +1,12 @@
+from dataclasses import asdict
+from datetime import datetime, timedelta
+
+from jose import jwt
+
+from src.dashboard.domain.entities.jwt_payload import Payload
+from src.dashboard.domain.entities.tokens import Token
+
+
 class JwtService:
     def __init__(self, config):
         self._access_key = config.JWT_ACCESS_SECRET_KEY
@@ -16,7 +25,7 @@ class JwtService:
             data["exp"] = now + timedelta(minutes=self._access_expiration)
             key = self._access_key
 
-        return jwt.encode(data, key, algorithm=self._algo)
+        return Token(token=jwt.encode(data, key, algorithm=self._algo))
 
     def decode(self, token: str, _is_refresh: bool = False) -> Payload:
         key = self._refresh_key if _is_refresh else self._access_key
