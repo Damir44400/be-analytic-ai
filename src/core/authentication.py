@@ -5,9 +5,9 @@ from fastapi import Depends
 from fastapi.security.http import HTTPBearer, HTTPAuthorizationCredentials
 
 from src.core.exceptions import UnauthorizedException
-from src.users.domain.entities import UserEntity
-from src.users.domain.interfaces import IJwtService
-from src.users.infrastructure.dao import IUserDAO
+from src.dashboard.domain.entities.users import UserEntity
+from src.dashboard.domain.interfaces.daos.users import IUserDAO
+from src.dashboard.domain.interfaces.security.jwt_handler import IJwtService
 
 bearer = HTTPBearer()
 

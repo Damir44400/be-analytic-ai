@@ -1,9 +1,9 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.branches import IBranchesDAO
-from src.dashboard.domain.interfaces.companies import ICompaniesDAO
-from src.dashboard.domain.interfaces.warehouses import (
+from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
+from src.dashboard.domain.interfaces.daos.warehouses import (
     IWarehousesDAO,
 )
 from src.dashboard.domain.use_cases.warehouses import (

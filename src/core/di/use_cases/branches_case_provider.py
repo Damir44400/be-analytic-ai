@@ -1,7 +1,9 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.branches import IBranchesDAO
+from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
+from src.dashboard.domain.interfaces.daos.emopoyees import IEmployeesDAO
 from src.dashboard.domain.use_cases.branches import (
     IRegisterCompanyBranchUseCase,
     IGetCompanyBranchesUseCase,
@@ -14,34 +16,45 @@ from src.dashboard.use_cases.branches.register_company_branch import RegisterCom
 from src.dashboard.use_cases.branches.update_company_branch import UpdateCompanyBranchUseCase
 
 
-class CompanyBranchUseCasesProvider(Provider):
+class BranchUseCasesProvider(Provider):
     @provide(scope=Scope.REQUEST)
     async def get_register_company_branch_use_case(
             self,
             uow: IUoW,
+            employee_dao: IEmployeesDAO,
+            company_dao: ICompaniesDAO,
             branch_dao: IBranchesDAO
     ) -> IRegisterCompanyBranchUseCase:
-        return RegisterCompanyBranchUseCase(uow, branch_dao)
+        return RegisterCompanyBranchUseCase(
+            uow,
+            employee_dao,
+            company_dao,
+            branch_dao
+        )
 
     @provide(scope=Scope.REQUEST)
     async def get_company_branches_use_case(
             self,
+            company_dao: ICompaniesDAO,
             branch_dao: IBranchesDAO
     ) -> IGetCompanyBranchesUseCase:
-        return GetCompanyBranchesUseCase(branch_dao)
+        return GetCompanyBranchesUseCase(company_dao, branch_dao)
 
     @provide(scope=Scope.REQUEST)
     async def get_delete_company_branch_use_case(
             self,
             uow: IUoW,
+            employee_dao: IEmployeesDAO,
             branch_dao: IBranchesDAO
     ) -> IDeleteCompanyBranchUseCase:
-        return DeleteCompanyBranchUseCase(uow, branch_dao)
+        return DeleteCompanyBranchUseCase(uow, employee_dao, branch_dao)
 
     @provide(scope=Scope.REQUEST)
     async def get_update_company_branch_use_case(
             self,
             uow: IUoW,
-            branch_dao: IBranchesDAO
+            branch_dao: IBranchesDAO,
+            employee_dao: IEmployeesDAO
     ) -> IUpdateCompanyBranchUseCase:
-        return UpdateCompanyBranchUseCase(uow, branch_dao)
+        return UpdateCompanyBranchUseCase(
+            uow, branch_dao, employee_dao)

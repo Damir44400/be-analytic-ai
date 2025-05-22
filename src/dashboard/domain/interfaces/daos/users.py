@@ -1,6 +1,5 @@
 from typing import Protocol
 
-from src.dashboard.domain.entities.tokens import Token
 from src.dashboard.domain.entities.users import UserEntity
 
 
@@ -24,17 +23,10 @@ class IUserUpdateUserDAO(Protocol):
         pass
 
 
-class IPasswordBcrypt(Protocol):
-    def verify_password(self, password: str, hash_password: str) -> bool:
-        pass
-
-    def hash_password(self, password: str) -> bytes:
-        pass
-
-
-class IJwtService(Protocol):
-    def encode(self, payload: Payload, _is_refresh: bool = False) -> Token:
-        pass
-
-    def decode(self, token: str, _is_refresh: bool = False) -> Payload:
-        pass
+class IUserDAO(
+    IUserGetByIdDAO,
+    IUserGetByEmailDAO,
+    IUserCreateUserDAO,
+    IUserUpdateUserDAO
+):
+    pass

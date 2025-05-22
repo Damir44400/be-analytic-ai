@@ -1,6 +1,6 @@
 from typing import Protocol, List
 
-from ...domain.entities.branches import CompanyBranchEntity
+from src.dashboard.domain.entities.branches import CompanyBranchEntity
 
 
 class ICompanyBranchCreateDAO(Protocol):

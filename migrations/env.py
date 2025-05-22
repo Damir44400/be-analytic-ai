@@ -6,16 +6,28 @@ from sqlalchemy import pool
 
 from src.core.config import DataBaseConfig
 from src.core.infrastructure.database import Base
-from src.dashboard.infrastructure.models.companies import Company
 from src.dashboard.infrastructure.models.branches import CompanyBranch
+from src.dashboard.infrastructure.models.categories import Category
+from src.dashboard.infrastructure.models.companies import Company
+from src.dashboard.infrastructure.models.employees import Employee
+from src.dashboard.infrastructure.models.product_category import ProductsCategory
 from src.dashboard.infrastructure.models.products import Product
-from src.users.infrastructure.models import User
+from src.dashboard.infrastructure.models.users import User
+from src.dashboard.infrastructure.models.warehouse import Warehouse
+from src.dashboard.infrastructure.models.warehouse_products import WarehouseProducts
+from src.dashboard.infrastructure.models.warehouse_transfers import WarehouseTransfer
 
 __tables__ = [
     User,
     Company,
     CompanyBranch,
-    Product
+    Product,
+    Employee,
+    Warehouse,
+    Category,
+    ProductsCategory,
+    WarehouseProducts,
+    WarehouseTransfer,
 ]
 
 config = context.config

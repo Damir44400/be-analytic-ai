@@ -26,18 +26,18 @@ class CompanyBranchRead(BaseModel):
     address: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CompanyBranchReadWarehouses(CompanyBranchRead):
     warehouses: List[dict]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CompanyBranchReadEmployees(CompanyBranchRead):
     employees: List[dict]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -14,3 +14,11 @@ class TokenResponse(BaseModel):
 class RegisterResponse(BaseModel):
     user_id: int
     detail: str
+
+
+class UnauthorizedSchema(BaseModel):
+    error: str = "User with this email not found"
+
+
+class UserDataConflictSchema(BaseModel):
+    error: str = "User with this email already exists"

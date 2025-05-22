@@ -2,12 +2,11 @@ from typing import List
 
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.branches import CompanyBranchEntity
-from src.dashboard.domain.interfaces.branches import ICompanyBranchGetByCompanyDAO
-from src.dashboard.domain.interfaces.companies import ICompanyGetDAO
-from src.dashboard.domain.use_cases.branches import IGetCompanyBranchesUseCase
+from src.dashboard.domain.interfaces.daos.branches import ICompanyBranchGetByCompanyDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompanyGetDAO
 
 
-class GetCompanyBranchesUseCase(IGetCompanyBranchesUseCase):
+class GetCompanyBranchesUseCase:
     def __init__(
             self,
             company_dao: ICompanyGetDAO,

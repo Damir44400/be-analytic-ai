@@ -1,7 +1,7 @@
 from typing import List
 
 from src.dashboard.domain.entities.companies import CompanyEntity
-from src.dashboard.domain.interfaces.companies import ICompaniesListByUsersDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompaniesListByUsersDAO
 
 
 class GetUserCompaniesUseCase:

@@ -1,23 +1,6 @@
-from dataclasses import dataclass
 from typing import Optional, Protocol, List
 
 from src.dashboard.domain.entities.employees import EmployeeEntity
-
-
-@dataclass
-class EmployeeCreate:
-    user_id: int
-    company_id: int
-    salary: float
-    status: str
-    role: str
-
-
-@dataclass
-class EmployeeUpdate:
-    salary: Optional[float] = None
-    status: Optional[str] = None
-    role: Optional[str] = None
 
 
 class IGetEmployeeUseCase(Protocol):
@@ -28,7 +11,7 @@ class IGetEmployeeUseCase(Protocol):
 
 
 class ICreateEmployeeUseCase(Protocol):
-    async def execute(self, form: EmployeeCreate) -> Optional[EmployeeEntity]:
+    async def execute(self, form: EmployeeEntity) -> Optional[EmployeeEntity]:
         """
         Create a new employee record for a company.
         """
@@ -38,7 +21,7 @@ class IUpdateEmployeeUseCase(Protocol):
     async def execute(
             self,
             employee_id: int,
-            form: EmployeeUpdate
+            form: EmployeeEntity
     ) -> Optional[EmployeeEntity]:
         """
         Update employee details such as salary, status, and role.

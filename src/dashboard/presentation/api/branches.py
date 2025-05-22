@@ -13,12 +13,12 @@ from src.dashboard.domain.use_cases.branches import (
     IDeleteCompanyBranchUseCase,
     CompanyBranchUpdateForm
 )
-from src.users.domain.entities import UserEntity
 from ..schemas.branches import (
     CompanyBranchCreate,
     CompanyBranchRead,
     CompanyBranchUpdate
 )
+from ...domain.entities.users import UserEntity
 from ...domain.use_cases.branches import IGetCompanyBranchesUseCase
 
 router = APIRouter()

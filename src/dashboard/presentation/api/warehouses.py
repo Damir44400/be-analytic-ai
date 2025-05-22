@@ -12,12 +12,12 @@ from src.dashboard.domain.use_cases.warehouses import (
     IWarehouseListUseCase,
     ICompanyWarehouseUseCase
 )
-from src.users.domain.entities import UserEntity
 from ..schemas.warehouses import (
     WarehouseCreate,
     WarehouseRead,
     WarehouseUpdate
 )
+from ...domain.entities.users import UserEntity
 from ...domain.entities.warehouse import WarehouseEntity
 
 router = APIRouter()
@@ -70,7 +70,7 @@ async def update_warehouse(
         use_case: FromDishka[IWarehouseUpdateUseCase],
         auth_user: UserEntity = Depends(get_current_user)
 ):
-    return await use_case.execute(warehouse_id, form.dict(), auth_user.id)
+    return await use_case.execute(warehouse_id, auth_user.id, WarehouseEntity(**form.dict()))
 
 
 @router.delete("/{warehouse_id}", status_code=200)

@@ -4,17 +4,17 @@ from src.dashboard.domain.entities.warehouse import WarehouseEntity
 
 
 class IWarehouseCreateUseCase(Protocol):
-    async def execute(self, data: WarehouseEntity) -> WarehouseEntity:
+    async def execute(self, data: WarehouseEntity,  user_id: int) -> WarehouseEntity:
         ...
 
 
 class IWarehouseUpdateUseCase(Protocol):
-    async def execute(self, warehouse_id: int, data: WarehouseEntity) -> WarehouseEntity:
+    async def execute(self, warehouse_id: int, user_id: int, data: WarehouseEntity) -> WarehouseEntity:
         ...
 
 
 class IWarehouseDeleteUseCase(Protocol):
-    async def execute(self, warehouse_id: int) -> WarehouseEntity:
+    async def execute(self, warehouse_id: int, user_id: int) -> WarehouseEntity:
         ...
 
 

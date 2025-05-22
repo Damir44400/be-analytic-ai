@@ -2,8 +2,8 @@ from typing import List
 
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
-from src.dashboard.domain.interfaces.companies import ICompanyGetDAO
-from src.dashboard.domain.interfaces.warehouses import IWarehousesGetByCompany
+from src.dashboard.domain.interfaces.daos.companies import ICompanyGetDAO
+from src.dashboard.domain.interfaces.daos.warehouses import IWarehousesGetByCompany
 
 
 class CompanyGateway(ICompanyGetDAO):

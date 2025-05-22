@@ -14,7 +14,6 @@ from src.dashboard.domain.use_cases.companies import (
     IGetCompanyDetailUseCase,
     CompanyUpdateForm
 )
-from src.users.domain.entities import UserEntity
 from ..schemas.companies import (
     CompanyCreate,
     UserCompaniesRead,
@@ -22,6 +21,7 @@ from ..schemas.companies import (
     CompanyUpdate,
     CompanyReadBranch
 )
+from ...domain.entities.users import UserEntity
 from ...domain.use_cases.companies import IGetUserCompaniesUseCase
 
 router = APIRouter()

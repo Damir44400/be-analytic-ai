@@ -38,7 +38,7 @@ class IGetUserCompaniesUseCase(Protocol):
 
 
 class IGetCompanyDetailUseCase(Protocol):
-    async def execute(self, company_id: int, user_id: int) -> CompanyEntity: ...
+    async def execute(self, company_id: int) -> CompanyEntity: ...
 
 
 class IDeleteCompanyUseCase(Protocol):

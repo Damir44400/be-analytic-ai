@@ -4,7 +4,7 @@ from sqlalchemy import insert, select, delete, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.product_category import ProductCategoryEntity
-from src.dashboard.domain.interfaces.product_category import IProductCategoryDAO
+from src.dashboard.domain.interfaces.daos.product_category import IProductCategoryDAO
 from src.dashboard.infrastructure.models.product_category import ProductsCategory
 
 

@@ -1,9 +1,9 @@
 from src.core.domain.interfaces import IUoW
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
-from src.dashboard.domain.interfaces.branches import ICompanyBranchGetByUserIdDAO
-from src.dashboard.domain.interfaces.warehouses import IWarehouseCreateDAO
-from src.dashboard.domain.interfaces.warehouses import IWarehouseGetByIdDAO
+from src.dashboard.domain.interfaces.daos.branches import ICompanyBranchGetByUserIdDAO
+from src.dashboard.domain.interfaces.daos.warehouses import IWarehouseCreateDAO
+from src.dashboard.domain.interfaces.daos.warehouses import IWarehouseGetByIdDAO
 
 
 class WarehouseGateway(

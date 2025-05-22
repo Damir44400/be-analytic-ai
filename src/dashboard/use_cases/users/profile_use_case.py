@@ -1,12 +1,12 @@
-from src.users.domain.entities import UserEntity
 from src.core.exceptions import UnauthorizedException
-from src.users.domain.use_cases.profile.interfaces import IProfileUseCase, UserGetGateway
+from src.dashboard.domain.entities.users import UserEntity
+from src.dashboard.domain.interfaces.daos.users import IUserGetByIdDAO
 
 
-class ProfileUseCase(IProfileUseCase):
+class ProfileUseCase:
     def __init__(
             self,
-            user_dao: UserGetGateway,
+            user_dao: IUserGetByIdDAO,
     ):
         self._user_dao = user_dao
 

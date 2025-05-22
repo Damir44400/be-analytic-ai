@@ -56,3 +56,9 @@ class EmployeesDAO:
     async def delete(self, employee_id: int) -> None:
         stmt = delete(Employee).where(Employee.id == employee_id)
         await self._session.execute(stmt)
+
+    async def get_by_user_id(self, user_id: int) -> EmployeeEntity:
+        stmt = select(Employee).where(Employee.user_id == user_id)
+        result = await self._session.execute(stmt)
+        employee = result.scalar_one_or_none()
+        return EmployeeEntity.to_domain(employee) if employee else None

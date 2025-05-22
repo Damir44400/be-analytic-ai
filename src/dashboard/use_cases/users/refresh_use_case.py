@@ -1,13 +1,12 @@
 import jwt
 
-from src.users.domain.entities import Payload
 from src.core.exceptions import BadRequestException
-from src.users.domain.interfaces import IJwtService
-from src.users.domain.use_cases.refresh.interfaces import IRefreshUseCase
-from src.users.presentation.schemas.auth import TokenResponse
+from src.dashboard.domain.entities.jwt_payload import Payload
+from src.dashboard.domain.interfaces.security.jwt_handler import IJwtService
+from src.dashboard.presentation.schemas.auth import TokenResponse
 
 
-class RefreshUseCase(IRefreshUseCase):
+class RefreshUseCase:
     def __init__(self, jwt_service: IJwtService):
         self._jwt_service = jwt_service
 

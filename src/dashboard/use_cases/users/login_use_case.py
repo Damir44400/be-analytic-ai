@@ -1,14 +1,16 @@
 from src.core.exceptions import UnauthorizedException, BadRequestException
-from src.users.domain.entities import Payload, Token
-from src.users.domain.interfaces import IPasswordBcrypt, IJwtService
-from src.users.domain.use_cases.login.entities import TokenResponse, LoginRequest
-from src.users.domain.use_cases.login.interfaces import UserGetGateway, ILoginUseCase
+from src.dashboard.domain.entities.jwt_payload import Payload
+from src.dashboard.domain.entities.tokens import Token, TokenResponse
+from src.dashboard.domain.entities.users import UserEntity
+from src.dashboard.domain.interfaces.daos.users import IUserGetByEmailDAO
+from src.dashboard.domain.interfaces.security.jwt_handler import IJwtService
+from src.dashboard.domain.interfaces.security.password_handler import IPasswordBcrypt
 
 
-class LoginUseCase(ILoginUseCase):
+class LoginUseCase:
     def __init__(
             self,
-            user_dao: UserGetGateway,
+            user_dao: IUserGetByEmailDAO,
             password_bcrypt: IPasswordBcrypt,
             jwt_service: IJwtService
     ):
@@ -16,7 +18,7 @@ class LoginUseCase(ILoginUseCase):
         self._password_bcrypt = password_bcrypt
         self._jwt_service = jwt_service
 
-    async def execute(self, user: LoginRequest) -> TokenResponse:
+    async def execute(self, user: UserEntity) -> TokenResponse:
         db_user = await self._user_dao.get_user_by_email(user.email)
         if not db_user:
             raise UnauthorizedException("User with this email not found")

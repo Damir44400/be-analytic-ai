@@ -1,8 +1,9 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.branches import IBranchesDAO
-from src.dashboard.domain.interfaces.companies import ICompaniesDAO
+from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
+from src.dashboard.domain.interfaces.daos.emopoyees import IEmployeesDAO
 from src.dashboard.domain.use_cases.companies import (
     IGetUserCompaniesUseCase,
     IUpdateCompanyUseCase,
@@ -42,8 +43,10 @@ class CompanyUseCasesProvider(Provider):
     async def get_company_update_use_case(
             self,
             uow: IUoW,
-            company_dao: ICompaniesDAO) -> IUpdateCompanyUseCase:
-        return UpdateCompanyUseCase(uow, company_dao)
+            employee_dao: IEmployeesDAO,
+            company_dao: ICompaniesDAO
+    ) -> IUpdateCompanyUseCase:
+        return UpdateCompanyUseCase(uow, employee_dao, company_dao)
 
     @provide(scope=Scope.REQUEST)
     async def get_company_detailed_use_case(
@@ -64,6 +67,7 @@ class CompanyUseCasesProvider(Provider):
     async def delete_company_detailed_use_case(
             self,
             uow: IUoW,
+            employee_dao: IEmployeesDAO,
             company_dao: ICompaniesDAO
     ) -> IDeleteCompanyUseCase:
-        return DeleteCompanyUseCase(uow, company_dao)
+        return DeleteCompanyUseCase(uow, employee_dao, company_dao)

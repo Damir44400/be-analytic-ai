@@ -1,14 +1,14 @@
 from src.core.domain.interfaces import IUoW
 from src.core.exceptions import NotFoundException
-from src.dashboard.domain.interfaces.warehouses import (
+from src.dashboard.domain.interfaces.daos.warehouses import (
     IWarehouseDeleteDAO,
-    IWarehouseGetByIdDAO
+    IWarehouseGetByUserDAO,
 )
 
 
 class WarehouseGateway(
     IWarehouseDeleteDAO,
-    IWarehouseGetByIdDAO,
+    IWarehouseGetByUserDAO,
 ):
     ...
 
@@ -22,10 +22,10 @@ class DeleteWarehouseUseCase:
         self._uow = uow
         self._warehouse_gateway = warehouse_gateway
 
-    async def execute(self, warehouse_id: int):
-        warehouse = await self._warehouse_gateway.get_by_id(warehouse_id)
+    async def execute(self, warehouse_id: int, user_id: int):
+        warehouse = await self._warehouse_gateway.get_by_user(warehouse_id, user_id)
         if not warehouse:
-            raise NotFoundException("Warehouse not found")
+            raise NotFoundException("Warehouse not found or does not exist")
         async with self._uow:
             await self._warehouse_gateway.delete(warehouse_id)
 

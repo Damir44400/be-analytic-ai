@@ -5,6 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
 from src.dashboard.infrastructure.models.branches import CompanyBranch
+from src.dashboard.infrastructure.models.companies import Company
+from src.dashboard.infrastructure.models.employees import Employee
 from src.dashboard.infrastructure.models.warehouse import Warehouse
 
 
@@ -58,3 +60,18 @@ class WarehousesDAO:
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
         return [WarehouseEntity.to_domain(r) for r in rows]
+
+    async def get_by_user(self, id: int, user_id: int) -> WarehouseEntity | None:
+        stmt = (
+            select(Warehouse)
+            .join(CompanyBranch, CompanyBranch.id == Warehouse.branch_id)
+            .join(Company, Company.id == CompanyBranch.company_id)
+            .join(Employee, Employee.company_id == Company.id)
+            .where(
+                Warehouse.id == id,
+                Employee.user_id == user_id
+            )
+        )
+        result = await self._session.execute(stmt)
+        row = result.scalar_one_or_none()
+        return WarehouseEntity.to_domain(row)

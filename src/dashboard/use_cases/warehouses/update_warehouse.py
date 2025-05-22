@@ -3,7 +3,7 @@ from dataclasses import asdict
 from src.core.domain.interfaces import IUoW
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
-from src.dashboard.domain.interfaces.warehouses import IWarehouseUpdateDAO, IWarehouseGetByIdDAO
+from src.dashboard.domain.interfaces.daos.warehouses import IWarehouseUpdateDAO, IWarehouseGetByIdDAO
 
 
 class WarehouseGateway(
@@ -22,7 +22,7 @@ class UpdateWarehouseUseCase:
         self._uow = uow
         self._warehouse_gateway = warehouse_gateway
 
-    async def execute(self, warehouse_id: int, form: WarehouseEntity):
+    async def execute(self, warehouse_id: int, user_id: int, form: WarehouseEntity):
         warehouse = await self._warehouse_gateway.get_by_id(warehouse_id)
         if not warehouse:
             raise NotFoundException("Warehouse not found")

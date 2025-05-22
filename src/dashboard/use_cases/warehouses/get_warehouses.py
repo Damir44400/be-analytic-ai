@@ -2,8 +2,8 @@ from typing import List
 
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.warehouse import WarehouseEntity
-from src.dashboard.domain.interfaces.branches import ICompanyBranchGetByUserIdDAO
-from src.dashboard.domain.interfaces.warehouses import IWarehouseListByBranchDAO
+from src.dashboard.domain.interfaces.daos.branches import ICompanyBranchGetByUserIdDAO
+from src.dashboard.domain.interfaces.daos.warehouses import IWarehouseListByBranchDAO
 
 
 class BranchGateway(ICompanyBranchGetByUserIdDAO):

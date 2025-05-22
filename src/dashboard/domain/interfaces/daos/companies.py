@@ -1,6 +1,6 @@
 from typing import Protocol, List
 
-from ...domain.entities.companies import CompanyEntity
+from src.dashboard.domain.entities.companies import CompanyEntity
 
 
 class ICompanyCreateDAO(Protocol):
@@ -23,8 +23,7 @@ class ICompanyGetByUserIdDAO(Protocol):
     async def get_by_user_id(
             self,
             user_id: int,
-            company_id: int,
-            role: str
+            company_id: int
     ) -> CompanyEntity:
         ...
 
@@ -39,7 +38,7 @@ class ICompanyUpdateDAO(Protocol):
 
 
 class ICompaniesListByUsersDAO(Protocol):
-    async def user_companies(self, user_id: int, role: str) -> List[CompanyEntity]:
+    async def user_companies(self, user_id: int) -> List[CompanyEntity]:
         ...
 
 
