@@ -4,7 +4,7 @@ from sqlalchemy import insert, select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.dashboard.domain.entities.warehouse_transfer import WarehouseTransferEntity
-from src.dashboard.domain.interfaces.warehouse_transfers import IWarehouseTransfersDAO
+from src.dashboard.domain.interfaces.daos.warehouse_transfers import IWarehouseTransfersDAO
 from src.dashboard.infrastructure.models.warehouse_transfers import WarehouseTransfer
 
 

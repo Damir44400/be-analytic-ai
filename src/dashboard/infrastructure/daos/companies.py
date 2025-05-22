@@ -27,16 +27,14 @@ class CompaniesDAO:
     async def get_by_user_id(
             self,
             user_id: int,
-            company_id: int,
-            role: str
+            company_id: int
     ) -> Company:
         stmt = (
             select(Company)
             .join(Employee, Employee.company_id == Company.id)
             .where(
                 Employee.user_id == user_id,
-                Company.id == company_id,
-                Employee.role == role
+                Company.id == company_id
             )
         )
 
@@ -47,14 +45,12 @@ class CompaniesDAO:
     async def user_companies(
             self,
             user_id: int,
-            role: str
     ) -> List[CompanyEntity]:
         stmt = (
             select(Company)
             .join(Employee, Employee.company_id == Company.id)
             .where(
-                Employee.user_id == user_id,
-                Employee.role == role
+                Employee.user_id == user_id
             )
         )
 
