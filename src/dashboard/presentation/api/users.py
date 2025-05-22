@@ -4,9 +4,9 @@ from fastapi import APIRouter
 from fastapi.params import Depends
 
 from src.core.authentication import get_current_user
-from src.users.domain.entities import UserEntity
-from src.users.domain.use_cases.profile.interfaces import IProfileUseCase, IProfileUpdateUseCase
-from src.users.presentation.schemas.user import UserProfile, UserProfileUpdate
+from src.dashboard.domain.entities.users import UserEntity
+from src.dashboard.domain.use_cases.users import IProfileUseCase, IProfileUpdateUseCase
+from src.dashboard.presentation.schemas.user import UserProfile, UserProfileUpdate
 
 router = APIRouter()
 

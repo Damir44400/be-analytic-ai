@@ -2,13 +2,15 @@ from dishka import FromDishka
 from dishka.integrations.fastapi import inject
 from fastapi import APIRouter, Body
 
-from src.users.domain.use_cases.login.entities import LoginRequest
-from src.users.domain.use_cases.login.interfaces import ILoginUseCase
-from src.users.domain.use_cases.refresh.interfaces import IRefreshUseCase
-from src.users.domain.use_cases.register.entities import RegisterRequest
-from src.users.domain.use_cases.register.interfaces import IRegisterUseCase
-from src.users.presentation.schemas.auth import TokenResponse, UserBody, RegisterResponse
-from src.users.presentation.schemas.exceptions import UnauthorizedSchema, UserDataConflictSchema
+from src.dashboard.domain.entities.users import UserEntity
+from src.dashboard.domain.use_cases.users import ILoginUseCase, IRegisterUseCase, IRefreshUseCase
+from src.dashboard.presentation.schemas.auth import (
+    TokenResponse,
+    UserBody,
+    RegisterResponse,
+    UnauthorizedSchema,
+    UserDataConflictSchema
+)
 
 router = APIRouter()
 
@@ -19,8 +21,8 @@ router = APIRouter()
 @inject
 async def login(form: UserBody, login_use_case: FromDishka[ILoginUseCase]):
     return await login_use_case.execute(
-        LoginRequest(
-            email=form.email,
+        UserEntity(
+            email=str(form.email),
             password=form.password
         )
     )
@@ -32,7 +34,7 @@ async def login(form: UserBody, login_use_case: FromDishka[ILoginUseCase]):
 @inject
 async def register(form: UserBody, register_use_case: FromDishka[IRegisterUseCase]):
     return await register_use_case.execute(
-        RegisterRequest(
+        UserEntity(
             email=str(form.email),
             password=form.password
         )
