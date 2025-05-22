@@ -1,7 +1,7 @@
 from src.core.domain.interfaces import IUoW
 from src.core.exceptions import BadRequestException
 from src.dashboard.domain.entities.categories import CategoryEntity
-from src.dashboard.domain.interfaces.categories import ICategoryCreateDAO, ICategoryGetByNameCompanyDAO
+from src.dashboard.domain.interfaces.daos.categories import ICategoryCreateDAO, ICategoryGetByNameCompanyDAO
 from src.dashboard.domain.use_cases.categories import CategoryForm
 
 
