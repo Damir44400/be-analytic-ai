@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from src.core.domain.interfaces import IUoW
 from src.core.exceptions import BadRequestException
-from src.dashboard.domain.interfaces.categories import (
+from src.dashboard.domain.interfaces.daos.categories import (
     ICategoryDeleteDAO,
     ICategoryGetByIdDAO
 )

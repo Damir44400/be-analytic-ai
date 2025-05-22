@@ -2,10 +2,10 @@ from typing import List
 
 from src.core.exceptions import NotFoundException
 from src.dashboard.domain.entities.categories import CategoryEntity
-from src.dashboard.domain.interfaces.categories import (
+from src.dashboard.domain.interfaces.daos.categories import (
     ICategoryListByCompanyIdDAO
 )
-from src.dashboard.domain.interfaces.companies import ICompanyGetDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompanyGetDAO
 
 
 class CategoryGateway(
