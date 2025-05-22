@@ -1,23 +1,23 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
-from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
-from src.dashboard.domain.interfaces.daos.warehouses import (
+from src.crm.domain.interfaces.daos.branches import IBranchesDAO
+from src.crm.domain.interfaces.daos.companies import ICompaniesDAO
+from src.crm.domain.interfaces.daos.warehouses import (
     IWarehousesDAO,
 )
-from src.dashboard.domain.use_cases.warehouses import (
+from src.crm.domain.use_cases.warehouses import (
     IWarehouseCreateUseCase,
     IWarehouseUpdateUseCase,
     IWarehouseDeleteUseCase,
     IWarehouseListUseCase,
     ICompanyWarehouseUseCase,
 )
-from src.dashboard.use_cases.warehouses.create_warehouse import CreateWarehouseUseCase
-from src.dashboard.use_cases.warehouses.delete_warehouse import DeleteWarehouseUseCase
-from src.dashboard.use_cases.warehouses.get_company_warehouses import CompanyWarehousesListUseCase
-from src.dashboard.use_cases.warehouses.get_warehouses import WarehouseListUseCase
-from src.dashboard.use_cases.warehouses.update_warehouse import UpdateWarehouseUseCase
+from src.crm.use_cases.warehouses.create_warehouse import CreateWarehouseUseCase
+from src.crm.use_cases.warehouses.delete_warehouse import DeleteWarehouseUseCase
+from src.crm.use_cases.warehouses.get_company_warehouses import CompanyWarehousesListUseCase
+from src.crm.use_cases.warehouses.get_warehouses import WarehouseListUseCase
+from src.crm.use_cases.warehouses.update_warehouse import UpdateWarehouseUseCase
 
 
 class WarehouseUseCasesProvider(Provider):

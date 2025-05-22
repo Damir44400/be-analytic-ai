@@ -1,19 +1,19 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
-from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
-from src.dashboard.domain.interfaces.daos.emopoyees import IEmployeesDAO
-from src.dashboard.domain.use_cases.branches import (
+from src.crm.domain.interfaces.daos.branches import IBranchesDAO
+from src.crm.domain.interfaces.daos.companies import ICompaniesDAO
+from src.crm.domain.interfaces.daos.emopoyees import IEmployeesDAO
+from src.crm.domain.use_cases.branches import (
     IRegisterCompanyBranchUseCase,
     IGetCompanyBranchesUseCase,
     IDeleteCompanyBranchUseCase,
     IUpdateCompanyBranchUseCase
 )
-from src.dashboard.use_cases.branches.delete_company_branch import DeleteCompanyBranchUseCase
-from src.dashboard.use_cases.branches.get_company_branches import GetCompanyBranchesUseCase
-from src.dashboard.use_cases.branches.register_company_branch import RegisterCompanyBranchUseCase
-from src.dashboard.use_cases.branches.update_company_branch import UpdateCompanyBranchUseCase
+from src.crm.use_cases.branches.delete_company_branch import DeleteCompanyBranchUseCase
+from src.crm.use_cases.branches.get_company_branches import GetCompanyBranchesUseCase
+from src.crm.use_cases.branches.register_company_branch import RegisterCompanyBranchUseCase
+from src.crm.use_cases.branches.update_company_branch import UpdateCompanyBranchUseCase
 
 
 class BranchUseCasesProvider(Provider):

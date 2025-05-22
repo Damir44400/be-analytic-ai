@@ -1,10 +1,10 @@
 from dishka import Provider, provide, Scope
 
 from src.core.config import Config
-from src.dashboard.domain.interfaces.security.jwt_handler import IJwtService
-from src.dashboard.domain.interfaces.security.password_handler import IPasswordBcrypt
-from src.dashboard.infrastructure.services.jwt_handler import JwtService
-from src.dashboard.infrastructure.services.password_handler import PasswordBcrypt
+from src.crm.domain.interfaces.security.jwt_handler import IJwtService
+from src.crm.domain.interfaces.security.password_handler import IPasswordBcrypt
+from src.crm.infrastructure.services.jwt_handler import JwtService
+from src.crm.infrastructure.services.password_handler import PasswordBcrypt
 
 
 class ServiceProvider(Provider):

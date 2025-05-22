@@ -4,7 +4,7 @@ from starlette.responses import JSONResponse
 
 from src.core.di.app_provider import create_container
 from src.core.exceptions import AppBaseException
-from src.dashboard.api_entrypoint import router as dashboard_router
+from src.crm.api_entrypoint import router as dashboard_router
 
 app = FastAPI()
 container = create_container()

@@ -1,21 +1,21 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.daos.users import IUserDAO
-from src.dashboard.domain.interfaces.security.jwt_handler import IJwtService
-from src.dashboard.domain.interfaces.security.password_handler import IPasswordBcrypt
-from src.dashboard.domain.use_cases.users import (
+from src.crm.domain.interfaces.daos.users import IUserDAO
+from src.crm.domain.interfaces.security.jwt_handler import IJwtService
+from src.crm.domain.interfaces.security.password_handler import IPasswordBcrypt
+from src.crm.domain.use_cases.users import (
     ILoginUseCase,
     IRegisterUseCase,
     IProfileUseCase,
     IRefreshUseCase,
     IProfileUpdateUseCase
 )
-from src.dashboard.use_cases.users.login_use_case import LoginUseCase
-from src.dashboard.use_cases.users.profile_update_use_case import ProfileUpdateUseCase
-from src.dashboard.use_cases.users.profile_use_case import ProfileUseCase
-from src.dashboard.use_cases.users.refresh_use_case import RefreshUseCase
-from src.dashboard.use_cases.users.register_use_case import RegisterUseCase
+from src.crm.use_cases.users.login_use_case import LoginUseCase
+from src.crm.use_cases.users.profile_update_use_case import ProfileUpdateUseCase
+from src.crm.use_cases.users.profile_use_case import ProfileUseCase
+from src.crm.use_cases.users.refresh_use_case import RefreshUseCase
+from src.crm.use_cases.users.register_use_case import RegisterUseCase
 
 
 class UserUseCaseProvider(Provider):

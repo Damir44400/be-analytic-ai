@@ -1,25 +1,25 @@
 from dishka import Provider, provide, Scope
 
 from src.core.domain.interfaces import IUoW
-from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
-from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
-from src.dashboard.domain.interfaces.daos.emopoyees import IEmployeesDAO
-from src.dashboard.domain.use_cases.companies import (
+from src.crm.domain.interfaces.daos.branches import IBranchesDAO
+from src.crm.domain.interfaces.daos.companies import ICompaniesDAO
+from src.crm.domain.interfaces.daos.emopoyees import IEmployeesDAO
+from src.crm.domain.use_cases.companies import (
     IGetUserCompaniesUseCase,
     IUpdateCompanyUseCase,
     IGetCompanyDetailUseCase,
     IDeleteCompanyUseCase
 )
-from src.dashboard.domain.use_cases.companies import IRegisterCompanyUseCase
-from src.dashboard.use_cases.companies.delete_company import DeleteCompanyUseCase
-from src.dashboard.use_cases.companies.get_detailed_companies import GetDetailedCompaniesUseCase
-from src.dashboard.use_cases.companies.get_user_companies import (
+from src.crm.domain.use_cases.companies import IRegisterCompanyUseCase
+from src.crm.use_cases.companies.delete_company import DeleteCompanyUseCase
+from src.crm.use_cases.companies.get_detailed_companies import GetDetailedCompaniesUseCase
+from src.crm.use_cases.companies.get_user_companies import (
     GetUserCompaniesUseCase
 )
-from src.dashboard.use_cases.companies.register_company import (
+from src.crm.use_cases.companies.register_company import (
     RegisterCompanyUseCase
 )
-from src.dashboard.use_cases.companies.update_company import UpdateCompanyUseCase
+from src.crm.use_cases.companies.update_company import UpdateCompanyUseCase
 
 
 class CompanyUseCasesProvider(Provider):

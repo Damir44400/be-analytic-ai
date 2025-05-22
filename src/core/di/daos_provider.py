@@ -1,16 +1,16 @@
 from dishka import Provider, provide, Scope
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.dashboard.domain.interfaces.daos.branches import IBranchesDAO
-from src.dashboard.domain.interfaces.daos.companies import ICompaniesDAO
-from src.dashboard.domain.interfaces.daos.emopoyees import IEmployeesDAO
-from src.dashboard.domain.interfaces.daos.users import IUserDAO
-from src.dashboard.domain.interfaces.daos.warehouses import IWarehousesDAO
-from src.dashboard.infrastructure.daos.branches import BranchesDAO
-from src.dashboard.infrastructure.daos.companies import CompaniesDAO
-from src.dashboard.infrastructure.daos.employees import EmployeesDAO
-from src.dashboard.infrastructure.daos.user_dao import UserDAO
-from src.dashboard.infrastructure.daos.warehouses import WarehousesDAO
+from src.crm.domain.interfaces.daos.branches import IBranchesDAO
+from src.crm.domain.interfaces.daos.companies import ICompaniesDAO
+from src.crm.domain.interfaces.daos.emopoyees import IEmployeesDAO
+from src.crm.domain.interfaces.daos.users import IUserDAO
+from src.crm.domain.interfaces.daos.warehouses import IWarehousesDAO
+from src.crm.infrastructure.daos.branches import BranchesDAO
+from src.crm.infrastructure.daos.companies import CompaniesDAO
+from src.crm.infrastructure.daos.employees import EmployeesDAO
+from src.crm.infrastructure.daos.user_dao import UserDAO
+from src.crm.infrastructure.daos.warehouses import WarehousesDAO
 
 
 class DashboardDaosProviders(Provider):
