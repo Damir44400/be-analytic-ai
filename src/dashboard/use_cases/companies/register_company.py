@@ -4,10 +4,10 @@ from typing import Dict
 from src.core.domain.interfaces import IUoW
 from ...domain.entities.branches import CompanyBranchEntity
 from ...domain.entities.companies import CompanyEntity
-from ...domain.interfaces.branches import (
+from src.dashboard.domain.interfaces.daos.branches import (
     ICompanyBranchCreateDAO
 )
-from ...domain.interfaces.companies import ICompanyCreateDAO
+from src.dashboard.domain.interfaces.daos.companies import ICompanyCreateDAO
 from ...domain.use_cases.companies import (
     CompanyRegisterForm
 )
