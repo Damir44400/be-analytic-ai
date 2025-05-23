@@ -5,7 +5,7 @@ from dishka.integrations.fastapi import inject
 from fastapi import APIRouter
 from fastapi.params import Depends
 
-from src.core.authentication import get_current_user
+from src.crm.presentation.api.depends.authentication import get_current_user
 from src.crm.domain.use_cases.branches import (
     IRegisterCompanyBranchUseCase,
     CompanyBranchRegisterForm,
