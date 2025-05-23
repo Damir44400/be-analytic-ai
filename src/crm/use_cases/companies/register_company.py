@@ -1,7 +1,7 @@
 from dataclasses import asdict
 from typing import Dict
 
-from src.core.domain.interfaces import IUoW
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.interfaces.daos.branches import (
     ICompanyBranchCreateDAO
 )

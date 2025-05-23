@@ -1,6 +1,6 @@
 import jwt
 
-from src.core.exceptions import BadRequestException
+from src.crm.domain.exceptions import BadRequestException
 from src.crm.domain.entities.jwt_payload import Payload
 from src.crm.domain.interfaces.security.jwt_handler import IJwtService
 from src.crm.presentation.schemas.auth import TokenResponse

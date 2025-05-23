@@ -3,7 +3,7 @@ import enum
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 
-from src.core.infrastructure.database import Base
+from src.crm.infrastructure.database.database import Base
 
 
 class BusinessTypeEnum(enum.Enum):

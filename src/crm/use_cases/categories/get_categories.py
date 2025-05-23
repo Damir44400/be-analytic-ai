@@ -1,6 +1,6 @@
 from typing import List
 
-from src.core.exceptions import NotFoundException
+from src.crm.domain.exceptions import NotFoundException
 from src.crm.domain.entities.categories import CategoryEntity
 from src.crm.domain.interfaces.daos.categories import (
     ICategoryListByCompanyIdDAO

@@ -1,5 +1,5 @@
-from src.core.domain.interfaces import IUoW
-from src.core.exceptions import NotFoundException, BadRequestException
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.domain.exceptions import NotFoundException, BadRequestException
 from src.crm.domain.entities.employees import EmployeeEntity
 from src.crm.domain.interfaces.daos.companies import ICompanyGetDAO
 from src.crm.domain.interfaces.daos.emopoyees import (

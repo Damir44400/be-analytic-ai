@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import List
 
-from src.core.exceptions import BadRequestException
+from src.crm.domain.exceptions import BadRequestException
 
 
 def required_role(roles: List[str]):

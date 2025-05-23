@@ -1,6 +1,6 @@
 from dishka import Provider, provide, Scope
 
-from src.core.domain.interfaces import IUoW
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.interfaces.daos.users import IUserDAO
 from src.crm.domain.interfaces.security.jwt_handler import IJwtService
 from src.crm.domain.interfaces.security.password_handler import IPasswordBcrypt

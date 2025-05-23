@@ -1,4 +1,4 @@
-from src.core.exceptions import UnauthorizedException
+from src.crm.domain.exceptions import UnauthorizedException
 from src.crm.domain.entities.users import UserEntity
 from src.crm.domain.interfaces.daos.users import IUserGetByIdDAO
 

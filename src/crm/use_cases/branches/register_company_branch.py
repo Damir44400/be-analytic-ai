@@ -1,7 +1,7 @@
 from dataclasses import asdict
 
-from src.core.domain.interfaces import IUoW
-from src.core.exceptions import NotFoundException, BadRequestException
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.domain.exceptions import NotFoundException, BadRequestException
 from src.crm.domain.entities.branches import CompanyBranchEntity
 from src.crm.domain.interfaces.daos.branches import ICompanyBranchCreateDAO
 from src.crm.domain.interfaces.daos.companies import ICompanyGetByUserIdDAO

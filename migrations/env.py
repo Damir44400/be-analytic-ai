@@ -4,8 +4,8 @@ from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from src.core.config import DataBaseConfig
-from src.core.infrastructure.database import Base
+from src.config import DataBaseConfig
+from src.crm.infrastructure.database.database import Base
 from src.crm.infrastructure.models.branches import CompanyBranch
 from src.crm.infrastructure.models.categories import Category
 from src.crm.infrastructure.models.companies import Company

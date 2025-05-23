@@ -1,5 +1,5 @@
-from src.core.domain.interfaces import IUoW
-from src.core.exceptions import NotFoundException
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.domain.exceptions import NotFoundException
 from src.crm.domain.entities.warehouse import WarehouseEntity
 from src.crm.domain.interfaces.daos.branches import ICompanyBranchGetByUserIdDAO
 from src.crm.domain.interfaces.daos.warehouses import IWarehouseCreateDAO

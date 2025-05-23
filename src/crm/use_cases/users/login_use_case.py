@@ -1,4 +1,4 @@
-from src.core.exceptions import UnauthorizedException, BadRequestException
+from src.crm.domain.exceptions import UnauthorizedException, BadRequestException
 from src.crm.domain.entities.jwt_payload import Payload
 from src.crm.domain.entities.tokens import Token, TokenResponse
 from src.crm.domain.entities.users import UserEntity

@@ -2,9 +2,9 @@ from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI, Request
 from starlette.responses import JSONResponse
 
-from src.core.di.app_provider import create_container
-from src.core.exceptions import AppBaseException
-from src.crm.api_entrypoint import router as dashboard_router
+from src.di.app_provider import create_container
+from src.crm.domain.exceptions import AppBaseException
+from src.crm.presentation.api import router as dashboard_router
 
 app = FastAPI()
 container = create_container()

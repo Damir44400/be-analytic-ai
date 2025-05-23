@@ -23,8 +23,13 @@ class IProductGetByIdDAO(Protocol):
         ...
 
 
-class IProductListAllDAO(Protocol):
-    async def list_all(self) -> List[ProductEntity]:
+class IProductListByCompanyDAO(Protocol):
+    async def list_by_company(self, company_id: int) -> List[ProductEntity]:
+        ...
+
+
+class IProductListByWarehouseDAO(Protocol):
+    async def list_by_warehouse(self, warehouse_id: int) -> List[ProductEntity]:
         ...
 
 
@@ -33,6 +38,7 @@ class IProductsDAO(
     IProductUpdateDAO,
     IProductDeleteDAO,
     IProductGetByIdDAO,
-    IProductListAllDAO,
+    IProductListByCompanyDAO,
+    IProductListByWarehouseDAO
 ):
     ...

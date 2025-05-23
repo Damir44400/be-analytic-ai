@@ -3,10 +3,10 @@ from typing import AsyncIterable
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
 
-from src.core.config import Config
-from src.core.domain.interfaces import IUoW
-from src.core.infrastructure.database import create_db_engine, create_db_session, get_db_session
-from src.core.infrastructure.uow import UoW
+from src.config import Config
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.infrastructure.database.database import create_db_engine, create_db_session
+from src.crm.infrastructure.database.uow import UoW
 
 
 class AlchemyProvider(Provider):

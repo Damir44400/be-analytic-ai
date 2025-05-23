@@ -1,8 +1,8 @@
 from dataclasses import asdict
 from typing import Any, Dict
 
-from src.core.domain.interfaces import IUoW
-from src.core.exceptions import BadRequestException
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.domain.exceptions import BadRequestException
 from src.crm.domain.entities.categories import CategoryEntity
 from src.crm.domain.interfaces.daos.categories import (
     ICategoryGetByIdDAO,

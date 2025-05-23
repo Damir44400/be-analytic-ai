@@ -1,6 +1,6 @@
 from dishka import Provider, provide, Scope
 
-from src.core.domain.interfaces import IUoW
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.interfaces.daos.branches import IBranchesDAO
 from src.crm.domain.interfaces.daos.companies import ICompaniesDAO
 from src.crm.domain.interfaces.daos.emopoyees import IEmployeesDAO

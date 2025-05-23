@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from src.core.domain.entity import EntityMeta
+from src.crm.domain.entity import EntityMeta
 
 
 @dataclass(frozen=True)

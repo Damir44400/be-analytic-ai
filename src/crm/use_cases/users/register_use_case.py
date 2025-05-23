@@ -1,7 +1,7 @@
 from typing import Dict
 
-from src.core.domain.interfaces import IUoW
-from src.core.exceptions import AlreadyExistsException
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.domain.exceptions import AlreadyExistsException
 from src.crm.domain.entities.users import UserEntity
 from src.crm.domain.interfaces.daos.users import IUserCreateUserDAO, IUserGetByEmailDAO
 from src.crm.domain.interfaces.security.password_handler import IPasswordBcrypt

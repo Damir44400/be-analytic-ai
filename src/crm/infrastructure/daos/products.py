@@ -4,11 +4,11 @@ from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crm.domain.entities.products import ProductEntity
-from src.crm.domain.interfaces.daos.products import IProductsDAO
 from src.crm.infrastructure.models.products import Product
+from src.crm.infrastructure.models.warehouse_products import WarehouseProducts
 
 
-class ProductsDAO(IProductsDAO):
+class ProductsDAO:
     def __init__(self, session: AsyncSession):
         self._session = session
 
@@ -39,8 +39,21 @@ class ProductsDAO(IProductsDAO):
         row = result.scalar_one_or_none()
         return ProductEntity.to_domain(row)
 
-    async def list_all(self) -> List[ProductEntity]:
-        stmt = select(Product)
+    async def list_by_company(self, company_id: int) -> List[ProductEntity]:
+        stmt = select(Product).where(Product.company_id == company_id)
+        result = await self._session.execute(stmt)
+        rows = result.scalars().all()
+        return [ProductEntity.to_domain(row) for row in rows]
+
+    async def list_by_warehouse(self, warehouse_id: int) -> List[ProductEntity]:
+        stmt = (
+            select(Product)
+            .join(
+                WarehouseProducts,
+                WarehouseProducts.warehouse_id == warehouse_id
+            )
+            .where(WarehouseProducts.warehouse_id == warehouse_id)
+        )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
         return [ProductEntity.to_domain(row) for row in rows]

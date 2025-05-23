@@ -1,4 +1,4 @@
-from src.core.exceptions import NotFoundException
+from src.crm.domain.exceptions import NotFoundException
 from src.crm.domain.entities.companies import CompanyEntity
 from src.crm.domain.interfaces.daos.companies import ICompanyGetDAO
 

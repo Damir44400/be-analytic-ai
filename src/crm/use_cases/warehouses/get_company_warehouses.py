@@ -1,6 +1,6 @@
 from typing import List
 
-from src.core.exceptions import NotFoundException
+from src.crm.domain.exceptions import NotFoundException
 from src.crm.domain.entities.warehouse import WarehouseEntity
 from src.crm.domain.interfaces.daos.companies import ICompanyGetDAO
 from src.crm.domain.interfaces.daos.warehouses import IWarehousesGetByCompany

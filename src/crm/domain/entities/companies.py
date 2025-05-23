@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, List
 
-from src.core.domain.entity import EntityMeta
+from src.crm.domain.entity import EntityMeta
 from .branches import CompanyBranchEntity
 from .products import ProductEntity
 from ...infrastructure.models.companies import (

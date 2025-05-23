@@ -1,4 +1,4 @@
-from src.core.domain.interfaces import IUoW
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.entities.users import UserEntity
 from src.crm.domain.interfaces.daos.users import IUserUpdateUserDAO
 

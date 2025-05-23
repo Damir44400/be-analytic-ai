@@ -1,7 +1,7 @@
 from typing import Dict
 
-from src.core.domain.interfaces import IUoW
-from src.core.exceptions import NotFoundException, BadRequestException
+from src.crm.domain.interfaces.uow import IUoW
+from src.crm.domain.exceptions import NotFoundException, BadRequestException
 from src.crm.domain.interfaces.daos.companies import ICompanyDeleteDAO, ICompanyGetByUserIdDAO
 from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserCompanyDAO
 from src.crm.infrastructure.models.employees import EmployeeRoleStatusEnum
