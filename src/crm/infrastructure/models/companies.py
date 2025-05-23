@@ -37,9 +37,3 @@ class Company(Base):
         sa.String,
         nullable=True
     )
-
-    employees = orm.relationship(
-        "User",
-        secondary="employees",
-        backref="companies",
-    )

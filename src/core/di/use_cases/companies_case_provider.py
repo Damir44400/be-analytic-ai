@@ -27,10 +27,11 @@ class CompanyUseCasesProvider(Provider):
     async def get_register_company_use_case(
             self,
             uow: IUoW,
+            employee_dao: IEmployeesDAO,
             company_dao: ICompaniesDAO,
             company_branch_dao: IBranchesDAO
     ) -> IRegisterCompanyUseCase:
-        return RegisterCompanyUseCase(uow, company_dao, company_branch_dao)
+        return RegisterCompanyUseCase(uow, employee_dao, company_dao, company_branch_dao)
 
     @provide(scope=Scope.REQUEST)
     async def get_user_companies_use_case(

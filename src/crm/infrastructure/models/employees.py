@@ -17,6 +17,7 @@ class EmployeeStatusEnum(enum.Enum):
 
 class EmployeeRoleStatusEnum(enum.Enum):
     OWNER = "OWNER"
+    MANAGER = "MANAGER"
     EMPLOYEE = "EMPLOYEE"
 
 
@@ -29,13 +30,15 @@ class Employee(Base):
     user_id: orm.Mapped[int] = orm.mapped_column(
         sa.ForeignKey(
             "users.id", ondelete="CASCADE"
-        )
+        ),
+        index=True,
     )
     company_id: orm.Mapped[int] = orm.mapped_column(
         sa.ForeignKey(
             "companies.id",
             ondelete="CASCADE"
-        )
+        ),
+        index=True,
     )
 
     salary: orm.Mapped[float] = orm.mapped_column(
@@ -61,6 +64,7 @@ class Employee(Base):
         default=EmployeeRoleStatusEnum.EMPLOYEE
     )
 
+    company = orm.relationship("Company", backref="employees")
     __table_args__ = tuple(
         sa.UniqueConstraint(
             "user_id",
