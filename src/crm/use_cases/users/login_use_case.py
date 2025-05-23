@@ -47,5 +47,4 @@ class LoginUseCase:
                 _is_refresh=True
             )
         )
-
-        return TokenResponse(access_token, refresh_token)
+        return TokenResponse(access_token.token, refresh_token.token)

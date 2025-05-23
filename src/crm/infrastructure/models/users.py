@@ -12,4 +12,3 @@ class User(Base):
     last_name: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=True)
     email: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=False, unique=True)
     password: orm.Mapped[str] = orm.mapped_column(sa.String, nullable=False)
-    is_staff: orm.Mapped[bool] = orm.mapped_column(sa.Boolean, nullable=False, default=False)
