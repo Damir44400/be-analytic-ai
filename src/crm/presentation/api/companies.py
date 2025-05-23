@@ -5,7 +5,6 @@ from dishka.integrations.fastapi import inject
 from fastapi import APIRouter
 from fastapi.params import Depends
 
-from src.core.authentication import get_current_user
 from src.crm.domain.use_cases.companies import (
     IRegisterCompanyUseCase,
     CompanyRegisterForm,
@@ -14,6 +13,8 @@ from src.crm.domain.use_cases.companies import (
     IGetCompanyDetailUseCase,
     CompanyUpdateForm
 )
+from src.crm.presentation.api.depends.authentication import get_current_user
+from .depends.required_role import required_role
 from ..schemas.companies import (
     CompanyCreate,
     UserCompaniesRead,
@@ -23,6 +24,7 @@ from ..schemas.companies import (
 )
 from ...domain.entities.users import UserEntity
 from ...domain.use_cases.companies import IGetUserCompaniesUseCase
+from ...infrastructure.models.employees import EmployeeRoleStatusEnum
 
 router = APIRouter()
 
@@ -38,6 +40,7 @@ router = APIRouter()
         }
     }
 })
+@required_role(roles=[EmployeeRoleStatusEnum.OWNER.value])
 @inject
 async def create_company(
         form: CompanyCreate,
