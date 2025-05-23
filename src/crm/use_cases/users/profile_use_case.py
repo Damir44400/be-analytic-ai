@@ -14,5 +14,4 @@ class ProfileUseCase:
         db_user = await self._user_dao.get_user_by_id(user_id)
         if not db_user:
             raise UnauthorizedException("User with id {} not found".format(user_id))
-        print(db_user)
         return db_user
