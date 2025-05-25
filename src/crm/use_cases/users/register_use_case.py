@@ -31,7 +31,7 @@ class RegisterUseCase(IRegisterUseCase):
         db_user = await self._user_dao.get_user_by_email(user.email)
         if db_user:
             raise AlreadyExistsException("User with email already exists")
-        hash_password = self._password_bcrypt.hash_password(user.password)
+        hash_password = self._password_bcrypt.hash_password(user.password.encode()).decode()
         user.password = hash_password
         async with self._uow:
             db_user = await self._user_dao.create_user(
