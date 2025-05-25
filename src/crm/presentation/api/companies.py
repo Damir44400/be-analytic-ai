@@ -40,7 +40,6 @@ router = APIRouter()
         }
     }
 })
-@required_role(roles=[EmployeeRoleStatusEnum.OWNER.value])
 @inject
 async def create_company(
         form: CompanyCreate,
@@ -68,7 +67,7 @@ async def get_company_detail(
         use_case: FromDishka[IGetCompanyDetailUseCase],
         auth_user: UserEntity = Depends(get_current_user),
 ):
-    return await use_case.execute(user_id=auth_user.id, company_id=company_id)
+    return await use_case.execute(company_id=company_id)
 
 
 @router.patch("/{company_id}", response_model=CompanyRead)
