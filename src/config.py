@@ -2,7 +2,8 @@ from pathlib import Path
 from typing import List
 
 from pydantic_settings import BaseSettings
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class _LocalBaseSetting(BaseSettings):
@@ -24,6 +25,7 @@ class DataBaseConfig(_LocalBaseSetting):
     @property
     def get_db_url(self):
         return f"postgresql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
 
 class CorsConfig(_LocalBaseSetting):
     CORS_ORIGINS: List[str] = ["*"]
