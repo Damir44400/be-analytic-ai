@@ -1,14 +1,11 @@
-from typing import List
-
 from sqlalchemy import insert, select, delete, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crm.domain.entities.product_category import ProductCategoryEntity
-from src.crm.domain.interfaces.daos.product_category import IProductCategoryDAO
 from src.crm.infrastructure.models.product_category import ProductsCategory
 
 
-class ProductCategoryDAO(IProductCategoryDAO):
+class ProductCategoryDAO:
     def __init__(self, session: AsyncSession):
         self._session = session
 
@@ -29,18 +26,11 @@ class ProductCategoryDAO(IProductCategoryDAO):
         )
         await self._session.execute(stmt)
 
-    async def list_by_product_id(self, product_id: int) -> List[ProductCategoryEntity]:
+    async def get(self, product_id: int, category_id: int) -> ProductCategoryEntity:
         stmt = select(ProductsCategory).where(
-            ProductsCategory.product_id == product_id
-        )
-        result = await self._session.execute(stmt)
-        rows = result.scalars().all()
-        return [ProductCategoryEntity.to_domain(r) for r in rows]
-
-    async def list_by_category_id(self, category_id: int) -> List[ProductCategoryEntity]:
-        stmt = select(ProductsCategory).where(
+            ProductsCategory.product_id == product_id,
             ProductsCategory.category_id == category_id
         )
         result = await self._session.execute(stmt)
-        rows = result.scalars().all()
-        return [ProductCategoryEntity.to_domain(r) for r in rows]
+        row = result.scalar_one()
+        return ProductCategoryEntity.to_domain(row)

@@ -1,4 +1,5 @@
-from typing import Protocol, List
+from typing import Protocol
+
 from src.crm.domain.entities.product_category import ProductCategoryEntity
 
 
@@ -12,20 +13,14 @@ class IProductCategoryDeleteDAO(Protocol):
         ...
 
 
-class IProductCategoryListByProductDAO(Protocol):
-    async def list_by_product_id(self, product_id: int) -> List[ProductCategoryEntity]:
-        ...
-
-
-class IProductCategoryListByCategoryDAO(Protocol):
-    async def list_by_category_id(self, category_id: int) -> List[ProductCategoryEntity]:
+class IProductProductCategoryDAO(Protocol):
+    async def get(self, product_id: int, category_id: int) -> ProductCategoryEntity:
         ...
 
 
 class IProductCategoryDAO(
     IProductCategoryAddDAO,
     IProductCategoryDeleteDAO,
-    IProductCategoryListByProductDAO,
-    IProductCategoryListByCategoryDAO,
+    IProductProductCategoryDAO
 ):
     ...

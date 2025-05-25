@@ -1,5 +1,11 @@
 from typing import Protocol, List
+
 from src.crm.domain.entities.warehouse_product import WarehouseProductEntity
+
+
+class IWarehouseProductGetByProductDAO(Protocol):
+    async def get(self, product_id: int, warehouse_id: int) -> WarehouseProductEntity:
+        ...
 
 
 class IWarehouseProductAddDAO(Protocol):
@@ -27,5 +33,6 @@ class IWarehouseProductDAO(
     IWarehouseProductDeleteDAO,
     IWarehouseProductListByProductDAO,
     IWarehouseProductListByWarehouseDAO,
+    IWarehouseProductGetByProductDAO
 ):
     ...

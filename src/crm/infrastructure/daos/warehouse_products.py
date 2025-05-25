@@ -4,11 +4,10 @@ from sqlalchemy import insert, select, delete, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crm.domain.entities.warehouse_product import WarehouseProductEntity
-from src.crm.domain.interfaces.daos.warehouse_products import IWarehouseProductDAO
 from src.crm.infrastructure.models.warehouse_products import WarehouseProducts
 
 
-class WarehouseProductDAO(IWarehouseProductDAO):
+class WarehouseProductDAO:
     def __init__(self, session: AsyncSession):
         self._session = session
 
@@ -44,3 +43,12 @@ class WarehouseProductDAO(IWarehouseProductDAO):
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
         return [WarehouseProductEntity.to_domain(r) for r in rows]
+
+    async def get(self, product_id: int, warehouse_id: int) -> WarehouseProductEntity:
+        stmt = select(WarehouseProducts).where(
+            WarehouseProducts.product_id == product_id,
+            WarehouseProducts.warehouse_id == warehouse_id
+        )
+        result = await self._session.execute(stmt)
+        row = result.scalar_one()
+        return WarehouseProductEntity.to_domain(row)

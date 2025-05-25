@@ -49,7 +49,6 @@ class RegisterCompanyUseCase:
 
     async def execute(self, company: CompanyRegisterForm, user_id: int) -> Dict[str, str]:
         company_data = asdict(company)
-        company_data['user_id'] = user_id
         if company_data.get('company_website', None):
             company_data['company_website'] = str(company_data['company_website'])
         branches_data = company_data.pop('branches', [])

@@ -39,8 +39,20 @@ class ProductsDAO:
         row = result.scalar_one_or_none()
         return ProductEntity.to_domain(row)
 
-    async def list_by_company(self, company_id: int) -> List[ProductEntity]:
-        stmt = select(Product).where(Product.company_id == company_id)
+    async def list_by_company(self, company_id: int, filters: dict) -> List[ProductEntity]:
+        stmt = (
+            select(Product)
+            .where(
+                Product.company_id == company_id
+            )
+            .filter_by(
+                **filters
+            )
+            .options(
+                Product.warehouses.label("warehouses"),
+                Product.categories.label("categories"),
+            )
+        )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
         return [ProductEntity.to_domain(row) for row in rows]

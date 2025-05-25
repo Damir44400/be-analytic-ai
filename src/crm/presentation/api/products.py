@@ -2,14 +2,13 @@ from typing import List
 
 from dishka import FromDishka
 from dishka.integrations.fastapi import inject
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 
 from src.crm.domain.use_cases.products import (
     IProductCreateUseCase,
     IProductUpdateUseCase,
     IProductDeleteUseCase,
     IProductListByCompanyUseCase,
-    IProductListByWarehouseUseCase,
 )
 from src.crm.presentation.api.depends.authentication import get_current_user
 from ..schemas.products import ProductCreate, ProductUpdate, ProductRead
@@ -30,24 +29,29 @@ async def create_product(
     return product
 
 
-@router.get("/by-company/{company_id}", response_model=List[ProductRead])
+@router.get(
+    "/by-company/{company_id}",
+    response_model=List[ProductRead],
+    dependencies=[Depends(get_current_user)]
+)
 @inject
 async def get_products_by_company(
         company_id: int,
         use_case: FromDishka[IProductListByCompanyUseCase],
-        auth_user: UserEntity = Depends(get_current_user)
+        name: str = Query(None),
+        price: float = Query(None),
+        warehouses_id: List[int] = Query([]),
+        categories_id: List[int] = Query([]),
 ):
-    return await use_case.execute(company_id)
-
-
-@router.get("/by-warehouse/{warehouse_id}", response_model=List[ProductRead])
-@inject
-async def get_products_by_warehouse(
-        warehouse_id: int,
-        use_case: FromDishka[IProductListByWarehouseUseCase],
-        auth_user: UserEntity = Depends(get_current_user)
-):
-    return await use_case.execute(warehouse_id)
+    return await use_case.execute(
+        company_id,
+        filters=ProductEntity(
+            name=name,
+            price=price,
+            warehouses_id=warehouses_id,
+            categories_id=categories_id
+        )
+    )
 
 
 @router.patch("/{product_id}", response_model=ProductRead)
