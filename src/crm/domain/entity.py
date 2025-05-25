@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import TypeVar, ClassVar, Any, Dict, Optional
+from typing import TypeVar, ClassVar, Any, Dict, Optional, List
 
 T = TypeVar("T")
 
@@ -30,3 +30,8 @@ class EntityMeta:
             instance_data = {k: v for k, v in obj.__dict__.items() if not k.startswith("_")}
             return cls(**instance_data)
         return None
+
+    def exclude(self, fields: List[str]):
+        for field in fields:
+            delattr(self, field)
+        return self
