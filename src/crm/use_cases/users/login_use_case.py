@@ -1,7 +1,7 @@
-from src.crm.domain.exceptions import UnauthorizedException, BadRequestException
 from src.crm.domain.entities.jwt_payload import Payload
 from src.crm.domain.entities.tokens import Token, TokenResponse
 from src.crm.domain.entities.users import UserEntity
+from src.crm.domain.exceptions import UnauthorizedException, BadRequestException
 from src.crm.domain.interfaces.daos.users import IUserGetByEmailDAO
 from src.crm.domain.interfaces.security.jwt_handler import IJwtService
 from src.crm.domain.interfaces.security.password_handler import IPasswordBcrypt
@@ -27,8 +27,8 @@ class LoginUseCase:
                 self
                 ._password_bcrypt
                 .verify_password(
-                    user.password.encode("utf-8"),
-                    db_user.password.encode("utf-8")
+                    user.password.encode(),
+                    db_user.password.encode()
                 )
             )
         except Exception as e:
