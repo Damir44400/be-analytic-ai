@@ -1,7 +1,7 @@
-from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.exceptions import BadRequestException
 from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserCompanyDAO
 from src.crm.domain.interfaces.daos.products import IProductDeleteDAO, IProductGetByIdDAO
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.infrastructure.models.employees import EmployeeRoleStatusEnum
 
 
@@ -24,8 +24,10 @@ class DeleteProductsUseCase:
         self._product_dao = product_dao
 
     async def execute(self, user_id: int, product_id: int, company_id: int):
-        db_employee = await self._employee_dao.get_by_user_and_company(user_id=user_id, company_id=company_id)
-
+        db_employee = await self._employee_dao.get_by_user_and_company(
+            user_id=user_id,
+            company_id=company_id
+        )
         if db_employee is None or db_employee.role == EmployeeRoleStatusEnum.EMPLOYEE:
             raise BadRequestException("User does not have the necessary permissions to delete the product.")
 

@@ -29,5 +29,5 @@ class IProductListByWarehouseUseCase(Protocol):
 
 
 class IProductListByCompanyUseCase(Protocol):
-    async def execute(self, company_id: int) -> List[ProductEntity]:
+    async def execute(self, company_id: int, filters: ProductEntity) -> List[ProductEntity]:
         ...

@@ -8,5 +8,5 @@ class ListProductsByCompanyUseCase:
     def __init__(self, product_dao: IProductListByCompanyDAO):
         self._product_dao = product_dao
 
-    async def execute(self, company_id: int) -> List[ProductEntity]:
-        return await self._product_dao.list_by_company(company_id)
+    async def execute(self, company_id: int, filters: ProductEntity) -> List[ProductEntity]:
+        return await self._product_dao.list_by_company(company_id, filters.to_dict(exclude_none=True))
