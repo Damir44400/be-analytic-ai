@@ -9,7 +9,7 @@ class Category(Base):
 
     id: orm.Mapped[int] = orm.mapped_column(sa.Integer, primary_key=True)
     name: orm.Mapped[str] = orm.mapped_column(sa.String, index=True)
-    company_id: orm.Mapped[int] = orm.mapped_column(sa.Integer)
+    company_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("companies.id", ondelete="CASCADE") )
 
     __table_args__ = tuple(
         sa.UniqueConstraint("company_id", "name")
