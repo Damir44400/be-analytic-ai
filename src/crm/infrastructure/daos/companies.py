@@ -73,6 +73,7 @@ class CompaniesDAO:
             .returning(Company)
         )
         company = await self._session.execute(stmt)
+        company = company.scalar_one_or_none()
         return CompanyEntity.to_domain(company)
 
     async def delete(

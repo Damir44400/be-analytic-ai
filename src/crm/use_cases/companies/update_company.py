@@ -17,7 +17,7 @@ class GetUpdateCompanyGateway(
 
 
 class UpdateCompanyUseCase:
-    def __init__(
+    def  __init__(
             self,
             uow: IUoW,
             employee_dao: IEmployeeGetByUserCompanyDAO,

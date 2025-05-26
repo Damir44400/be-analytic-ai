@@ -3,7 +3,7 @@ from typing import List
 from dishka import FromDishka
 from dishka.integrations.fastapi import inject
 from fastapi import APIRouter
-from fastapi.params import Depends
+from fastapi.params import Depends, Query
 
 from src.crm.domain.use_cases.companies import (
     IRegisterCompanyUseCase,
@@ -14,17 +14,18 @@ from src.crm.domain.use_cases.companies import (
     CompanyUpdateForm
 )
 from src.crm.presentation.api.depends.authentication import get_current_user
-from .depends.required_role import required_role
+from ..schemas.branches import CompanyBranchRead
 from ..schemas.companies import (
     CompanyCreate,
     UserCompaniesRead,
     CompanyRead,
-    CompanyUpdate,
-    CompanyReadBranch
+    CompanyUpdate
 )
+from ..schemas.products import ProductRead
 from ...domain.entities.users import UserEntity
+from ...domain.use_cases.branches import IGetCompanyBranchesUseCase
 from ...domain.use_cases.companies import IGetUserCompaniesUseCase
-from ...infrastructure.models.employees import EmployeeRoleStatusEnum
+from ...domain.use_cases.products import IProductListByCompanyUseCase
 
 router = APIRouter()
 
@@ -60,7 +61,7 @@ async def get_user_companies(
     return await use_case.execute(auth_user.id)
 
 
-@router.get("/{company_id}", response_model=CompanyReadBranch)
+@router.get("/{company_id}", response_model=CompanyRead)
 @inject
 async def get_company_detail(
         company_id: int,
@@ -89,3 +90,43 @@ async def delete_company(
         auth_user: UserEntity = Depends(get_current_user),
 ):
     return await use_case.execute(company_id, auth_user.id)
+
+
+@router.get(
+    "/{company_id}/products",
+    response_model=List[ProductRead],
+    dependencies=[Depends(get_current_user)]
+)
+@inject
+async def get_products_by_company(
+        company_id: int,
+        use_case: FromDishka[IProductListByCompanyUseCase],
+        name: str = Query(None),
+        min_price: float = Query(None),
+        max_price: float = Query(None),
+        warehouses_id: List[int] = Query([]),
+        categories_id: List[int] = Query([]),
+):
+    return await use_case.execute(
+        company_id,
+        filters={
+            'name': name,
+            'min_price': min_price,
+            'max_price': max_price,
+            'warehouses_id': warehouses_id,
+            'categories_id': categories_id,
+        }
+    )
+
+
+@router.get(
+    "/{company_id}/branches",
+    response_model=List[CompanyBranchRead]
+)
+@inject
+async def get_company_branches(
+        company_id: int,
+        use_case: FromDishka[IGetCompanyBranchesUseCase],
+        auth_user: UserEntity = Depends(get_current_user)
+):
+    return await use_case.execute(company_id=company_id)

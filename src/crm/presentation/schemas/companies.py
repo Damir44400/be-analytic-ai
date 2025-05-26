@@ -3,7 +3,7 @@ from typing import Optional, List
 from pydantic import BaseModel, HttpUrl, constr
 
 from src.crm.infrastructure.models.companies import BusinessTypeEnum
-from .branches import CompanyBranchForm, CompanyBranchRead
+from .branches import CompanyBranchForm
 
 
 class CompanyBase(BaseModel):
@@ -26,7 +26,6 @@ class CompanyUpdate(CompanyBase):
     company_website: Optional[HttpUrl] = None
     company_phone_number: Optional[str] = None
     company_logo: Optional[bytes] = None
-    branches: Optional[List[CompanyBranchForm]] = None
 
 
 class CompanyRead(CompanyBase):
@@ -35,10 +34,6 @@ class CompanyRead(CompanyBase):
 
     class Config:
         from_attributes = True
-
-
-class CompanyReadBranch(CompanyRead):
-    branches: List[CompanyBranchRead]
 
 
 class UserCompaniesRead(BaseModel):
