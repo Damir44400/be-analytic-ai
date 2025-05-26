@@ -1,11 +1,8 @@
-from typing import List
-
 from dishka import FromDishka
 from dishka.integrations.fastapi import inject
 from fastapi import APIRouter
 from fastapi.params import Depends
 
-from src.crm.presentation.api.depends.authentication import get_current_user
 from src.crm.domain.use_cases.branches import (
     IRegisterCompanyBranchUseCase,
     CompanyBranchRegisterForm,
@@ -13,13 +10,13 @@ from src.crm.domain.use_cases.branches import (
     IDeleteCompanyBranchUseCase,
     CompanyBranchUpdateForm
 )
+from src.crm.presentation.api.depends.authentication import get_current_user
 from ..schemas.branches import (
     CompanyBranchCreate,
     CompanyBranchRead,
     CompanyBranchUpdate
 )
 from ...domain.entities.users import UserEntity
-from ...domain.use_cases.branches import IGetCompanyBranchesUseCase
 
 router = APIRouter()
 
@@ -44,15 +41,6 @@ async def create_company_branch(
         CompanyBranchRegisterForm(**form.dict()),
         auth_user.id
     )
-
-
-@router.get("/", response_model=List[CompanyBranchRead])
-@inject
-async def get_company_branches(
-        use_case: FromDishka[IGetCompanyBranchesUseCase],
-        auth_user: UserEntity = Depends(get_current_user)
-):
-    return await use_case.execute(auth_user.id)
 
 
 @router.patch("/{branch_id}", response_model=CompanyBranchRead)
