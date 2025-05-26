@@ -1,7 +1,7 @@
 from typing import List
 
-from src.crm.domain.exceptions import NotFoundException
 from src.crm.domain.entities.branches import CompanyBranchEntity
+from src.crm.domain.exceptions import NotFoundException
 from src.crm.domain.interfaces.daos.branches import ICompanyBranchGetByCompanyDAO
 from src.crm.domain.interfaces.daos.companies import ICompanyGetDAO
 
