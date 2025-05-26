@@ -2,6 +2,7 @@ from typing import List
 
 from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import lazyload
 
 from src.crm.domain.entities.products import ProductEntity
 from src.crm.infrastructure.models.products import Product
@@ -45,14 +46,14 @@ class ProductsDAO:
             .where(
                 Product.company_id == company_id
             )
-            .filter_by(
-                **filters
-            )
             .options(
-                Product.warehouses.label("warehouses"),
-                Product.categories.label("categories"),
+                lazyload(Product.warehouses),
+                lazyload(Product.categories),
             )
         )
+        warehouses_id = filters.get("warehouses_id")
+        categories_id = filters.get("categories_id")
+
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
         return [ProductEntity.to_domain(row) for row in rows]
