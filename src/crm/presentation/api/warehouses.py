@@ -4,14 +4,13 @@ from dishka import FromDishka
 from dishka.integrations.fastapi import inject
 from fastapi import APIRouter, Depends
 
-from src.crm.presentation.api.depends.authentication import get_current_user
 from src.crm.domain.use_cases.warehouses import (
     IWarehouseCreateUseCase,
     IWarehouseUpdateUseCase,
     IWarehouseDeleteUseCase,
-    IWarehouseListUseCase,
     ICompanyWarehouseUseCase
 )
+from src.crm.presentation.api.depends.authentication import get_current_user
 from ..schemas.warehouses import (
     WarehouseCreate,
     WarehouseRead,
@@ -40,16 +39,6 @@ async def create_warehouse(
         use_case: FromDishka[IWarehouseCreateUseCase],
         auth_user: UserEntity = Depends(get_current_user)):
     return await use_case.execute(WarehouseEntity(**form.dict()), auth_user.id)
-
-
-@router.get("/{branch_id}", response_model=List[WarehouseRead])
-@inject
-async def get_warehouses(
-        branch_id: int,
-        use_case: FromDishka[IWarehouseListUseCase],
-        auth_user: UserEntity = Depends(get_current_user)
-):
-    return await use_case.execute(branch_id, auth_user.id)
 
 
 @router.get("/company/{company_id}", response_model=List[WarehouseRead])

@@ -1,3 +1,5 @@
+from typing import List
+
 from dishka import FromDishka
 from dishka.integrations.fastapi import inject
 from fastapi import APIRouter
@@ -16,7 +18,9 @@ from ..schemas.branches import (
     CompanyBranchRead,
     CompanyBranchUpdate
 )
+from ..schemas.warehouses import WarehouseRead
 from ...domain.entities.users import UserEntity
+from ...domain.use_cases.warehouses import IWarehouseListUseCase
 
 router = APIRouter()
 
@@ -60,5 +64,15 @@ async def delete_company_branch(
         branch_id: int,
         use_case: FromDishka[IDeleteCompanyBranchUseCase],
         auth_user: UserEntity = Depends(get_current_user),
+):
+    return await use_case.execute(branch_id, auth_user.id)
+
+
+@router.get("/{branch_id}/warehouses", response_model=List[WarehouseRead])
+@inject
+async def get_warehouses(
+        branch_id: int,
+        use_case: FromDishka[IWarehouseListUseCase],
+        auth_user: UserEntity = Depends(get_current_user)
 ):
     return await use_case.execute(branch_id, auth_user.id)

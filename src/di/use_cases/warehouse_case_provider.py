@@ -1,22 +1,20 @@
 from dishka import Provider, provide, Scope
 
-from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.interfaces.daos.branches import IBranchesDAO
 from src.crm.domain.interfaces.daos.companies import ICompaniesDAO
 from src.crm.domain.interfaces.daos.warehouses import (
     IWarehousesDAO,
 )
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.use_cases.warehouses import (
     IWarehouseCreateUseCase,
     IWarehouseUpdateUseCase,
     IWarehouseDeleteUseCase,
-    IWarehouseListUseCase,
     ICompanyWarehouseUseCase,
 )
 from src.crm.use_cases.warehouses.create_warehouse import CreateWarehouseUseCase
 from src.crm.use_cases.warehouses.delete_warehouse import DeleteWarehouseUseCase
 from src.crm.use_cases.warehouses.get_company_warehouses import CompanyWarehousesListUseCase
-from src.crm.use_cases.warehouses.get_warehouses import WarehouseListUseCase
 from src.crm.use_cases.warehouses.update_warehouse import UpdateWarehouseUseCase
 
 
@@ -45,17 +43,6 @@ class WarehouseUseCasesProvider(Provider):
             warehouse_dao: IWarehousesDAO
     ) -> IWarehouseDeleteUseCase:
         return DeleteWarehouseUseCase(uow, warehouse_dao)
-
-    @provide(scope=Scope.REQUEST)
-    async def get_warehouse_list_use_case(
-            self,
-            branch_dao: IBranchesDAO,
-            warehouse_dao: IWarehousesDAO
-    ) -> IWarehouseListUseCase:
-        return WarehouseListUseCase(
-            branch_gateway=branch_dao,
-            warehouse_gateway=warehouse_dao
-        )
 
     @provide(scope=Scope.REQUEST)
     async def get_company_warehouse_use_case(
