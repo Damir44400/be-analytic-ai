@@ -8,9 +8,10 @@ from src.crm.domain.use_cases.warehouses import (
     IWarehouseCreateUseCase,
     IWarehouseUpdateUseCase,
     IWarehouseDeleteUseCase,
-    ICompanyWarehouseUseCase
+    IGetWarehouseProductsUseCase
 )
 from src.crm.presentation.api.depends.authentication import get_current_user
+from ..schemas.products import ProductRead
 from ..schemas.warehouses import (
     WarehouseCreate,
     WarehouseRead,
@@ -41,16 +42,6 @@ async def create_warehouse(
     return await use_case.execute(WarehouseEntity(**form.dict()), auth_user.id)
 
 
-@router.get("/company/{company_id}", response_model=List[WarehouseRead])
-@inject
-async def get_warehouses_by_company(
-        company_id: int,
-        use_case: FromDishka[ICompanyWarehouseUseCase],
-        auth_user: UserEntity = Depends(get_current_user)
-):
-    return await use_case.execute(company_id)
-
-
 @router.patch("/{warehouse_id}", response_model=WarehouseRead)
 @inject
 async def update_warehouse(
@@ -70,3 +61,13 @@ async def delete_warehouse(
         auth_user: UserEntity = Depends(get_current_user),
 ):
     return await use_case.execute(warehouse_id, auth_user.id)
+
+
+@router.get("/{warehouse_id}/products", response_model=List[ProductRead])
+@inject
+async def get_warehouses_for_product(
+        warehouse_id: int,
+        use_case: FromDishka[IGetWarehouseProductsUseCase],
+        auth_user: UserEntity = Depends(get_current_user),
+):
+    return await use_case.execute(warehouse_id)
