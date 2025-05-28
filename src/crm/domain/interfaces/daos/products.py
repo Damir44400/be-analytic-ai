@@ -24,7 +24,7 @@ class IProductGetByIdDAO(Protocol):
 
 
 class IProductListByCompanyDAO(Protocol):
-    async def list_by_company(self, company_id: int, filters: dict) -> List[ProductEntity]:
+    async def list_by_company(self, company_id: int, filters: dict = {}) -> List[ProductEntity]:
         ...
 
 

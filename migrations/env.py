@@ -9,7 +9,9 @@ from src.crm.infrastructure.database.database import Base
 from src.crm.infrastructure.models.branches import CompanyBranch
 from src.crm.infrastructure.models.categories import Category
 from src.crm.infrastructure.models.companies import Company
+from src.crm.infrastructure.models.deals import Deal
 from src.crm.infrastructure.models.employees import Employee
+from src.crm.infrastructure.models.leads import Lead
 from src.crm.infrastructure.models.product_category import ProductsCategory
 from src.crm.infrastructure.models.products import Product
 from src.crm.infrastructure.models.users import User
@@ -28,6 +30,8 @@ __tables__ = [
     ProductsCategory,
     WarehouseProducts,
     WarehouseTransfer,
+    Deal,
+    Lead,
 ]
 
 config = context.config
