@@ -3,9 +3,11 @@ from datetime import date
 from decimal import Decimal
 from typing import Optional, List
 
+from src.crm.domain.entity import EntityMeta
+
 
 @dataclass
-class DealEntity:
+class DealEntity(EntityMeta):
     id: Optional[str] = None
     name: Optional[str] = None
     amount: Optional[Decimal] = None

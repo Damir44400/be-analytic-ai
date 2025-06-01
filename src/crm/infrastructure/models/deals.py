@@ -6,6 +6,7 @@ from sqlalchemy.dialects import postgresql
 
 from src.crm.infrastructure.database.database import Base
 
+
 class DealStage(enum.Enum):
     QUALIFICATION = "Qualification"
     NEEDS_ANALYSIS = "Needs Analysis"
@@ -28,6 +29,8 @@ class Deal(Base):
         nullable=False
     )
     probability: orm.Mapped[float] = orm.mapped_column(sa.Float, default=0.0)
+    company_id: orm.Mapped[int] = orm.mapped_column(sa.Integer, sa.ForeignKey('companies.id'))
+    company: orm.Mapped["Company"] = orm.relationship("Company", backref="deals")
     lead_id: orm.Mapped[int] = orm.mapped_column(sa.Integer, sa.ForeignKey("leads.id"), nullable=True)
     lead: orm.Mapped["Lead"] = orm.relationship("Lead", backref="deals")
     created_at: orm.Mapped[sa.DateTime] = orm.mapped_column(sa.DateTime, default=sa.func.now())
