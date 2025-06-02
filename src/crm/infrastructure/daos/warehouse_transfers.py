@@ -18,19 +18,19 @@ class WarehouseTransfersDAO(IWarehouseTransfersDAO):
         ).returning(WarehouseTransfer)
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return WarehouseTransferEntity.to_domain(row)
+        return WarehouseTransferEntity.from_domain(row)
 
     async def get_by_id(self, id: int) -> WarehouseTransferEntity:
         stmt = select(WarehouseTransfer).where(WarehouseTransfer.id == id)
         result = await self._session.execute(stmt)
         row = result.scalar_one_or_none()
-        return WarehouseTransferEntity.to_domain(row)
+        return WarehouseTransferEntity.from_domain(row)
 
     async def list_by_product(self, product_id: int) -> List[WarehouseTransferEntity]:
         stmt = select(WarehouseTransfer).where(WarehouseTransfer.product_id == product_id)
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [WarehouseTransferEntity.to_domain(r) for r in rows]
+        return [WarehouseTransferEntity.from_domain(r) for r in rows]
 
     async def list_by_warehouse(self, warehouse_id: int) -> List[WarehouseTransferEntity]:
         stmt = select(WarehouseTransfer).where(
@@ -41,4 +41,4 @@ class WarehouseTransfersDAO(IWarehouseTransfersDAO):
         )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [WarehouseTransferEntity.to_domain(r) for r in rows]
+        return [WarehouseTransferEntity.from_domain(r) for r in rows]

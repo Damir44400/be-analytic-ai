@@ -25,7 +25,7 @@ class EntityMeta:
             return data
 
     @classmethod
-    def to_domain(cls, obj):
+    def from_domain(cls, obj):
         if obj:
             instance_data = {k: v for k, v in obj.__dict__.items() if not k.startswith("_")}
             return cls(**instance_data)

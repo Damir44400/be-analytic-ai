@@ -19,7 +19,7 @@ class DealEntity(EntityMeta):
     updated_at: Optional[date] = None
     description: Optional[str] = None
     lost_reason: Optional[str] = None
-
+    company_id: Optional[int] = None
 
 @dataclass
 class DealStageMetrics:

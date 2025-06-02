@@ -17,7 +17,7 @@ class WarehouseProductDAO:
         ).returning(WarehouseProducts)
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return WarehouseProductEntity.to_domain(row)
+        return WarehouseProductEntity.from_domain(row)
 
     async def delete(self, product_id: int, warehouse_id: int) -> None:
         stmt = delete(WarehouseProducts).where(
@@ -34,7 +34,7 @@ class WarehouseProductDAO:
         )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [WarehouseProductEntity.to_domain(r) for r in rows]
+        return [WarehouseProductEntity.from_domain(r) for r in rows]
 
     async def list_by_warehouse_id(self, warehouse_id: int) -> List[WarehouseProductEntity]:
         stmt = select(WarehouseProducts).where(
@@ -42,7 +42,7 @@ class WarehouseProductDAO:
         )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [WarehouseProductEntity.to_domain(r) for r in rows]
+        return [WarehouseProductEntity.from_domain(r) for r in rows]
 
     async def get(self, product_id: int, warehouse_id: int) -> WarehouseProductEntity:
         stmt = select(WarehouseProducts).where(
@@ -51,4 +51,4 @@ class WarehouseProductDAO:
         )
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return WarehouseProductEntity.to_domain(row)
+        return WarehouseProductEntity.from_domain(row)

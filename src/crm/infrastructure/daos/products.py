@@ -17,7 +17,7 @@ class ProductsDAO:
         stmt = insert(Product).values(product.to_dict(exclude_none=True)).returning(Product)
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return ProductEntity.to_domain(row)
+        return ProductEntity.from_domain(row)
 
     async def update(self, id: int, product: ProductEntity) -> ProductEntity:
         stmt = (
@@ -28,7 +28,7 @@ class ProductsDAO:
         )
         result = await self._session.execute(stmt)
         updated = result.scalar_one()
-        return ProductEntity.to_domain(updated)
+        return ProductEntity.from_domain(updated)
 
     async def delete(self, id: int) -> None:
         stmt = delete(Product).where(Product.id == id)
@@ -38,7 +38,7 @@ class ProductsDAO:
         stmt = select(Product).where(Product.id == id)
         result = await self._session.execute(stmt)
         row = result.scalar_one_or_none()
-        return ProductEntity.to_domain(row)
+        return ProductEntity.from_domain(row)
 
     async def list_by_company(self, company_id: int, filters: dict) -> List[ProductEntity]:
         stmt = (
@@ -56,7 +56,7 @@ class ProductsDAO:
 
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [ProductEntity.to_domain(row) for row in rows]
+        return [ProductEntity.from_domain(row) for row in rows]
 
     async def list_by_warehouse(self, warehouse_id: int) -> List[ProductEntity]:
         stmt = (
@@ -69,4 +69,4 @@ class ProductsDAO:
         )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [ProductEntity.to_domain(row) for row in rows]
+        return [ProductEntity.from_domain(row) for row in rows]

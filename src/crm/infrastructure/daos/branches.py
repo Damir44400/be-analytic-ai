@@ -17,13 +17,13 @@ class BranchesDAO:
         stmt = insert(CompanyBranch).values(branch.to_dict(exclude_none=True)).returning(CompanyBranch)
         result = await self._session.execute(stmt)
         branch_row = result.scalar_one()
-        return CompanyBranchEntity.to_domain(branch_row)
+        return CompanyBranchEntity.from_domain(branch_row)
 
     async def get_by_id(self, id: int) -> CompanyBranchEntity:
         stmt = select(CompanyBranch).where(CompanyBranch.id == id)
         result = await self._session.execute(stmt)
         branch = result.scalar_one_or_none()
-        return CompanyBranchEntity.to_domain(branch)
+        return CompanyBranchEntity.from_domain(branch)
 
     async def get_by_company_id(self, company_id: int) -> List[CompanyBranchEntity]:
         stmt = (
@@ -33,7 +33,7 @@ class BranchesDAO:
         )
         result = await self._session.execute(stmt)
         branches = result.scalars().all()
-        return [CompanyBranchEntity.to_domain(branch) for branch in branches]
+        return [CompanyBranchEntity.from_domain(branch) for branch in branches]
 
     async def update(self, branch_id: int, branch: CompanyBranchEntity) -> CompanyBranchEntity:
         stmt = (
@@ -44,7 +44,7 @@ class BranchesDAO:
         )
         result = await self._session.execute(stmt)
         updated = result.scalar_one()
-        return CompanyBranchEntity.to_domain(updated)
+        return CompanyBranchEntity.from_domain(updated)
 
     async def delete(self, branch_id: int) -> None:
         stmt = delete(CompanyBranch).where(CompanyBranch.id == branch_id)
@@ -66,4 +66,4 @@ class BranchesDAO:
         )
         result = await self._session.execute(stmt)
         branch = result.scalar_one_or_none()
-        return CompanyBranchEntity.to_domain(branch)
+        return CompanyBranchEntity.from_domain(branch)

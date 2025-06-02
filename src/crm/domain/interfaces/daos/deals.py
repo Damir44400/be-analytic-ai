@@ -38,6 +38,7 @@ class IDealsDAO(
     IUpdateDealDAO,
     IGetDealDAO,
     IDeleteDealDAO,
-    ICalculatedCompanyMetricsDAO
+    ICalculatedCompanyMetricsDAO,
+    ICompanyDealsDAO
 ):
     ...

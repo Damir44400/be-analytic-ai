@@ -21,7 +21,7 @@ class WarehousesDAO:
         stmt = insert(Warehouse).values(warehouse.to_dict(exclude_none=True)).returning(Warehouse)
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return WarehouseEntity.to_domain(row)
+        return WarehouseEntity.from_domain(row)
 
     async def update(self, id: int, warehouse: WarehouseEntity) -> WarehouseEntity:
         stmt = (
@@ -32,7 +32,7 @@ class WarehousesDAO:
         )
         result = await self._session.execute(stmt)
         updated = result.scalar_one()
-        return WarehouseEntity.to_domain(updated)
+        return WarehouseEntity.from_domain(updated)
 
     async def delete(self, id: int) -> None:
         stmt = delete(Warehouse).where(Warehouse.id == id)
@@ -42,13 +42,13 @@ class WarehousesDAO:
         stmt = select(Warehouse).where(Warehouse.id == id)
         result = await self._session.execute(stmt)
         row = result.scalar_one_or_none()
-        return WarehouseEntity.to_domain(row)
+        return WarehouseEntity.from_domain(row)
 
     async def list_by_branch_id(self, branch_id: int) -> List[WarehouseEntity]:
         stmt = select(Warehouse).where(Warehouse.branch_id == branch_id)
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [WarehouseEntity.to_domain(r) for r in rows]
+        return [WarehouseEntity.from_domain(r) for r in rows]
 
     async def get_by_company(self, company_id: int) -> List[WarehouseEntity]:
         stmt = (
@@ -59,7 +59,7 @@ class WarehousesDAO:
         )
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [WarehouseEntity.to_domain(r) for r in rows]
+        return [WarehouseEntity.from_domain(r) for r in rows]
 
     async def get_by_user(self, id: int, user_id: int) -> WarehouseEntity | None:
         stmt = (
@@ -74,4 +74,4 @@ class WarehousesDAO:
         )
         result = await self._session.execute(stmt)
         row = result.scalar_one_or_none()
-        return WarehouseEntity.to_domain(row)
+        return WarehouseEntity.from_domain(row)

@@ -15,7 +15,7 @@ class CategoriesDAO:
         stmt = insert(Category).values(category.to_dict(exclude_none=True)).returning(Category)
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return CategoryEntity.to_domain(row)
+        return CategoryEntity.from_domain(row)
 
     async def update(self, id: int, category: CategoryEntity) -> CategoryEntity:
         stmt = (
@@ -26,7 +26,7 @@ class CategoriesDAO:
         )
         result = await self._session.execute(stmt)
         updated = result.scalar_one()
-        return CategoryEntity.to_domain(updated)
+        return CategoryEntity.from_domain(updated)
 
     async def delete(self, id: int) -> None:
         stmt = delete(Category).where(Category.id == id)
@@ -36,10 +36,10 @@ class CategoriesDAO:
         stmt = select(Category).where(Category.id == id)
         result = await self._session.execute(stmt)
         row = result.scalar_one_or_none()
-        return CategoryEntity.to_domain(row)
+        return CategoryEntity.from_domain(row)
 
     async def list_by_company_id(self, company_id: int) -> List[CategoryEntity]:
         stmt = select(Category).where(Category.company_id == company_id)
         result = await self._session.execute(stmt)
         rows = result.scalars().all()
-        return [CategoryEntity.to_domain(cat) for cat in rows]
+        return [CategoryEntity.from_domain(cat) for cat in rows]

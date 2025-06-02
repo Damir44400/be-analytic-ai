@@ -1,16 +1,24 @@
 from datetime import timezone
 from decimal import Decimal
-from typing import Dict
+from typing import Dict, List
 
-from sqlalchemy import insert, select, update, delete
+from sqlalchemy import (
+    insert,
+    select,
+    update,
+    delete
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.crm.domain.entities.deals import DealEntity, CalculatedCompanyMetrics, DealStageMetrics
-from src.crm.domain.interfaces.daos.deals import IDealsDAO
+from src.crm.domain.entities.deals import (
+    DealEntity,
+    CalculatedCompanyMetrics,
+    DealStageMetrics
+)
 from src.crm.infrastructure.models.deals import Deal, DealStage
 
 
-class DealsDAO(IDealsDAO):
+class DealsDAO:
     def __init__(self, session: AsyncSession):
         self._session = session
 
@@ -18,19 +26,19 @@ class DealsDAO(IDealsDAO):
         stmt = insert(Deal).values(deal.to_dict(exclude_none=True))
         result = await self._session.execute(stmt)
         deal = result.scalar()
-        return DealEntity.to_domain(deal)
+        return DealEntity.from_domain(deal)
 
     async def get(self, deal_id: int) -> DealEntity:
         stmt = select(Deal).where(Deal.id == deal_id)
         result = await self._session.execute(stmt)
         deal = result.scalar_one_or_none()
-        return DealEntity.to_domain(deal)
+        return DealEntity.from_domain(deal)
 
     async def update(self, deal_id: int, deal: DealEntity) -> DealEntity:
         stmt = update(Deal).values(deal.to_dict(exclude_none=True)).where(Deal.id == deal_id)
         result = await self._session.execute(stmt)
         deal = result.scalar_one_or_none()
-        return DealEntity.to_domain(deal)
+        return DealEntity.from_domain(deal)
 
     async def delete(self, deal_id: int) -> None:
         stmt = delete(Deal).where(Deal.id == deal_id)
@@ -112,3 +120,9 @@ class DealsDAO(IDealsDAO):
             )
 
         return metrics
+
+    async def company_deals(self, company_id: int) -> List[DealEntity]:
+        stmt = select(Deal).where(Deal.company_id == company_id)
+        result = await self._session.execute(stmt)
+        deals = result.scalars().all()
+        return [DealEntity.from_domain(deal) for deal in deals]

@@ -15,7 +15,7 @@ class ProductCategoryDAO:
         ).returning(ProductsCategory)
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return ProductCategoryEntity.to_domain(row)
+        return ProductCategoryEntity.from_domain(row)
 
     async def delete(self, product_id: int, category_id: int) -> None:
         stmt = delete(ProductsCategory).where(
@@ -33,4 +33,4 @@ class ProductCategoryDAO:
         )
         result = await self._session.execute(stmt)
         row = result.scalar_one()
-        return ProductCategoryEntity.to_domain(row)
+        return ProductCategoryEntity.from_domain(row)

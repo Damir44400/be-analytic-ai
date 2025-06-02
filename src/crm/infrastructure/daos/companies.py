@@ -16,13 +16,13 @@ class CompaniesDAO:
         stmt = insert(Company).values(company.to_dict(exclude_none=True)).returning(Company)
         company = await self._session.execute(stmt)
         company = company.scalars().first()
-        return CompanyEntity.to_domain(company)
+        return CompanyEntity.from_domain(company)
 
     async def get_by_id(self, company_id: int) -> Company:
         stmt = select(Company).where(Company.id == company_id)
         company = await self._session.execute(stmt)
         company = company.scalar_one_or_none()
-        return CompanyEntity.to_domain(company)
+        return CompanyEntity.from_domain(company)
 
     async def get_by_user_id(
             self,
@@ -40,7 +40,7 @@ class CompaniesDAO:
 
         company = await self._session.execute(stmt)
         company = company.scalar_one_or_none()
-        return CompanyEntity.to_domain(company)
+        return CompanyEntity.from_domain(company)
 
     async def user_companies(
             self,
@@ -56,7 +56,7 @@ class CompaniesDAO:
 
         companies = await self._session.execute(stmt)
         companies = companies.scalars().all()
-        return [CompanyEntity.to_domain(company) for company in companies]
+        return [CompanyEntity.from_domain(company) for company in companies]
 
     async def update(
             self,
@@ -74,7 +74,7 @@ class CompaniesDAO:
         )
         company = await self._session.execute(stmt)
         company = company.scalar_one_or_none()
-        return CompanyEntity.to_domain(company)
+        return CompanyEntity.from_domain(company)
 
     async def delete(
             self,
