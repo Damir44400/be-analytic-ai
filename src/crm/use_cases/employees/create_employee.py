@@ -1,13 +1,12 @@
-from src.crm.domain.interfaces.uow import IUoW
-from src.crm.domain.exceptions import NotFoundException, BadRequestException
 from src.crm.domain.entities.employees import EmployeeEntity
+from src.crm.domain.exceptions import NotFoundException, BadRequestException, ForbiddenException
 from src.crm.domain.interfaces.daos.companies import ICompanyGetDAO
 from src.crm.domain.interfaces.daos.emopoyees import (
     IEmployeeCreateDAO,
     IEmployeeGetByUserCompanyDAO
 )
 from src.crm.domain.interfaces.daos.users import IUserGetByIdDAO
-from src.crm.infrastructure.models.employees import EmployeeRoleStatusEnum
+from src.crm.domain.interfaces.uow import IUoW
 
 
 class UserGateway(IUserGetByIdDAO):
@@ -42,8 +41,8 @@ class CreateEmployeeUseCase:
 
     async def execute(self, form: EmployeeEntity, user_id: int) -> EmployeeEntity:
         owner = await self._employee_gateway.get_by_user_and_company(user_id, form.company_id)
-        if owner is None or owner.role != EmployeeRoleStatusEnum.OWNER.value:
-            raise BadRequestException("You do not have permission to perform this action.")
+        if owner is None or not owner.is_owner:
+            raise ForbiddenException("You do not have permission to perform this action.")
         db_company = await self._company_gateway.get_by_id(form.company_id)
         if not db_company:
             raise NotFoundException("Company not found")

@@ -1,11 +1,11 @@
 from dataclasses import asdict
 from typing import Dict
 
-from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.interfaces.daos.branches import (
     ICompanyBranchCreateDAO
 )
 from src.crm.domain.interfaces.daos.companies import ICompanyCreateDAO
+from src.crm.domain.interfaces.uow import IUoW
 from ...domain.entities.branches import CompanyBranchEntity
 from ...domain.entities.companies import CompanyEntity
 from ...domain.entities.employees import EmployeeEntity
@@ -16,7 +16,6 @@ from ...domain.interfaces.daos.emopoyees import (
 from ...domain.use_cases.companies import (
     CompanyRegisterForm
 )
-from ...infrastructure.models.employees import EmployeeRoleStatusEnum
 
 
 class EmployeeGateway(
@@ -61,7 +60,8 @@ class RegisterCompanyUseCase:
                 EmployeeEntity(
                     user_id=user_id,
                     company_id=company.id,
-                    role=EmployeeRoleStatusEnum.OWNER.value
+                    role="Owner",
+                    is_owner=True
                 )
             )
         return {

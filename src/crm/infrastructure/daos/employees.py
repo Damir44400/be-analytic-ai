@@ -4,6 +4,8 @@ from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crm.domain.entities.employees import EmployeeEntity
+from src.crm.infrastructure.models.branches import CompanyBranch
+from src.crm.infrastructure.models.categories import Category
 from src.crm.infrastructure.models.employees import Employee
 
 
@@ -38,12 +40,12 @@ class EmployeesDAO:
         employees = result.scalars().all()
         return [EmployeeEntity.from_domain(e) for e in employees]
 
-    async def update(self, employee_id: int, employee: EmployeeEntity) -> EmployeeEntity:
+    async def update(self, employee_id: int, data: EmployeeEntity) -> EmployeeEntity:
         stmt = (
             update(Employee)
             .where(Employee.id == employee_id)
             .values(
-                employee.to_dict(
+                data.to_dict(
                     exclude_none=True
                 )
             )
@@ -59,6 +61,38 @@ class EmployeesDAO:
 
     async def get_by_user_id(self, user_id: int) -> EmployeeEntity:
         stmt = select(Employee).where(Employee.user_id == user_id)
+        result = await self._session.execute(stmt)
+        employee = result.scalar_one_or_none()
+        return EmployeeEntity.from_domain(employee) if employee else None
+
+    async def get_by_user_branch(self, user_id: int, branch_id: int) -> EmployeeEntity:
+        stmt = (
+            select(Employee)
+            .join(
+                CompanyBranch,
+                CompanyBranch.company_id == Employee.company_id
+            )
+            .where(
+                CompanyBranch.id == branch_id,
+                Employee.user_id == user_id
+            )
+        )
+        result = await self._session.execute(stmt)
+        employee = result.scalar_one_or_none()
+        return EmployeeEntity.from_domain(employee) if employee else None
+
+    async def get_by_user_and_category(self, user_id: int, category_id: int) -> EmployeeEntity:
+        stmt = (
+            select(Employee)
+            .join(
+                Category,
+                Category.company_id == Employee.company_id
+            )
+            .where(
+                Category.id == category_id,
+                Employee.user_id == user_id
+            )
+        )
         result = await self._session.execute(stmt)
         employee = result.scalar_one_or_none()
         return EmployeeEntity.from_domain(employee) if employee else None

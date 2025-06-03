@@ -54,12 +54,24 @@ class IEmployeeGetByUserCompanyDAO(Protocol):
         ...
 
 
+class IEmployeeGetByUserBranchDAO(Protocol):
+    async def get_by_user_branch(self, user_id: int, branch_id: int) -> EmployeeEntity:
+        ...
+
+
+class IEmployeeGetByUserCategoryDAO(Protocol):
+    async def get_by_user_and_category(self, user_id: int, category_id: int) -> EmployeeEntity:
+        ...
+
+
 class IEmployeesDAO(
     IEmployeeCreateDAO,
     IEmployeeUpdateDAO,
     IEmployeeDeleteDAO,
     IEmployeeGetByIdDAO,
     IEmployeeGetByUserIdDAO,
-    IEmployeeListByCompanyDAO
+    IEmployeeListByCompanyDAO,
+    IEmployeeGetByUserBranchDAO,
+    IEmployeeGetByUserCategoryDAO
 ):
     ...

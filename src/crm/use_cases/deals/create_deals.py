@@ -1,5 +1,5 @@
 from src.crm.domain.entities.deals import DealEntity
-from src.crm.domain.exceptions import BadRequestException
+from src.crm.domain.exceptions import BadRequestException, ForbiddenException
 from src.crm.domain.interfaces.daos.deals import ICreateDealDAO
 from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserCompanyDAO
 from src.crm.domain.interfaces.uow import IUoW
@@ -31,7 +31,7 @@ class CreateDeals:
         )
 
         if not employee:
-            raise BadRequestException("You do not have an employee to create this deal")
+            raise ForbiddenException("You do not have an employee to create this deal")
 
         async with self._uow:
             return await self._deal_gateway.create(deal)

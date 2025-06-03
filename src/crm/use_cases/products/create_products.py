@@ -3,7 +3,7 @@ from typing import List
 from src.crm.domain.entities.product_category import ProductCategoryEntity
 from src.crm.domain.entities.products import ProductEntity
 from src.crm.domain.entities.warehouse_product import WarehouseProductEntity
-from src.crm.domain.exceptions import BadRequestException
+from src.crm.domain.exceptions import ForbiddenException
 from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserCompanyDAO
 from src.crm.domain.interfaces.daos.product_category import IProductCategoryAddDAO
 from src.crm.domain.interfaces.daos.products import IProductCreateDAO
@@ -11,7 +11,6 @@ from src.crm.domain.interfaces.daos.warehouse_products import (
     IWarehouseProductAddDAO
 )
 from src.crm.domain.interfaces.uow import IUoW
-from src.crm.infrastructure.models.employees import EmployeeRoleStatusEnum
 
 
 class WarehouseProductGateway(
@@ -44,8 +43,8 @@ class ProductCreateUseCase:
     async def execute(self, form: ProductEntity, user_id: int) -> ProductEntity:
         db_employee = await self._employee_dao.get_by_user_and_company(user_id=user_id, company_id=form.company_id)
 
-        if db_employee is None or db_employee.role == EmployeeRoleStatusEnum.EMPLOYEE:
-            raise BadRequestException("User does not have the necessary permissions to create a product.")
+        if db_employee is None or not db_employee.is_manager_or_owner:
+            raise ForbiddenException("User does not have the necessary permissions to create a product.")
         categories_id: List[int] = form.categories_id
         warehouses_id: List[int] = form.warehouses_id
         async with self._uow:

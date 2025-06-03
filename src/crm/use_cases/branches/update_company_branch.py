@@ -1,17 +1,16 @@
 from dataclasses import asdict
 
-from src.crm.domain.interfaces.uow import IUoW
-from src.crm.domain.exceptions import NotFoundException, BadRequestException
 from src.crm.domain.entities.branches import CompanyBranchEntity
+from src.crm.domain.exceptions import NotFoundException, ForbiddenException
 from src.crm.domain.interfaces.daos.branches import (
     ICompanyBranchGetByUserIdDAO,
     ICompanyBranchUpdateDAO,
 )
-from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserIdDAO
+from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserBranchDAO
+from src.crm.domain.interfaces.uow import IUoW
 from src.crm.domain.use_cases.branches import (
     CompanyBranchUpdateForm
 )
-from src.crm.infrastructure.models.employees import EmployeeRoleStatusEnum
 
 
 class Gateway(
@@ -26,7 +25,7 @@ class UpdateCompanyBranchUseCase:
             self,
             uow: IUoW,
             dao: Gateway,
-            employee_dao: IEmployeeGetByUserIdDAO,
+            employee_dao: IEmployeeGetByUserBranchDAO,
     ):
         self._uow = uow
         self._dao = dao
@@ -38,10 +37,12 @@ class UpdateCompanyBranchUseCase:
             form: CompanyBranchUpdateForm,
             user_id: int,
     ) -> CompanyBranchEntity:
-        db_employee = await self._employee_dao.get_by_user_id(user_id=user_id)
-        if db_employee.role != EmployeeRoleStatusEnum.OWNER:
-            raise BadRequestException("You are not the owner of the company")
-
+        db_employee = await self._employee_dao.get_by_user_branch(
+            user_id=user_id,
+            branch_id=branch_id
+        )
+        if not db_employee or not db_employee.is_manager_or_owner:
+            raise ForbiddenException("You do not have permission to perform this action.")
         existing = await self._dao.get_by_user_id(user_id, branch_id)
         if not existing:
             raise NotFoundException("Branch not found")

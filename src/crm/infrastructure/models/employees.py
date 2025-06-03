@@ -15,12 +15,6 @@ class EmployeeStatusEnum(enum.Enum):
     TRAINING = "TRAINING"  # На обучении
 
 
-class EmployeeRoleStatusEnum(enum.Enum):
-    OWNER = "OWNER"
-    MANAGER = "MANAGER"
-    EMPLOYEE = "EMPLOYEE"
-
-
 class Employee(Base):
     __tablename__ = "employees"
 
@@ -55,15 +49,15 @@ class Employee(Base):
         default=EmployeeStatusEnum.ACTIVE
     )
 
-    role: orm.Mapped[str] = orm.mapped_column(
-        sa.Enum(
-            EmployeeRoleStatusEnum,
-            name="employee_role"
-        ),
-        nullable=False,
-        default=EmployeeRoleStatusEnum.EMPLOYEE
+    role: orm.Mapped[str] = orm.mapped_column(sa.String, default="EMPLOYEE")
+    is_owner: orm.Mapped[bool] = orm.mapped_column(
+        sa.Boolean,
+        default=False
     )
-
+    is_manager: orm.Mapped[bool] = orm.mapped_column(
+        sa.Boolean,
+        default=False
+    )
     company = orm.relationship("Company", backref="employees")
     __table_args__ = tuple(
         sa.UniqueConstraint(

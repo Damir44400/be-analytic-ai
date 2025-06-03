@@ -12,3 +12,9 @@ class EmployeeEntity(EntityMeta):
     salary: Optional[float] = None
     status: Optional[str] = None
     role: Optional[str] = None
+    is_owner: Optional[bool] = None
+    is_manager: Optional[bool] = None
+
+    @property
+    def is_manager_or_owner(self):
+        return self.is_manager or self.is_owner

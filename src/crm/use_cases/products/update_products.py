@@ -1,9 +1,8 @@
-from src.crm.domain.interfaces.uow import IUoW
-from src.crm.domain.exceptions import BadRequestException, NotFoundException
 from src.crm.domain.entities.products import ProductEntity
+from src.crm.domain.exceptions import NotFoundException, ForbiddenException
 from src.crm.domain.interfaces.daos.emopoyees import IEmployeeGetByUserCompanyDAO
 from src.crm.domain.interfaces.daos.products import IProductUpdateDAO, IProductGetByIdDAO
-from src.crm.infrastructure.models.employees import EmployeeRoleStatusEnum
+from src.crm.domain.interfaces.uow import IUoW
 
 
 class ProductGateway(
@@ -32,8 +31,8 @@ class UpdateProductUseCase:
             product_data: ProductEntity
     ) -> ProductEntity:
         db_employee = await self._employee_dao.get_by_user_and_company(user_id=user_id, company_id=company_id)
-        if db_employee is None or db_employee.role == EmployeeRoleStatusEnum.EMPLOYEE:
-            raise BadRequestException("User does not have the necessary permissions to update the product.")
+        if db_employee is None or not db_employee.is_manager_or_owner:
+            raise ForbiddenException("User does not have the necessary permissions to update the product.")
 
         product = await self._product_dao.get_by_id(product_id)
         if product is None:

@@ -16,3 +16,7 @@ class AlreadyExistsException(AppBaseException):
 
 class NotFoundException(AppBaseException):
     status_code = 404
+
+
+class ForbiddenException(AppBaseException):
+    status_code = 403
