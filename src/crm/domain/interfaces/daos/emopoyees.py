@@ -1,4 +1,4 @@
-from typing import Protocol, List
+from typing import Protocol, List, Optional, Dict
 
 from src.crm.domain.entities.employees import EmployeeEntity
 
@@ -64,6 +64,24 @@ class IEmployeeGetByUserCategoryDAO(Protocol):
         ...
 
 
+class IEmployeeFilteredListByCompanyDAO(Protocol):
+    async def list_filtered(
+            self,
+            company_id: int,
+            role: Optional[str] = None,
+            min_salary: Optional[int] = None,
+            max_salary: Optional[int] = None,
+            is_manager: Optional[bool] = None,
+            status: Optional[str] = None
+    ) -> List[EmployeeEntity]:
+        ...
+
+
+class IEmployeeCountByRoleDAO(Protocol):
+    async def count_by_role(self, company_id: int) -> Dict[str, int]:
+        ...
+
+
 class IEmployeesDAO(
     IEmployeeCreateDAO,
     IEmployeeUpdateDAO,
@@ -72,6 +90,8 @@ class IEmployeesDAO(
     IEmployeeGetByUserIdDAO,
     IEmployeeListByCompanyDAO,
     IEmployeeGetByUserBranchDAO,
-    IEmployeeGetByUserCategoryDAO
+    IEmployeeGetByUserCategoryDAO,
+    IEmployeeFilteredListByCompanyDAO,
+    IEmployeeCountByRoleDAO
 ):
     ...

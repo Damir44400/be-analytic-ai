@@ -11,7 +11,8 @@ from src.crm.domain.use_cases.companies import (
     IUpdateCompanyUseCase,
     IDeleteCompanyUseCase,
     IGetCompanyDetailUseCase,
-    CompanyUpdateForm
+    CompanyUpdateForm,
+    IGetCompanyEmployees
 )
 from src.crm.presentation.api.depends.authentication import get_current_user
 from ..schemas.branches import CompanyBranchRead
@@ -21,11 +22,13 @@ from ..schemas.companies import (
     CompanyRead,
     CompanyUpdate
 )
+from ..schemas.employees import CompanyEmployee
 from ..schemas.products import ProductRead
 from ...domain.entities.users import UserEntity
 from ...domain.use_cases.branches import IGetCompanyBranchesUseCase
 from ...domain.use_cases.companies import IGetUserCompaniesUseCase
 from ...domain.use_cases.products import IProductListByCompanyUseCase
+from ...infrastructure.models.employees import EmployeeStatusEnum
 
 router = APIRouter()
 
@@ -130,3 +133,28 @@ async def get_company_branches(
         auth_user: UserEntity = Depends(get_current_user)
 ):
     return await use_case.execute(company_id=company_id)
+
+
+@router.get(
+    "/{company_id}/employees",
+    response_model=List[CompanyEmployee]
+)
+@inject
+async def get_company_employees(
+        company_id: int,
+        use_case: FromDishka[IGetCompanyEmployees],
+        role: str = Query(None),
+        min_salary: int = Query(None),
+        max_salary: int = Query(None),
+        is_manager: bool = Query(None),
+        status: EmployeeStatusEnum = Query(None),
+        auth_user: UserEntity = Depends(get_current_user),
+):
+    return await use_case.execute(
+        company_id=company_id,
+        role=role,
+        min_salary=min_salary,
+        max_salary=max_salary,
+        is_manager=is_manager,
+        status=status.value
+    )

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
+from src.crm.domain.entities.users import UserEntity
 from src.crm.domain.entity import EntityMeta
 
 
@@ -14,6 +15,7 @@ class EmployeeEntity(EntityMeta):
     role: Optional[str] = None
     is_owner: Optional[bool] = None
     is_manager: Optional[bool] = None
+    user: Optional[UserEntity] = None
 
     @property
     def is_manager_or_owner(self):

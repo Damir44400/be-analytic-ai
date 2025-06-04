@@ -59,6 +59,7 @@ class Employee(Base):
         default=False
     )
     company = orm.relationship("Company", backref="employees")
+    user = orm.relationship("User", backref="employees")
     __table_args__ = tuple(
         sa.UniqueConstraint(
             "user_id",

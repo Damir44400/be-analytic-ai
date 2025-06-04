@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Protocol, Dict, Optional, List
+from typing import Protocol, Dict, Optional, List, Any
 
 from src.crm.domain.entities.companies import CompanyEntity
 from src.crm.infrastructure.models.companies import BusinessTypeEnum
@@ -49,3 +49,16 @@ class IUpdateCompanyUseCase(Protocol):
     async def execute(
             self, company_id: int, company: CompanyUpdateForm, user_id: int
     ) -> CompanyEntity: ...
+
+
+class IGetCompanyEmployees(Protocol):
+    async def execute(
+            self,
+            company_id: int,
+            role: Optional[str] = None,
+            min_salary: Optional[int] = None,
+            max_salary: Optional[int] = None,
+            is_manager: Optional[bool] = None,
+            status: Optional[str] = None
+    ) -> Dict[str, Any]:
+        ...

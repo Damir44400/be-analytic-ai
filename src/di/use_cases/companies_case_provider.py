@@ -10,12 +10,13 @@ from src.crm.domain.use_cases.companies import (
     IGetUserCompaniesUseCase,
     IUpdateCompanyUseCase,
     IGetCompanyDetailUseCase,
-    IDeleteCompanyUseCase
+    IDeleteCompanyUseCase, IGetCompanyEmployees
 )
 from src.crm.domain.use_cases.companies import IRegisterCompanyUseCase
 from src.crm.domain.use_cases.products import IProductListByCompanyUseCase
 from src.crm.use_cases.companies.delete_company import DeleteCompanyUseCase
 from src.crm.use_cases.companies.get_company_branches import GetCompanyBranchesUseCase
+from src.crm.use_cases.companies.get_company_employees import GetCompanyEmployees
 from src.crm.use_cases.companies.get_company_products import ListProductsByCompanyUseCase
 from src.crm.use_cases.companies.get_detailed_companies import GetDetailedCompaniesUseCase
 from src.crm.use_cases.companies.get_user_companies import (
@@ -94,3 +95,14 @@ class CompanyUseCasesProvider(Provider):
             branch_dao: IBranchesDAO
     ) -> IGetCompanyBranchesUseCase:
         return GetCompanyBranchesUseCase(company_dao, branch_dao)
+
+    @provide(scope=Scope.REQUEST)
+    async def get_company_employees_use_case(
+            self,
+            company_dao: ICompaniesDAO,
+            employee_dao: IEmployeesDAO
+    ) -> IGetCompanyEmployees:
+        return GetCompanyEmployees(
+            company_dao,
+            employee_dao,
+        )

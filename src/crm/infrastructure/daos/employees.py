@@ -1,7 +1,9 @@
-from typing import List
+from typing import List, Optional, Dict
 
+import sqlalchemy as sa
 from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import lazyload
 
 from src.crm.domain.entities.employees import EmployeeEntity
 from src.crm.infrastructure.models.branches import CompanyBranch
@@ -96,3 +98,48 @@ class EmployeesDAO:
         result = await self._session.execute(stmt)
         employee = result.scalar_one_or_none()
         return EmployeeEntity.from_domain(employee) if employee else None
+
+    async def list_filtered(
+            self,
+            company_id: int,
+            role: Optional[str] = None,
+            min_salary: Optional[int] = None,
+            max_salary: Optional[int] = None,
+            is_manager: Optional[bool] = None,
+            status: Optional[str] = None
+    ) -> List[EmployeeEntity]:
+        stmt = (
+            select(Employee)
+            .where(Employee.company_id == company_id)
+            .options(
+                lazyload(Employee.user)
+            )
+        )
+
+        if role:
+            stmt = stmt.where(Employee.role == role)
+        if min_salary is not None:
+            stmt = stmt.where(Employee.salary >= min_salary)
+        if max_salary is not None:
+            stmt = stmt.where(Employee.salary <= max_salary)
+        if is_manager is not None:
+            stmt = stmt.where(Employee.is_manager == is_manager)
+        if status:
+            stmt = stmt.where(Employee.status == status)
+
+        result = await self._session.execute(stmt)
+        employees = result.scalars().all()
+
+        return [EmployeeEntity.from_domain(emp) for emp in employees]
+
+    async def count_by_role(self, company_id: int) -> Dict[str, int]:
+        stmt = (
+            select(Employee.role, sa.func.count())
+            .where(Employee.company_id == company_id)
+            .group_by(Employee.role)
+        )
+
+        result = await self._session.execute(stmt)
+        rows = result.all()
+
+        return {role: count for role, count in rows}
